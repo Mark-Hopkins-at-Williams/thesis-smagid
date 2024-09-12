@@ -7,11 +7,14 @@ import csv
 DATABASE_FILE = "data.csv"
 TTF_DIRECTORY = "ttf-files"
 IMG_DIR = "images"
-NUM_FONTS = 1000 # handle the first n fonts in directory
+# NUM_FONTS = 1000 # handle the first n fonts in directory
 IMG_SIZE = 512
 
 # create a list of all the fonts
 font_list = [f for f in listdir(TTF_DIRECTORY) if isfile(join(TTF_DIRECTORY, f))]
+
+# deal with all fonts
+NUM_FONTS = len(font_list)
 
 # create data output list
 data = [['font', 'character', 'path']]
