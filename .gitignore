@@ -1,3 +1,4 @@
 # folders to ignore
-/ttf-files/
-/images/
+/datamaker/ttf-files/
+/datamaker/images/
+/datamaker/non-resized-images/
