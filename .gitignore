@@ -2,3 +2,5 @@
 /datamaker/ttf-files/
 /datamaker/images/
 /datamaker/non-resized-images/
+/autoencoder/fontdata
+/autoencoder/MNIST
