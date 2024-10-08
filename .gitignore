@@ -1,6 +1,6 @@
 # folders to ignore
 /datamaker/ttf-files/
-/datamaker/images/
-/datamaker/non-resized-images/
+/datamaker/images-backup/
 /autoencoder/fontdata
-/autoencoder/MNIST
+/progress*/
+/logs/
