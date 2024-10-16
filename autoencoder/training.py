@@ -111,7 +111,7 @@ def image_progress(dev_set, model, step):
         plt.title("trained")
         plt.axis('off')
     plt.tight_layout()
-    plt.savefig(f'progress-112/{step}.png')
+    plt.savefig(f'progress-112-32-2/{step}.png')
 
 
 
