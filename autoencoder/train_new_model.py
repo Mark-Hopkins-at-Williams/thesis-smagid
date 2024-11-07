@@ -13,50 +13,63 @@ import sys
 IMG_DIR = 'fontdata/images'
 CSV_DATA = 'fontdata/data.csv'
 IMG_SIZE = 128
-DATA_RANGE = None
 BATCH_SIZE = 256
 NUM_EPOCHS = 100
-
-
+LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
 class FontPairDataset(Dataset):
-    def __init__(self, csv_file, img_dir, transform = None, range = None):
+    def __init__(self, csv_file, img_dir, transform = None):
         self.data_frame = pd.read_csv(csv_file)
         self.img_dir = img_dir
         self.transform = transform
-        self.range = range
-        self.letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-        self.fonts = self.data_frame['font'].unique()        
+        self.letters = list(LETTERS)
+        all_fonts = self.data_frame['font'].unique()
+        df = self.data_frame
+        self.fonts = []
+        
+        # TODO: probably only cache the images themselves
+        self.cache = dict()        
+        
+        try:
+            with open('alphabetic_fonts.txt') as reader:
+                for line in reader:
+                    self.fonts.append(line.strip())
+        except FileNotFoundError:        
+            for font in tqdm(all_fonts):
+                sub_df = df[(df['font'] == font) & (df['character'].isin(self.letters))] 
+                if len(sub_df) == 52:                
+                    self.fonts.append(font)
+            with open('alphabetic_fonts.txt', 'w') as writer:
+                for font in self.fonts:
+                    writer.write(f'{font}\n')
+                
 
-        if self.range:
-            self.data_frame.truncate(after = range)
-    
     def __len__(self):
-        return len(self.data_frame)
+        return (len(self.letters) ** 2) * len(self.fonts)
 
     def __getitem__(self, idx):
-        which_letter2 = idx % len(self.letters)
-        which_letter1 = (idx // len(self.letters)) % len(self.letters)
-        which_font = (idx // (len(self.letters) ** 2)) % len(self.fonts)
-        df = self.data_frame
-        letter1 = df[df['font'] == self.fonts[which_font]][df['character']==self.letters[which_letter1]] # comment for sam
-        letter2 = df[df['font'] == self.fonts[which_font]][df['character']==self.letters[which_letter2]]
-        
-        
-        letter1_img_name = os.path.join(self.img_dir, letter1.iloc[0]['path'])
-        letter1_image = Image.open(letter1_img_name)
-        letter2_img_name = os.path.join(self.img_dir, letter2.iloc[0]['path'])
-        letter2_image = Image.open(letter2_img_name)
-        
-        letter1_label = self.letters.index(letter1.iloc[0]['character'])
-        letter2_label = self.letters.index(letter2.iloc[0]['character'])
-        
-        if self.transform:
-            letter1_image = self.transform(letter1_image)
-            letter2_image = self.transform(letter2_image)
+        if idx not in self.cache:
+            which_letter2 = idx % len(self.letters)
+            which_letter1 = (idx // len(self.letters)) % len(self.letters)
+            which_font = (idx // (len(self.letters) ** 2)) % len(self.fonts)
+            df = self.data_frame
+            letter1 = df[(df['font'] == self.fonts[which_font]) & (df['character']==self.letters[which_letter1])] 
+            letter2 = df[(df['font'] == self.fonts[which_font]) & (df['character']==self.letters[which_letter2])]
+            
+            letter1_img_name = os.path.join(self.img_dir, letter1.iloc[0]['path'])
+            letter1_image = Image.open(letter1_img_name)
+            letter2_img_name = os.path.join(self.img_dir, letter2.iloc[0]['path'])
+            letter2_image = Image.open(letter2_img_name)
+            
+            letter1_label = self.letters.index(letter1.iloc[0]['character'])
+            letter2_label = self.letters.index(letter2.iloc[0]['character'])
+            
+            if self.transform:
+                letter1_image = self.transform(letter1_image)
+                letter2_image = self.transform(letter2_image)
 
-        return (letter1_image, letter1_label, letter2_label), letter2_image
-
+            self.cache[idx] = (letter1_image, torch.tensor(letter1_label), torch.tensor(letter2_label)), letter2_image
+        return self.cache[idx]
 
 class DeepAutoencoder(torch.nn.Module): 
     def __init__(self): 
@@ -81,7 +94,7 @@ class DeepAutoencoder(torch.nn.Module):
         ) 
           
         self.decoder = torch.nn.Sequential( 
-            torch.nn.Linear(10, 64), 
+            torch.nn.Linear(10+self.letter_embedding_dim, 64), 
             torch.nn.ReLU(), 
             torch.nn.Linear(64, 128), 
             torch.nn.ReLU(), 
@@ -98,44 +111,51 @@ class DeepAutoencoder(torch.nn.Module):
             torch.nn.Linear(6272, IMG_SIZE*IMG_SIZE), 
             torch.nn.Sigmoid() 
         ) 
-        self.letter1_embedding = Parameter(Embedding(num_embeddings=52, embedding_dim=10))
-        self.letter2_embedding = Parameter(Embedding(num_embeddings=52, embedding_dim=10))
+        self.letter1_embedding = Embedding(num_embeddings=52, embedding_dim=10)
+        self.letter2_embedding = Embedding(num_embeddings=52, embedding_dim=10)
         
   
     def forward(self, letter1_img, letter1_label, letter2_label): 
-        letter1_embed = self.letter1_embedding(letter1_label)  
+        try:
+            letter1_embed = self.letter1_embedding(letter1_label) 
+        except Exception:
+            print(letter1_label.device)
+            print(self.letter1_embedding.weight.device)
+            
         letter2_embed = self.letter2_embedding(letter2_label)       
-        encoded = self.encoder(torch.cat([letter1_img, letter1_embed], dim=1))
-        
-        decoded = self.decoder(torch.cat([encoded, letter2_embed])) 
+        encoded = self.encoder(torch.cat([letter1_img, letter1_embed], dim=1))        
+        decoded = self.decoder(torch.cat([encoded, letter2_embed], dim=1)) 
         return decoded 
 
 
 def image_progress(dev_set, model, step):
     """Saves an image of model progress on a sample of devset."""
-    sample = 5
-    img, _ = dev_set
-    img = img.reshape(-1, IMG_SIZE*IMG_SIZE)
-    img = img.to("cuda")
-    original = img.reshape(-1,IMG_SIZE,IMG_SIZE)[0]
+    
+    (letter1_image, letter1_label, letter2_label), letter2_image = dev_set
+    original = letter1_image.clone()[0].squeeze()
+    letter1_image = letter1_image.reshape(-1, IMG_SIZE*IMG_SIZE).to("cuda")
+    letter1_label = letter1_label.to("cuda")
+    letter2_label = letter2_label.to("cuda")
     model.eval()
     with torch.no_grad():
-        out = model(img)
+        out = model(letter1_image, letter1_label, letter2_label)
         out = out.to("cuda")
-    trained = out.reshape(-1,IMG_SIZE,IMG_SIZE)[0:sample]
-    original = img.reshape(-1,IMG_SIZE,IMG_SIZE)[0:sample]
-    plt.clf()
-    for i in range(sample):
-        plt.subplot(sample, 2, 2*i + 1)
-        plt.imshow(original[i].cpu().detach().numpy(), cmap='gray')
-        plt.title("original")
-        plt.axis('off')
-        plt.subplot(sample, 2, 2*i + 2)
-        plt.imshow(trained[i].cpu().detach().numpy(), cmap='gray')
-        plt.title("trained")
-        plt.axis('off')
+    trained = out.reshape(-1,IMG_SIZE,IMG_SIZE)[0]
+    plt.clf()    
+    plt.subplot(1, 3, 1)
+    plt.imshow(original.cpu().detach().numpy(), cmap='gray')
+    plt.title(f"original ({LETTERS[letter1_label[0].item()]})")
+    plt.axis('off')
+    plt.subplot(1, 3, 2)
+    plt.imshow(trained.cpu().detach().numpy(), cmap='gray')
+    plt.title(f"trained ({LETTERS[letter2_label[0].item()]})")
+    plt.axis('off')
+    plt.subplot(1, 3, 3)
+    plt.imshow(letter2_image[0].squeeze().cpu().detach().numpy(), cmap='gray')
+    plt.title(f"goal ({LETTERS[letter2_label[0].item()]})")
+    plt.axis('off')
     plt.tight_layout()
-    plt.savefig(f'progress-112/{step}.png')
+    plt.savefig(f'progress-test/{step}.png')
 
 
 
@@ -151,11 +171,13 @@ if __name__ == "__main__":
     
     # Loading data, reserving 10% for a devset
     full_dataset = FontPairDataset(csv_file = CSV_DATA, img_dir = IMG_DIR,
-                                   transform = transformations, range = DATA_RANGE)
-    train_size = int(0.9 * len(full_dataset))
+                                   transform = transformations)
+    train_size = int(0.98 * len(full_dataset))
     dev_size = len(full_dataset) - train_size
     train_dataset, dev_dataset = random_split(full_dataset, [train_size, dev_size])
     train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE) 
+    print(f'train size: {len(train_dataset)}')
+    print(f'dev size:   {len(dev_dataset)}')
     dev_loader = DataLoader(dev_dataset, batch_size=BATCH_SIZE) 
 
     model = DeepAutoencoder() 
@@ -176,19 +198,20 @@ if __name__ == "__main__":
     record_every = 10
 
     steps = 0 # Running count of steps
-
     for epoch in range(num_epochs): 
         running_loss = 0 # Running loss count
         for i, batch in tqdm(enumerate(train_loader)): 
              
             # Unpacking batch
-            img, _ = batch
-            img = img.reshape(-1, IMG_SIZE*IMG_SIZE)
-            img = img.to(device)
+            (letter1_image, letter1_label, letter2_label), letter2_image = batch
+            letter1_image = letter1_image.reshape(-1, IMG_SIZE*IMG_SIZE).to(device)
+            letter1_label = letter1_label.to(device)
+            letter2_label = letter2_label.to(device)
 
             # Running batch through model and update weights
-            out = model(img) 
-            loss = criterion(out, img)
+            out = model(letter1_image, letter1_label, letter2_label) 
+            letter2_image = letter2_image.reshape(-1, IMG_SIZE*IMG_SIZE).to(device)
+            loss = criterion(out, letter2_image)
             optimizer.zero_grad() 
             loss.backward() 
             optimizer.step() 
