@@ -16,6 +16,11 @@ IMG_SIZE = 128
 BATCH_SIZE = 256
 NUM_EPOCHS = 100
 LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+GPU = "cuda"
+TEST_IMG_DIR = 'new-new-images'
+WEIGHTS_DIR = 'new-new-weights'
+IMG_EVERY = 10
+WEIGHTS_EVERY = 50
 
 class FontPairDataset(Dataset):
     def __init__(self, csv_file, img_dir, transform = None):
@@ -27,7 +32,7 @@ class FontPairDataset(Dataset):
         df = self.data_frame
         self.fonts = []
         
-        # TODO: probably only cache the images themselves
+        # cache structure: {(font, letter): image}
         self.cache = dict()        
         
         try:
@@ -48,28 +53,35 @@ class FontPairDataset(Dataset):
         return (len(self.letters) ** 2) * len(self.fonts)
 
     def __getitem__(self, idx):
-        if idx not in self.cache:
-            which_letter2 = idx % len(self.letters)
-            which_letter1 = (idx // len(self.letters)) % len(self.letters)
-            which_font = (idx // (len(self.letters) ** 2)) % len(self.fonts)
-            df = self.data_frame
-            letter1 = df[(df['font'] == self.fonts[which_font]) & (df['character']==self.letters[which_letter1])] 
-            letter2 = df[(df['font'] == self.fonts[which_font]) & (df['character']==self.letters[which_letter2])]
-            
+        which_letter2 = idx % len(self.letters)
+        which_letter1 = (idx // len(self.letters)) % len(self.letters)
+        which_font = (idx // (len(self.letters) ** 2)) % len(self.fonts)
+        df = self.data_frame
+
+        letter1 = df[(df['font'] == self.fonts[which_font]) & (df['character']==self.letters[which_letter1])]
+        letter1_label = torch.tensor(self.letters.index(letter1.iloc[0]['character']))
+        letter2 = df[(df['font'] == self.fonts[which_font]) & (df['character']==self.letters[which_letter2])]
+        letter2_label = torch.tensor(self.letters.index(letter2.iloc[0]['character']))
+
+        if (which_font, which_letter1) not in self.cache:
             letter1_img_name = os.path.join(self.img_dir, letter1.iloc[0]['path'])
             letter1_image = Image.open(letter1_img_name)
+            self.cache[(which_font, which_letter1)] = letter1_image
+        else:
+            letter1_image = self.cache[(which_font, which_letter1)]
+
+        if (which_font, which_letter2) not in self.cache:
             letter2_img_name = os.path.join(self.img_dir, letter2.iloc[0]['path'])
             letter2_image = Image.open(letter2_img_name)
+            self.cache[(which_font, which_letter2)] = letter2_image
+        else:
+            letter2_image = self.cache[(which_font, which_letter2)]
             
-            letter1_label = self.letters.index(letter1.iloc[0]['character'])
-            letter2_label = self.letters.index(letter2.iloc[0]['character'])
-            
-            if self.transform:
-                letter1_image = self.transform(letter1_image)
-                letter2_image = self.transform(letter2_image)
+        if self.transform:
+            letter1_image = self.transform(letter1_image)
+            letter2_image = self.transform(letter2_image)
 
-            self.cache[idx] = (letter1_image, torch.tensor(letter1_label), torch.tensor(letter2_label)), letter2_image
-        return self.cache[idx]
+        return (letter1_image, letter1_label, letter2_label), letter2_image
 
 class DeepAutoencoder(torch.nn.Module): 
     def __init__(self): 
@@ -133,13 +145,13 @@ def image_progress(dev_set, model, step):
     
     (letter1_image, letter1_label, letter2_label), letter2_image = dev_set
     original = letter1_image.clone()[0].squeeze()
-    letter1_image = letter1_image.reshape(-1, IMG_SIZE*IMG_SIZE).to("cuda")
-    letter1_label = letter1_label.to("cuda")
-    letter2_label = letter2_label.to("cuda")
+    letter1_image = letter1_image.reshape(-1, IMG_SIZE*IMG_SIZE).to(GPU)
+    letter1_label = letter1_label.to(GPU)
+    letter2_label = letter2_label.to(GPU)
     model.eval()
     with torch.no_grad():
         out = model(letter1_image, letter1_label, letter2_label)
-        out = out.to("cuda")
+        out = out.to(GPU)
     trained = out.reshape(-1,IMG_SIZE,IMG_SIZE)[0]
     plt.clf()    
     plt.subplot(1, 3, 1)
@@ -155,7 +167,7 @@ def image_progress(dev_set, model, step):
     plt.title(f"goal ({LETTERS[letter2_label[0].item()]})")
     plt.axis('off')
     plt.tight_layout()
-    plt.savefig(f'progress-test/{step}.png')
+    plt.savefig(f'{TEST_IMG_DIR}/{step}.png')
 
 
 
@@ -178,7 +190,7 @@ if __name__ == "__main__":
     train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE) 
     print(f'train size: {len(train_dataset)}')
     print(f'dev size:   {len(dev_dataset)}')
-    dev_loader = DataLoader(dev_dataset, batch_size=BATCH_SIZE) 
+    dev_loader = DataLoader(dev_dataset, batch_size=BATCH_SIZE, shuffle=True) 
 
     model = DeepAutoencoder() 
     criterion = torch.nn.MSELoss() 
@@ -189,28 +201,25 @@ if __name__ == "__main__":
 
     num_batches = len(train_loader)
 
-    # Transfering model to GPU
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Using device: {device}")
-    model.to(device)
+    print(len(train_loader))
 
-    sample_data = next(iter(dev_loader))
-    record_every = 10
+    model.to(GPU)
 
     steps = 0 # Running count of steps
+    
     for epoch in range(num_epochs): 
         running_loss = 0 # Running loss count
         for i, batch in tqdm(enumerate(train_loader)): 
              
             # Unpacking batch
             (letter1_image, letter1_label, letter2_label), letter2_image = batch
-            letter1_image = letter1_image.reshape(-1, IMG_SIZE*IMG_SIZE).to(device)
-            letter1_label = letter1_label.to(device)
-            letter2_label = letter2_label.to(device)
+            letter1_image = letter1_image.reshape(-1, IMG_SIZE*IMG_SIZE).to(GPU)
+            letter1_label = letter1_label.to(GPU)
+            letter2_label = letter2_label.to(GPU)
 
             # Running batch through model and update weights
             out = model(letter1_image, letter1_label, letter2_label) 
-            letter2_image = letter2_image.reshape(-1, IMG_SIZE*IMG_SIZE).to(device)
+            letter2_image = letter2_image.reshape(-1, IMG_SIZE*IMG_SIZE).to(GPU)
             loss = criterion(out, letter2_image)
             optimizer.zero_grad() 
             loss.backward() 
@@ -219,18 +228,23 @@ if __name__ == "__main__":
             # increment loss
             running_loss += loss.item() 
 
-            # Recording performance metrics every record_every updates
-            if i % record_every == 0:
-                image_progress(sample_data, model, steps // record_every)
+            # Recording performance metrics every IMAGE_EVERY updates
+            if i % IMG_EVERY == 0:
+                sample_data = next(iter(dev_loader))
+                image_progress(sample_data, model, steps // IMG_EVERY)
                 if i > 0:
                     loss_per_batch = running_loss / i if i > 0 else 0
                     print(f'Train loss: {loss_per_batch}')
                     sys.stdout.flush()
 
+            # Saving weights every WEIGHTS_EVERY updates
+            if i % WEIGHTS_EVERY == 0 and i != 0:
+                model.eval()
+                torch.save(model.state_dict(), f'{WEIGHTS_DIR}/weights-{i}.pth')
+                model.train()
+
             # Keeping track of steps
             steps += 1
-        model.eval()
-        torch.save(model.state_dict(), f'model_weights.{epoch}.pth')
         
         # Averaging out loss over entire batch 
         running_loss /= num_batches
