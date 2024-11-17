@@ -3,7 +3,8 @@ import torch
 from torch.utils.data import Dataset, DataLoader, random_split
 import torchvision
 import torchvision.transforms as transforms
-from training import FontDataset, DeepAutoencoder
+from new_training import FontPairDataset, DeepAutoencoder
+from torch.nn import Embedding, Parameter
 import random
 import matplotlib.pyplot as plt
 import io
@@ -13,7 +14,7 @@ PORT = 18812
 IMG_SIZE = 128
 IMG_DIR = '/mnt/storage/smagid/thesis-smagid/fontdata/images'
 CSV_DATA = '/mnt/storage/smagid/thesis-smagid/fontdata/data.csv'
-MODEL_FILE = 'model_weights.pth'
+MODEL_FILE = 'new_weights.pth'
 NUM_MODIFIERS = 10 # bottleneck size
 
 model = DeepAutoencoder()
@@ -29,9 +30,8 @@ transformations = transforms.Compose([
     transforms.Normalize((0.5), (0.5)),
 ])
 
-dataset = FontDataset(csv_file = CSV_DATA, img_dir = IMG_DIR,
+dataset = FontPairDataset(csv_file = CSV_DATA, img_dir = IMG_DIR,
                             transform = transformations)
-# loader = iter(DataLoader(dataset, batch_size=1, shuffle=True))
 
 app = Flask(__name__)
 app.secret_key = 'sampassword'
@@ -47,13 +47,22 @@ def generate_plot():
     # make modifier parameters into a modifier tensor
     for i in range(NUM_MODIFIERS):
         modifier_list.append(int(request.args.get(f'mod{i}', default = 0)) / 100)
-    print(modifier_list)
+    
     modifier = torch.tensor(modifier_list)
-    symbol = dataset[ID][0]
-    reshaped = symbol.reshape(IMG_SIZE*IMG_SIZE)
-    encoding = encoder(reshaped)
+
+    (letter1_image, letter1_label, letter2_label), letter2_image = dataset[ID]
+
+    letter1_image = letter1_image.reshape(IMG_SIZE*IMG_SIZE)
+
+    letter1_embed = model.letter1_embedding(letter1_label) 
+    letter2_embed = model.letter2_embedding(letter2_label)
+
+    encoding = encoder(torch.cat([letter1_image, letter1_embed], dim=0))
+
     modified = encoding + modifier * encoding
-    decoded = decoder(modified)
+
+    decoded = decoder(torch.cat([modified, letter2_embed], dim=0))
+
     reshaped = decoded.reshape((IMG_SIZE,IMG_SIZE))
     img_pil = transforms.ToPILImage()(reshaped)
     img_io = io.BytesIO()
