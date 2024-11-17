@@ -1,6 +1,6 @@
 #!/bin/sh
 #SBATCH -c 2
-#SBATCH -t 3-00:00
+#SBATCH -t 4-00:00
 #SBATCH -p dl
 #SBATCH --mem=10G
 #SBATCH -o logs/log%j.out

@@ -17,10 +17,11 @@ BATCH_SIZE = 256
 NUM_EPOCHS = 100
 LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 GPU = "cuda"
-TEST_IMG_DIR = 'new-new-images'
-WEIGHTS_DIR = 'new-new-weights'
+TEST_IMG_DIR = 'images'
+WEIGHTS_DIR = 'weights'
 IMG_EVERY = 10
-WEIGHTS_EVERY = 50
+LOSS_EVERY = 10
+WEIGHTS_EVERY = 500
 
 class FontPairDataset(Dataset):
     def __init__(self, csv_file, img_dir, transform = None):
@@ -170,9 +171,10 @@ def image_progress(dev_set, model, step):
     plt.savefig(f'{TEST_IMG_DIR}/{step}.png')
 
 
-
-
 if __name__ == "__main__":
+    for directory in [TEST_IMG_DIR, WEIGHTS_DIR]:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
     transformations = transforms.Compose([
         transforms.Resize((IMG_SIZE, IMG_SIZE)),
@@ -198,17 +200,17 @@ if __name__ == "__main__":
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
     train_loss = [] 
+    dev_loss = []
 
     num_batches = len(train_loader)
-
-    print(len(train_loader))
 
     model.to(GPU)
 
     steps = 0 # Running count of steps
+
+    running_loss = 0
     
     for epoch in range(num_epochs): 
-        running_loss = 0 # Running loss count
         for i, batch in tqdm(enumerate(train_loader)): 
              
             # Unpacking batch
@@ -243,15 +245,36 @@ if __name__ == "__main__":
                 torch.save(model.state_dict(), f'{WEIGHTS_DIR}/weights-{i}.pth')
                 model.train()
 
+            if i % LOSS_EVERY == 0:
+                # plot average training loss
+                running_loss /= LOSS_EVERY
+                train_loss.append(running_loss) 
+                running_loss = 0
+                plt.clf()
+                plt.plot(range(1,LOSS_EVERY * len(train_loss)+1, LOSS_EVERY), train_loss) 
+                plt.xlabel("Number of iterations") 
+                plt.ylabel("Training Loss")
+                plt.tight_layout() 
+                plt.savefig('train_loss.png')
+                # plot dev loss
+                model.eval()
+                with torch.no_grad():
+                    sample_data = next(iter(dev_loader))
+                    (s_letter1_image, s_letter1_label, s_letter2_label), s_letter2_image = sample_data
+                    s_letter1_image = s_letter1_image.reshape(-1, IMG_SIZE*IMG_SIZE).to(GPU)
+                    s_letter1_label = s_letter1_label.to(GPU)
+                    s_letter2_label = s_letter2_label.to(GPU)
+                    out = model(s_letter1_image, s_letter1_label, s_letter2_label)
+                    s_letter2_image = s_letter2_image.reshape(-1, IMG_SIZE*IMG_SIZE).to(GPU)
+                    loss = criterion(out, s_letter2_image).cpu().detach().numpy()
+                    dev_loss.append(loss)
+                plt.clf()
+                plt.plot(range(1,LOSS_EVERY * len(dev_loss)+1, LOSS_EVERY), dev_loss) 
+                plt.xlabel("Number of iterations") 
+                plt.ylabel("Dev Loss") 
+                plt.tight_layout()
+                plt.savefig('dev_loss.png')
+
+
             # Keeping track of steps
             steps += 1
-        
-        # Averaging out loss over entire batch 
-        running_loss /= num_batches
-        train_loss.append(running_loss) 
-
-    # Plotting the training loss 
-    plt.plot(range(1,num_epochs+1),train_loss) 
-    plt.xlabel("Number of epochs") 
-    plt.ylabel("Training Loss") 
-    plt.savefig('loss.png')
