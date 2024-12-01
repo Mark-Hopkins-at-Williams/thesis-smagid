@@ -3,14 +3,8 @@ Generates data for an interactive T-SNE plot of nn-font vector averages.
 """
 
 import torch
-from torch.utils.data import Dataset, DataLoader
-from torch.nn import Embedding, Parameter
-import torchvision
-import torchvision.transforms as transforms
 import pandas as pd
-from PIL import Image
 import os
-import faiss
 from tqdm import tqdm
 import numpy as np
 from sklearn.manifold import TSNE
@@ -19,39 +13,48 @@ from styletransfer import StyleTransfer # local import
 
 CSV_DATA = '/mnt/storage/smagid/thesis-smagid/fontdata/data.csv'
 IMG_DATA = '/mnt/storage/smagid/thesis-smagid/fontdata/images'
-MODEL_FILE = # fill this in
-IMG_SIZE = 64
-OUTPUT_FILE = 'tnse.npy'
+MODEL_FILE = '/mnt/storage/smagid/thesis-smagid/weights/styletransfer.pth'
+IMG_SIZE = 128
+AVERAGES_FILE = 'data/averages.pt'
+TSNE_OUTPUT_FILE = 'data/tnse.csv'
 
 if __name__ == "__main__":
-    # dataset initialization
-    dataset = FontDataset(csv_file = CSV_DATA, img_dir = IMG_DATA, img_size = IMG_SIZE)
-    # model initialization
-    model = StyleTransfer(img_size = IMG_SIZE)
-    model.load_state_dict(torch.load(MODEL_FILE, weights_only=True))
-    model.eval()
-    # only generating encodings
-    encoder = model.encoder
-    # populate dictionary of encodings by font
-    encodings = {}
-    for i in tqdm(range(len(dataset))):
-        (image, font, letter) = dataset[i]
-        reshaped = image.reshape(IMG_SIZE*IMG_SIZE)
-        letter_embedding = model.letter1_embedding(letter)
-        encoding = encoder(torch.cat([reshaped, letter_embedding], dim=0))
-        if font not in encodings:
-            encodings[font] = [encoding]
-        else:
-            encodings[font].append(encoding)
-    # take averages by font
-    averages = {}
-    for font in encodings:
-        vectors = torch.stack(encodings[font])
-        average = vectors.mean(dim=0)
-        averages[font] = average
-    
-    # can we keep font names when we make the numpy array?
-    
+    gpu = torch.device("cuda")
+    if os.path.exists(AVERAGES_FILE):
+        averages = torch.load(AVERAGES_FILE, map_location=gpu)
+    else:
+        # dataset initialization
+        dataset = FontDataset(csv_file = CSV_DATA, img_dir = IMG_DATA, img_size = IMG_SIZE)
+        # model initialization
+        model = StyleTransfer(img_size = IMG_SIZE).to(gpu)
+        model.load_state_dict(torch.load(MODEL_FILE, weights_only=True, map_location=gpu))
+        model.eval()
+        # only generating encodings
+        encoder = model.encoder.to(gpu)
+        # populate dictionary of encodings by font
+        encodings = {}
+        for i in tqdm(range(len(dataset))):
+            (image, font, letter) = dataset[i]
+            reshaped = image.reshape(IMG_SIZE*IMG_SIZE).to(gpu)
+            letter_embedding = model.letter1_embedding(letter.to(gpu))
+            encoding = encoder(torch.cat([reshaped, letter_embedding], dim=0))
+            if font not in encodings:
+                encodings[font] = [encoding]
+            else:
+                encodings[font].append(encoding)
+        # take averages by font
+        averages = {}
+        for font in encodings:
+            vectors = torch.stack(encodings[font]).to(gpu)
+            average = vectors.mean(dim=0)
+            averages[font] = average
+        # save for reloading
+        torch.save(averages, AVERAGES_FILE)
+    # apply t-sne
+    values = np.stack([value.numpy() for value in averages.values()])
     tsne = TSNE(n_components=2, perplexity=30, random_state=42)
-    reduced_vectors = tsne.fit_transform(vectors)
-    np.save(OUTPUT_FILE, reduced_vectors)
+    tsne_out = tsne.fit_transform(values)
+    # put into a pandas dataframe and save data
+    row_names = list(averages.keys())
+    tsne_df = pd.DataFrame(tsne_out, index=row_names, columns=["tSNE-1", "tSNE-2"])
+    tsne_df.to_csv(TSNE_OUTPUT_FILE, index=True)

@@ -7,6 +7,7 @@ from tqdm import tqdm
 import torchvision.transforms as transforms
 
 LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+ALPHA_FONTS_DIR = '/mnt/storage/smagid/thesis-smagid/fontdata/alphabetic_fonts.txt'
 
 class FontDataset(Dataset):
     def __init__(self, csv_file, img_dir, img_size):
@@ -24,7 +25,7 @@ class FontDataset(Dataset):
         self.letters = list(LETTERS)
 
         try:
-            with open('alphabetic_fonts.txt') as reader:
+            with open(ALPHA_FONTS_DIR) as reader:
                 for line in reader:
                     self.fonts.append(line.strip())
         except FileNotFoundError:        
@@ -32,7 +33,7 @@ class FontDataset(Dataset):
                 sub_df = df[(df['font'] == font) & (df['character'].isin(self.letters))] 
                 if len(sub_df) == 52:                
                     self.fonts.append(font)
-            with open('alphabetic_fonts.txt', 'w') as writer:
+            with open(ALPHA_FONTS_DIR, 'w') as writer:
                 for font in self.fonts:
                     writer.write(f'{font}\n')
     

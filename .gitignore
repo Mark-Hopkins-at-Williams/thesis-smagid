@@ -1,5 +1,7 @@
 *.pth
 *.npy
+*.err
+*.out
 
 fontdata/
 fontnames/outputs/
