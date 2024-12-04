@@ -1,0 +1,7 @@
+%% Background
+\chapter{Methodology}
+\label{chap:methodology}
+
+\section{Data Collection}
+
+We downloaded 6,018 TrueType (.ttf) and OpenType (.otf) font files from Google Fonts using the macOS FontBase software. We then used the FontForge library Python scripting to create a database of images of each common character\footnote{Capital letters (A-Z), lowercase letters (a-z), numbers (0-9), punctuation, and basic symbols} represented in each typeface, totalling 556,123 glyph images. The script also created a .csv file containing the locations of each character-font combination image in our database for use later in model training.
