@@ -5,19 +5,10 @@ import numpy as np
 import os
 
 TSNE_FILE = 'data/tnse.csv'
+IMAGE_PATH = 'assets/outputs/'
 
-df = pd.read_csv(TSNE_FILE, index_col=0)
-
-# SEE HOW DATA IS SAVED, THEN WRITE THIS
-
-# Path to the folder containing images
-image_folder = 'assets/outputs'
-
-# Get the list of image filenames
-image_files = [f for f in os.listdir(image_folder) if f.endswith(('png', 'jpg', 'jpeg', 'gif'))]
-
-# Create the full image paths
-image_paths = [os.path.join(image_folder, img) for img in image_files]
+df = pd.read_csv(TSNE_FILE)
+df['image'] = df['font'].apply(lambda x: f"{IMAGE_PATH}{x}{'.png'}")
 
 fig = go.Figure(data=[
     go.Scatter(

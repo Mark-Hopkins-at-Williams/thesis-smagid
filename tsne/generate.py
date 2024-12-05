@@ -51,7 +51,7 @@ if __name__ == "__main__":
         # save for reloading
         torch.save(averages, AVERAGES_FILE)
     # apply t-sne
-    values = np.stack([value.numpy() for value in averages.values()])
+    values = np.stack([value.cpu().detach().numpy() for value in averages.values()])
     tsne = TSNE(n_components=2, perplexity=30, random_state=42)
     tsne_out = tsne.fit_transform(values)
     # put into a pandas dataframe and save data
