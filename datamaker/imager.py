@@ -12,54 +12,47 @@ import csv
 
 DATABASE_FILE = "data.csv"
 TTF_DIRECTORY = "ttf-files"
-IMG_DIR = "non-resized-images"
-IMG_SIZE = 512
+IMG_DIR = "images"
+IMG_SIZE = 64
+CHARACTERS = set("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?:;@#$%&*()[]")
 
-# create a list of all the fonts
-font_list = [f for f in listdir(TTF_DIRECTORY) if isfile(join(TTF_DIRECTORY, f))]
+def generateGlyphs(font, outputDir, data):
+    print(f"Generating images for {fontName}")
+    for char in CHARACTERS:
+        glyph = font[ord(char)]
+        exportPath = f"{outputDir}/{glyph.unicode}.png"
+        glyph.export(exportPath, IMG_SIZE)
+        data.append([fontName, chr(glyph.unicode), exportPath])
 
-# deal with all fonts
-# NUM_FONTS = 1000 # handle the first n fonts in directory
-NUM_FONTS = len(font_list)
+if __name__ == "__main__":
+    # get file names
+    fontList = [f for f in listdir(TTF_DIRECTORY) if isfile(join(TTF_DIRECTORY, f))]
+    # create data output list
+    data = [['font', 'character', 'path']]
+    for file in fontList:
+        print(f"Trying {file}")
+        font = fontforge.open(f"{TTF_DIRECTORY}/{file}")
+        fontName = font.fullname
+        # check that all characters in set exist
+        charsInFont = [glyph for glyph in font.glyphs() if glyph.unicode != -1 and chr(glyph.unicode) in CHARACTERS]
+        if len(charsInFont) == len(CHARACTERS):
+            outputDir = f"{IMG_DIR}/{fontName}"
+            # check if dir already exists
+            if os.path.isdir(outputDir):
+                # count if already populated with images
+                items = os.listdir(outputDir)
+                # filter out for only files
+                files = [item for item in items if os.path.isfile(os.path.join(outputDir, item))]
+                if len(files) < len(CHARACTERS): # if not fully populated
+                    generateGlyphs(font, outputDir, data)
+            # if doesn't exist, generate images
+            else:
+                os.makedirs(outputDir)
+                generateGlyphs(font, outputDir, data)
+        else:
+            print(f"Skipping {fontName}")
 
-# create data output list
-data = [['font', 'character', 'path']]
-
-# define the Unicode ranges for basic characters
-BASIC_CHAR_RANGES = [
-    (0x0021, 0x007E),  # punctuation, and basic symbols
-    (0x0041, 0x005A),  # Uppercase letters A-Z
-    (0x0061, 0x007A),  # Lowercase letters a-z
-    (0x0030, 0x0039),  # Numbers 0-9
-]
-
-# Function to check if the Unicode value falls in the desired ranges
-def is_basic_char(unicode_val):
-    return any(start <= unicode_val <= end for start, end in BASIC_CHAR_RANGES)
-
-# iterate through font list
-for font_file in font_list[:NUM_FONTS]:
-    # open font file
-    font = fontforge.open(f"./{TTF_DIRECTORY}/{font_file}")
-    # font_name = font_file.removesuffix(".ttf").removesuffix(".otf")
-    font_name = font_file[:-4]
-    # Create output directory if it doesn't exist
-    output_dir = f"./{IMG_DIR}/{font_name}"
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-    # loop through each glyph in the font
-    for glyph in font.glyphs():
-        # get the Unicode code point of the glyph
-        unicode_val = glyph.unicode
-        # check if the glyph is worth exporting (non-empty)
-        if glyph.isWorthOutputting() and is_basic_char(unicode_val):
-            if unicode_val != -1:
-                char_representation = chr(unicode_val)
-                export_path = f"./{IMG_DIR}/{font_name}/{glyph.glyphname}.png"
-                glyph.export(export_path, IMG_SIZE)
-                data.append([font_name, char_representation, export_path])
-
-# write to database
-with open(DATABASE_FILE, mode='w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerows(data)
+    # write to database
+    with open(DATABASE_FILE, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(data)

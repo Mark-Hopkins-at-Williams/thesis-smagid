@@ -25,7 +25,12 @@ fig.update_traces(hoverinfo="none", hovertemplate=None)
 fig.update_layout(
     xaxis=dict(title='x'),
     yaxis=dict(title='y'),
-    plot_bgcolor='rgba(255,255,255,0.1)'
+    plot_bgcolor='rgba(255,255,255,0.1)',
+    title="t-SNE Visualization of FontSpace Data",
+    title_x=0.5,
+    title_y=0.95,
+    title_font=dict(size=30, color="black", family="Arial"),
+    height=800
 )
 
 app = Dash()
@@ -33,8 +38,9 @@ app = Dash()
 app.layout = html.Div([
     dcc.Graph(id="graph-basic-2", figure=fig, clear_on_unhover=True),
     dcc.Tooltip(id="graph-tooltip"),
-])
-
+], style={
+    'height': '100%'
+})
 
 @callback(
     Output("graph-tooltip", "show"),
@@ -64,4 +70,4 @@ def display_hover(hoverData):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=18812, host='0.0.0.0')

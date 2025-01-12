@@ -2,7 +2,7 @@ import os
 import matplotlib.pyplot as plt
 import torch
 
-LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?:;@#$%&*()[]"
 GPU = "cuda"
 
 def imageProgress(image_size, dev_set, model, step, out_dir, modeltype):
@@ -21,18 +21,17 @@ def imageProgress(image_size, dev_set, model, step, out_dir, modeltype):
             out = model(letter1_image, letter1_label, letter2_label)
             out = out.to(GPU)
         trained = out.reshape(-1,image_size,image_size)[0]
-        plt.clf()    
         plt.subplot(1, 3, 1)
         plt.imshow(original.cpu().detach().numpy(), cmap='gray')
-        plt.title(f"original ({LETTERS[letter1_label[0].item()]})")
+        plt.title(f"original ({CHARACTERS[letter1_label[0].item()]})")
         plt.axis('off')
         plt.subplot(1, 3, 2)
         plt.imshow(trained.cpu().detach().numpy(), cmap='gray')
-        plt.title(f"trained ({LETTERS[letter2_label[0].item()]})")
+        plt.title(f"trained ({CHARACTERS[letter2_label[0].item()]})")
         plt.axis('off')
         plt.subplot(1, 3, 3)
         plt.imshow(letter2_image[0].squeeze().cpu().detach().numpy(), cmap='gray')
-        plt.title(f"goal ({LETTERS[letter2_label[0].item()]})")
+        plt.title(f"goal ({CHARACTERS[letter2_label[0].item()]})")
         plt.axis('off')
     elif type == "auto": 
         sample = 5
