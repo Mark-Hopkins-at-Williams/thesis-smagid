@@ -1,0 +1,73 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.parent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-family: 'Roboto';
+  margin-bottom: 80px;
+  font-size: 50px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.center-glyph {
+  display: flex;
+  font-size: 100px;
+  justify-content: center;
+  align-items: center;
+  position: absolute
+}
+
+.circle-container {
+  display: flex;
+  position: relative;
+  width: 500px;
+  height: 500px;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle-button {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: none;
+  background-color: #e0e0e0;
+  color: rgb(0, 0, 0);
+  font-size: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: absolute;
+  transform-origin: 50% 50%;
+}
+
+.circle-button:hover {
+  background-color: #828282;
+}
+
+.deg0 { transform: translate(200px); }
+.deg60 { transform: rotate(60deg) translate(200px) rotate(-60deg); }
+.deg120 { transform: rotate(120deg) translate(200px) rotate(-120deg); }
+.deg180 { transform: translate(-200px) ; }
+.deg240 { transform: rotate(240deg) translate(200px) rotate(-240deg); }
+.deg300 { transform: rotate(300deg) translate(200px) rotate(-300deg); }
