@@ -1,49 +1,70 @@
-import React from "react";
-import ReactFontLoader from 'react-font-loader'
+import React, { useState } from "react";
 import "./App.css";
+import googlefonts from "./assets/googlefonts.json"
+import GoogleFontLoader from 'react-google-font'
+
+const GlyphButton = ({ rotation, onClick, label, font_name }) => {
+  return (
+    <>
+      <GoogleFontLoader fonts={[{font: font_name}]}/>
+      <button className={`circle-button ${rotation}`} style={{ fontFamily: font_name }} onClick={onClick}>
+        {label}
+      </button>
+    </>
+  );
+};
+
+const CenterGlyph = ({ label, font_name }) => {
+  console.log(font_name)
+  return (
+    <>
+      <GoogleFontLoader fonts={[{font: font_name}]}/>
+      <p className="center-glyph" style={{ fontFamily: font_name }}>
+        {label}
+      </p>
+    </>
+  )
+}
+
+const getRandomFont = () => {
+  const randomIndex = Math.floor(Math.random() * googlefonts.items.length);
+  const randomFont = googlefonts.items[randomIndex].family;
+  return randomFont
+};
 
 const App = () => {
-  const [count, setCount] = React.useState(0);
+  // font state for all buttons
+  const [fonts, setFonts] = useState(Array(6).fill().map(() => getRandomFont()));
+  const [centerFont, setCenterFont] = useState(getRandomFont())
 
-  const handleClick = () => {
-    setCount(count + 1);
+  const handleClick = (buttonIndex) => {
+    const newFonts = Array(6).fill().map(() => getRandomFont())
+    setFonts(newFonts);
+    const newCenterFont = getRandomFont()
+    setCenterFont(newCenterFont)
   };
+
+  let letter = "A"
   
   return (
     <div className="parent">
-      <ReactFontLoader url="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" />
 
       <h1 className = "title">Google Fontspace Selector</h1>
 
       <div className="circle-container">
 
-        <ReactFontLoader url="https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap" />
+        <CenterGlyph label={letter} font_name={centerFont} />
 
-        <p className="center-glyph" style={{ fontFamily: 'Rubik Vinyl' }}>A</p>
+        {fonts.map((font, index) => (
+          <GlyphButton
+            key={index}
+            rotation={"deg" + (index * 60)}
+            onClick={() => handleClick(index)}
+            label={letter}
+            font_name={font}
+          />
+        ))}
 
-        <button className="circle-button deg0" onClick={handleClick}>
-          A
-        </button>
-
-        <button className="circle-button deg60" onClick={handleClick}>
-          A
-        </button>
-
-        <button className="circle-button deg120" onClick={handleClick}>
-          A
-        </button>
-
-        <button className="circle-button deg180" onClick={handleClick}>
-          A
-        </button>
-
-        <button className="circle-button deg240" onClick={handleClick}>
-          A
-        </button>
-
-        <button className="circle-button deg300" onClick={handleClick}>
-          A
-        </button>
       </div>
     </div>
   );

@@ -5,6 +5,16 @@
   text-align: center;
 }
 
+.roboto {
+  font-family: "Roboto", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+
 body {
   display: flex;
   justify-content: center;
@@ -52,7 +62,7 @@ body {
   border: none;
   background-color: #e0e0e0;
   color: rgb(0, 0, 0);
-  font-size: 50px;
+  font-size: 55px;
   display: flex;
   justify-content: center;
   align-items: center;
