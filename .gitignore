@@ -7,3 +7,4 @@ fontdata/
 fontnames/outputs/
 datamaker/ttf-files
 fontnames/outputs
+__pycache__
