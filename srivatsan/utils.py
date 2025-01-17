@@ -1,5 +1,4 @@
 import sys
-
 import cv2
 import numpy as np
 import torch
@@ -26,7 +25,7 @@ def poisson_pmf(k, mu):
 
 def gaussian_reparam(mu, logvar, z_size, dtype):
     eps = Variable(torch.randn(z_size).type(dtype))
-    z = mu + eps * torch.exp(0.5 * logvar)
+    z = mu + eps * torch.exp(0.5 * logvar) # log(var) = log(stdev^2) so 1/2 needed
     return z
 
 def kl_divergence(mu, logvar, z_size):

@@ -16,7 +16,10 @@ from model import Model
 from set_paths import paths
 from utils import *
 
+import os
+
 class FontVAE(Model):
+
     def initialize(self):
         # define hyperprameters
         self.curr_epoch = -1
@@ -30,7 +33,8 @@ class FontVAE(Model):
                             'lr' : self.config.learn_rate}
         # initialize variables
         self.encoder = Encoder(self.config)
-        self.decoder = Decoder(self.config) 
+        self.decoder = Decoder(self.config)
+        # character embeddings
         self.y = Parameter(torch.randn(26, self.config.z_size).type(self.config.float))
         # set up optimizer
         self.params = list(self.parameters())
@@ -41,6 +45,7 @@ class FontVAE(Model):
         self.opt = optimizer_type(self.params, lr=self.config.learn_rate, weight_decay=self.config.regularization)
 
     def noisy_decode(self, mu, logvar):
+        """Applies the Reparameterization Trick (Kingma et al.) and decodes."""
         if self.training:
             z_hat = gaussian_reparam(mu, logvar, self.config.z_size, self.config.float)
             datum_hat = self.decoder.forward(z_hat, self.y)
@@ -56,12 +61,18 @@ class FontVAE(Model):
         return datum_hat
 
     def forward(self, datum, beta=1.0, filename=None):
-        # computes the approximate marginal log likelihood of observation
+        """Computes the approximate marginal log likelihood of observation.
+        - datum is a letters list (26x4096)
+        """
         if self.training and filename is not None:
             mask = self.get_mask(filename)
         else:
             mask = None
+        # basically the mean and standard deviation for reparam. dist.
+        # which is essentially z_hat i believe
         mu, logvar = self.encoder.forward(datum, self.y, mask=mask)
+        # y is (26x32) array which I believe are character embeddings
+        # self.y because constant across all font data
         kl = kl_divergence(mu, logvar, self.config.z_size)
         if self.training:
             kl = torch.max(kl, torch.zeros_like(kl) + self.config.kl_threshold).sum()
@@ -69,8 +80,6 @@ class FontVAE(Model):
             kl = kl.sum()
         datum_hat = self.noisy_decode(mu, logvar)
         recon = self.decoder.score(datum, datum_hat)
-        #print "Recon", recon
-        #print "KL", beta * kl
         loss = recon - beta * kl
         # add regularization terms
         if self.training:
@@ -79,6 +88,9 @@ class FontVAE(Model):
         return loss
 
     def train_step(self, font):
+        """Computes loss and updates gradients on a font input.
+        - datum is a letters list (26x4096)
+        """
         filename, datum = font
         datum = Variable(self.config.float(datum))
         # compute expected marginal negative log-likelihood
@@ -92,6 +104,7 @@ class FontVAE(Model):
         return True
 
     def reconstruct(self, datum, mask):
+        """Reconstructs based on VAE model output."""
         mu, logvar = self.encoder.forward(datum, self.y, mask=mask)
         datum_hat = self.noisy_decode(mu, logvar)
         if self.config.binarize:
@@ -112,8 +125,10 @@ class FontVAE(Model):
             if self.config.output_binarization:
                 datum_hat = self.config.float(smart_binarize(datum_hat))
             inter = datum * mask + datum_hat * (1 - mask)
-            path = "{}/{}/{}/recon_{}_e{}_b{}_{}_{}".format(paths['images'], self.config.mode, self.config.model, prefix, self.curr_epoch, self.config.blanks, i, filename)
-            imwrite(path, prep_write(inter))
+            path = f"{paths['images']}/{self.config.mode}/{self.config.model}"
+            os.makedirs(dir, exist_ok=True)
+            file = f"recon_{prefix}_e{self.curr_epoch}_b{self.config.blanks}_{i}_{filename}"
+            imwrite(f"{path}/{file}", prep_write(inter))
 
     def get_mask(self, filename):
         mask = Variable(torch.ones(26, 1)).type(self.config.float)
@@ -127,16 +142,19 @@ class FontVAE(Model):
             if sum(mask) == 0:
                 mask[random.choice(range(26)), 0] = 1
         else:
+            # test dict appears to just be a randomized list of 0:25 indices
+            # to make sure you're blanking the same characters each time
             if filename in self.config.test_dict:
                 blank_ids = self.config.test_dict[filename][:self.config.blanks]
             else:
-                blank_ids = range(26)
+                blank_ids = list(range(26))
                 random.shuffle(blank_ids)
                 blank_ids = blank_ids[:self.config.blanks]
             mask[blank_ids] = 0
         return mask
 
     def sample_fonts(self):
+        """Generates a sample of random z-sized data passed through decoder."""
         num_samples = 100
         for i in range(100):
             sample = self.decoder.sample(self.y)

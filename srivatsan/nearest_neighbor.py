@@ -24,7 +24,7 @@ class NearestNeighbor(Model):
     def standardize_pixel_intensities(self):
         return False
 
-    def reconstruct(self, letter_matrix, mask):   
+    def reconstruct(self, letter_matrix, mask):
         letter_matrix_hat = None
         if self.hyperparams['metric'] == Metric.mse:
             best_mse = float("inf")

@@ -7,10 +7,12 @@ import pickle
 from preprocessor import Preprocessor
 from set_paths import paths
 import torch
-#from models.font_vae import FontVAE
+from font_vae import FontVAE
 
 
 def load_hard(corpus, name):
+    """Loads the 10% of fonts furthest in L2 distance from their
+    nearest neighbor."""
     hard_font_file = open("hardest_10_{}.txt".format(name))
     hard_fonts = set()
     for line in hard_font_file:
@@ -45,8 +47,8 @@ def main(config):
     
     if config.model == Model.nearest_neighbor:
         model = NearestNeighbor(config)
-    #elif config.model == Model.font_vae:
-    #    model = FontVAE(config)
+    elif config.model == Model.font_vae:
+        model = FontVAE(config)
     
     model.config.test_dict = test_dict
     model.train(train, dev, dev_hard, test, test_hard)
