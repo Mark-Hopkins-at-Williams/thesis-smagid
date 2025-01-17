@@ -13,6 +13,7 @@ def read_split(split, config):
     - letters is a list of length 26 for which the kth element is another list
       of length 4096 that provides the grayscale pixel intensities for the 64x64
       image depicting the kth capital letter of the alphabet
+    - font is a tuple of (filename, letters)
 
     """
     def cap64(split):
@@ -32,11 +33,20 @@ def read_split(split, config):
         sys.exit("Unrecognized dataset")
 
 def load_corpus(config):
-    prefix = "toy_" if config.mode == Mode.toy else ""
-    test_affix = "test" if config.mode == Mode.test else "val"
-    train = read_split(f'{prefix}train', config)
-    dev = read_split(f'{prefix}val', config)
-    dev_hard = read_split(f'{prefix}val_hard', config)
-    test = read_split(f'{prefix}{test_affix}', config)
-    test_hard = read_split(f'{prefix}{test_affix}_hard', config)    
+    if config.mode == Mode.toy:
+        train = read_split('toy_train', config)
+        dev = read_split('toy_val', config)
+        dev_hard = read_split('toy_hard', config)
+        test = read_split('toy_val', config)
+        test_hard = read_split('toy_hard', config)
+    else:
+        train = read_split('train', config)
+        dev = read_split('val', config)
+        dev_hard = read_split('val_hard', config)
+        if config.mode == Mode.test:
+            test = read_split('test', config)
+            test_hard = read_split('test_hard', config)
+        else:
+            test = read_split('val', config)
+            test_hard = read_split('val_hard', config)
     return train, dev, dev_hard, test, test_hard

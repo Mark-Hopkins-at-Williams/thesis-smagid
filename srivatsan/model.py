@@ -10,6 +10,7 @@ import torch
 from torch.autograd import Variable
 from tqdm import tqdm
 from utils import prep_write, smart_binarize
+import os
 
 
 class Model(ABC, torch.nn.Module):
@@ -24,12 +25,12 @@ class Model(ABC, torch.nn.Module):
                 newval = getattr(config, var)
                 setattr(self.config, var, newval)
 
-    @abstractmethod
+    # @abstractmethod
     def initialize(self):
         """Performs any model-specific initialization."""
         pass
 
-    @abstractmethod
+    # @abstractmethod
     def train_step(self, font):
         """Trains the model on the next available training font.
         
@@ -41,7 +42,7 @@ class Model(ABC, torch.nn.Module):
         """
         pass
 
-    @abstractmethod
+    # @abstractmethod
     def reconstruct(self, letter_matrix, mask):
         """Reconstructs a partially specified letter matrix.
         
@@ -55,7 +56,7 @@ class Model(ABC, torch.nn.Module):
         """
         pass
 
-    @abstractmethod
+    # @abstractmethod
     def get_mask(self, filename):
         """Determines which letters from a font should be masked.
         
@@ -64,7 +65,7 @@ class Model(ABC, torch.nn.Module):
         """
         pass
 
-    @abstractmethod
+    # @abstractmethod
     def sample_fonts(self):
         pass
 
@@ -84,7 +85,7 @@ class Model(ABC, torch.nn.Module):
             self.training = False
             if e % self.config.eval_every == 0 or e == self.config.tgt_epoch:
                 self.print_metrics([train, dev, dev_hard], ["tr", "d", "dh"])
-                #self.sample_fonts()
+                self.sample_fonts()
                 self.visualize_reconstructions(dev, "dev", max_fonts=100)
                 self.visualize_reconstructions(dev_hard, "dev_hard", max_fonts=100)
             if self.config.save_every > 0 and e % self.config.save_every == 0 or e == self.config.tgt_epoch:
@@ -129,9 +130,11 @@ class Model(ABC, torch.nn.Module):
                 i, 
                 filename
             )
+            print("SAVING")
             imwrite(path, prep_write(inter))
 
     def evaluate(self, corpus, metric, max_fonts=None):
+        """Evaluates model reconstruction ability based on several metrics."""
         if max_fonts is None:
             max_fonts = len(corpus)
         if metric == Metric.nll_mf:
@@ -158,9 +161,11 @@ class Model(ABC, torch.nn.Module):
                 if filename in self.config.test_dict:
                     print(filename, float(torch.nn.functional.mse_loss((datum_hat / 255.) * (1-mask), (datum / 255.) * (1-mask), reduction='sum')) / self.config.blanks)
                 font_mse = float(torch.nn.functional.mse_loss((datum_hat / 255.) * (1-mask), (datum / 255.) * (1-mask), reduction='sum'))
-                outfile = open("{}/{}/{}/mse_e{}_b{}_{}.txt".format(paths['images'], self.config.mode, self.config.model, self.curr_epoch, self.config.blanks, filename), 'w')
-                outfile.write(str(font_mse / self.config.blanks))
-                outfile.close()
+                # dir = f"{paths['images']}/{self.config.mode}/{self.config.model}"
+                # os.makedirs(dir, exist_ok=True)
+                # outfile = open(f"{dir}/mse_e{self.curr_epoch}_b{self.config.blanks}_{filename}.txt", 'w+')
+                # outfile.write(str(font_mse / self.config.blanks))
+                # outfile.close()
                 total_mse += font_mse
             if self.config.blanks != 0:
                 return total_mse / (max_fonts * self.config.blanks)
@@ -186,6 +191,7 @@ class Model(ABC, torch.nn.Module):
             sys.exit("Unsupported metric")
 
     def print_metrics(self, corpora, names, max_fonts=None):
+        """Prints current model statistics to terminal."""
         outstring = "E:{:4d}".format(self.curr_epoch)
         values = []
         for metric in list(Metric):
@@ -197,6 +203,7 @@ class Model(ABC, torch.nn.Module):
         print(outstring.format(*values))
 
     def save(self):
+        """Saves model weights and parameters to .pt file."""
         save_path = self.get_save_path()
         save_dict = {'state_dict' : self.state_dict(),
                      'config' : self.config,
@@ -205,6 +212,7 @@ class Model(ABC, torch.nn.Module):
         torch.save(save_dict, save_path)
 
     def load(self):
+        """Loads a checkpoint model weights .pt file."""
         checkpoint_dict = torch.load(self.config.load_path)
         self.load_state_dict(checkpoint_dict['state_dict'], strict=False)
         self.config = checkpoint_dict['config']
@@ -212,7 +220,9 @@ class Model(ABC, torch.nn.Module):
         self.hyperparams = checkpoint_dict['hyperparams']
 
     def get_save_path(self):
+        """Generates save path directory for checkpoints."""
         filename = "{}_E-{}.pt".format(self, self.curr_epoch)
+        os.makedirs(f"{paths['checkpoints']}/{self.config.mode}", exist_ok=True)
         return "{}/{}/{}".format(paths['checkpoints'], self.config.mode, filename)
 
     def __str__(self):

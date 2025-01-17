@@ -1,3 +1,3 @@
-paths = {'cap64' : "/mnt/storage/hopkins/data/Capitals64/",
-         'checkpoints' : "/mnt/storage/hopkins/thesis/thesis-smagid/experiments/srivatsan/checkpoints/",
-         'images' : "/mnt/storage/hopkins/thesis/thesis-smagid/experiments/srivatsan/images/"}
+paths = {'cap64' : "/mnt/storage/smagid/Capitals64",
+         'checkpoints' : "/mnt/storage/smagid/thesis-smagid/srivatsan/checkpoints",
+         'images' : "/mnt/storage/smagid/thesis-smagid/srivatsan/images"}
