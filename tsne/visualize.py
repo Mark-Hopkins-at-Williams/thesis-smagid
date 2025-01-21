@@ -9,6 +9,7 @@ IMAGE_PATH = 'assets/outputs/'
 
 df = pd.read_csv(TSNE_FILE)
 df['image'] = df['font'].apply(lambda x: f"{IMAGE_PATH}{x}{'.png'}")
+print(df['image'].iloc[4])
 
 fig = go.Figure(data=[
     go.Scatter(

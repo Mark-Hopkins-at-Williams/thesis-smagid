@@ -15,8 +15,8 @@ CSV_DATA = '/mnt/storage/smagid/thesis-smagid/fontdata/data.csv'
 IMG_DATA = '/mnt/storage/smagid/thesis-smagid/fontdata/images'
 MODEL_FILE = '/mnt/storage/smagid/thesis-smagid/weights/styletransfer.pth'
 IMG_SIZE = 128
-AVERAGES_FILE = 'data/averages.pt'
-TSNE_OUTPUT_FILE = 'data/tnse.csv'
+AVERAGES_FILE = 'data/srivatsan.pt'
+TSNE_OUTPUT_FILE = 'data/srivatsan-tsne.csv'
 
 if __name__ == "__main__":
     gpu = torch.device("cuda")
@@ -55,6 +55,6 @@ if __name__ == "__main__":
     tsne = TSNE(n_components=2, perplexity=30, random_state=42)
     tsne_out = tsne.fit_transform(values)
     # put into a pandas dataframe and save data
-    row_names = list(averages.keys())
-    tsne_df = pd.DataFrame(tsne_out, index=row_names, columns=["tSNE-1", "tSNE-2"])
+    row_names = [key for key in averages.keys()]
+    tsne_df = pd.DataFrame(tsne_out, index=row_names, columns=["font", "tSNE-1", "tSNE-2"])
     tsne_df.to_csv(TSNE_OUTPUT_FILE, index=True)

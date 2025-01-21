@@ -19,6 +19,7 @@ class Model(ABC, torch.nn.Module):
         self.config = config
         self.initialize()
         if config.load_path is not None: # reload model from previous checkpoint, if applicable
+            print('loading')
             self.load()
             volatile = ['mode', 'blanks', 'output_binarization', 'tgt_epoch']
             for var in volatile:
@@ -150,6 +151,7 @@ class Model(ABC, torch.nn.Module):
                 return 0.0
         elif metric == Metric.mse:
             total_mse = 0.0
+            z_hats = dict()
             for i, font in enumerate(corpus[:max_fonts]):
                 filename, datum = font
                 datum = Variable(self.config.float(datum))
@@ -218,6 +220,7 @@ class Model(ABC, torch.nn.Module):
         self.config = checkpoint_dict['config']
         self.curr_epoch = checkpoint_dict['curr_epoch']
         self.hyperparams = checkpoint_dict['hyperparams']
+        print('load successful')
 
     def get_save_path(self):
         """Generates save path directory for checkpoints."""

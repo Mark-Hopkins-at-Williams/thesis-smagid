@@ -43,6 +43,7 @@ class FontVAE(Model):
         elif self.config.optim == Optimizer.sgd:
             optimizer_type = torch.optim.SGD 
         self.opt = optimizer_type(self.params, lr=self.config.learn_rate, weight_decay=self.config.regularization)
+        self.z_hats = dict() # for extracting encodings
 
     def noisy_decode(self, mu, logvar):
         """Applies the Reparameterization Trick (Kingma et al.) and decodes."""
@@ -78,6 +79,10 @@ class FontVAE(Model):
             kl = torch.max(kl, torch.zeros_like(kl) + self.config.kl_threshold).sum()
         else:
             kl = kl.sum()
+        # extracting z_hats
+        z_hat = gaussian_reparam(mu, logvar, self.config.z_size, self.config.float)
+        self.z_hats[filename] = z_hat
+        print(f'length is {len(self.z_hats)}')
         datum_hat = self.noisy_decode(mu, logvar)
         recon = self.decoder.score(datum, datum_hat)
         loss = recon - beta * kl
@@ -126,9 +131,13 @@ class FontVAE(Model):
                 datum_hat = self.config.float(smart_binarize(datum_hat))
             inter = datum * mask + datum_hat * (1 - mask)
             path = f"{paths['images']}/{self.config.mode}/{self.config.model}"
-            os.makedirs(dir, exist_ok=True)
+            os.makedirs(path, exist_ok=True)
             file = f"recon_{prefix}_e{self.curr_epoch}_b{self.config.blanks}_{i}_{filename}"
             imwrite(f"{path}/{file}", prep_write(inter))
+        print(f'{len(self.z_hats)} vs {len(corpus)}')
+        if len(self.z_hats) >= len(corpus):
+            print("SAVING Z HATS")
+            torch.save(self.z_hats, 'zhats.pt')
 
     def get_mask(self, filename):
         mask = Variable(torch.ones(26, 1)).type(self.config.float)
