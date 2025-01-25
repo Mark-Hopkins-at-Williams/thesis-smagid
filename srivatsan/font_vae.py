@@ -82,7 +82,6 @@ class FontVAE(Model):
         # extracting z_hats
         z_hat = gaussian_reparam(mu, logvar, self.config.z_size, self.config.float)
         self.z_hats[filename] = z_hat
-        print(f'length is {len(self.z_hats)}')
         datum_hat = self.noisy_decode(mu, logvar)
         recon = self.decoder.score(datum, datum_hat)
         loss = recon - beta * kl
@@ -134,7 +133,6 @@ class FontVAE(Model):
             os.makedirs(path, exist_ok=True)
             file = f"recon_{prefix}_e{self.curr_epoch}_b{self.config.blanks}_{i}_{filename}"
             imwrite(f"{path}/{file}", prep_write(inter))
-        print(f'{len(self.z_hats)} vs {len(corpus)}')
         if len(self.z_hats) >= len(corpus):
             print("SAVING Z HATS")
             torch.save(self.z_hats, 'zhats.pt')
@@ -167,4 +165,5 @@ class FontVAE(Model):
         num_samples = 100
         for i in range(100):
             sample = self.decoder.sample(self.y)
+            os.makedirs(f'{paths['images']}/{self.config.mode}/{self.config.model}/', exist_ok=True)
             imwrite("{}/{}/{}/sample_e{}_{}.png".format(paths['images'], self.config.mode, self.config.model, self.curr_epoch, i), sample)

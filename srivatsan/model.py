@@ -131,7 +131,6 @@ class Model(ABC, torch.nn.Module):
                 i, 
                 filename
             )
-            print("SAVING")
             imwrite(path, prep_write(inter))
 
     def evaluate(self, corpus, metric, max_fonts=None):

@@ -14,9 +14,9 @@ from styletransfer import StyleTransfer # local import
 CSV_DATA = '/mnt/storage/smagid/thesis-smagid/fontdata/data.csv'
 IMG_DATA = '/mnt/storage/smagid/thesis-smagid/fontdata/images'
 MODEL_FILE = '/mnt/storage/smagid/thesis-smagid/weights/styletransfer.pth'
-IMG_SIZE = 128
-AVERAGES_FILE = 'data/srivatsan.pt'
-TSNE_OUTPUT_FILE = 'data/srivatsan-tsne.csv'
+IMG_SIZE = 64
+AVERAGES_FILE = 'data/srivatsan-6.pt'
+TSNE_OUTPUT_FILE = 'data/srivatsan-tsne-6.csv'
 
 if __name__ == "__main__":
     gpu = torch.device("cuda")
@@ -56,5 +56,5 @@ if __name__ == "__main__":
     tsne_out = tsne.fit_transform(values)
     # put into a pandas dataframe and save data
     row_names = [key for key in averages.keys()]
-    tsne_df = pd.DataFrame(tsne_out, index=row_names, columns=["font", "tSNE-1", "tSNE-2"])
+    tsne_df = pd.DataFrame(tsne_out, index=row_names, columns=["tSNE-1", "tSNE-2"])
     tsne_df.to_csv(TSNE_OUTPUT_FILE, index=True)
