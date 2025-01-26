@@ -45,12 +45,20 @@ body {
   gap: 100px
 }
 
-.left-box{
+.left-box {
+  width: 200px;
+}
+
+.center-box {
   width: 500px;
 }
 
-.right-box{
-  width: 300px;
+.right-box {
+  width: 200px;
+}
+
+.slider {
+  transform: translateY(-75px);
 }
 
 .center-glyph {
