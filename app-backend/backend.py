@@ -23,7 +23,7 @@ def get_data():
             for otherFont in data.keys():
                 otherDatum = data[otherFont]
                 distance = torch.sqrt(torch.sum((newTensor - otherDatum) ** 2))
-                if distance < minDistance and otherFont != centerFont and otherFont not in selectedFonts:
+                if distance < minDistance and otherFont != centerFont and otherFont not in selectedFonts
                     minDistance = distance
                     minFont = otherFont
             selectedFonts.append(minFont)
