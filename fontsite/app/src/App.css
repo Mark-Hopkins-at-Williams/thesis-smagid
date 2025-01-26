@@ -14,7 +14,6 @@
     "wdth" 100;
 }
 
-
 body {
   display: flex;
   justify-content: center;
@@ -27,15 +26,31 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: 'Roboto';
 }
 
 .title {
-  font-family: 'Roboto';
   margin-bottom: 80px;
   font-size: 50px;
   justify-content: center;
   align-items: center;
   display: flex;
+}
+
+.horizontal {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 100px
+}
+
+.left-box{
+  width: 500px;
+}
+
+.right-box{
+  width: 300px;
 }
 
 .center-glyph {
@@ -81,3 +96,32 @@ body {
 .deg180 { transform: translate(-200px) ; }
 .deg240 { transform: rotate(240deg) translate(200px) rotate(-240deg); }
 .deg300 { transform: rotate(300deg) translate(200px) rotate(-300deg); }
+
+.fontName {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: 24px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.utility-button-container {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.utility-button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: none;
+  background-color: #e0e0e0;
+}
+
+.utility-button:hover {
+  background-color: #828282;
+}
