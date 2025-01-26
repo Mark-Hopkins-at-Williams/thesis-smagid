@@ -6,6 +6,8 @@ from imageio import imread
 import numpy as np
 from utils import *
 
+device = torch.device("cuda:3" if torch.cuda.is_available() else "cpu")
+
 config = parse_args()
 config.float = torch.cuda.FloatTensor
 config.long = torch.cuda.LongTensor
