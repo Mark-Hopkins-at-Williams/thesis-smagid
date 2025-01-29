@@ -132,7 +132,9 @@ const App = () => {
 
       <div className="horizontal">
 
-        <div className="left-box">
+        <div className="left-box"></div>
+
+        <div className="center-box">
 
           <div className="circle-container">
 
@@ -160,15 +162,20 @@ const App = () => {
         </div>
 
         <div className="right-box">
-          <Slider
-            aria-label="Slider"
-            value={sliderValue}
-            onChange={handleSlider}
-            min={-100}
-            max={100}
-            color="#828282"
-          />
-          <p>slide me!</p>
+          <Tooltip
+          title={<Typography sx={{ fontSize: '1rem' }}>Magnitude</Typography>}
+          placement='bottom'
+          >
+            <Slider 
+              className="slider"
+              aria-label="Slider"
+              value={sliderValue}
+              onChange={handleSlider}
+              min={-100}
+              max={100}
+              color="#828282"
+            />
+          </Tooltip>
         </div>
 
       </div>
