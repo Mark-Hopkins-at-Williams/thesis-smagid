@@ -2,6 +2,7 @@
 *.npy
 *.err
 *.out
+*.csv
 
 fontdata/
 fontnames/outputs/
