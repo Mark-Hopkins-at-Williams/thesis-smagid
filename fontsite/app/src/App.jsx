@@ -121,11 +121,17 @@ const ShuffleButton = ( {onClick} ) => {
   )
 }
 
-const CenterGlyph = ({ label, font_name }) => {
+const CenterGlyph = ({ label, font_name, onInput }) => {
   return (
     <>
       <GoogleFontLoader fonts={[{font: font_name}]}/>
-      <p className="center-glyph" style={{ fontFamily: font_name }}>
+      <p
+        className="center-glyph"
+        style={{ fontFamily: font_name }}
+        contentEditable
+        suppressContentEditableWarning
+        onInput={onInput}
+      >
         {label}
       </p>
     </>
@@ -145,6 +151,7 @@ const App = () => {
   const [data, setData] = useState(null)
   const [fonts, setFonts] = useState(Array(6))
   const [centerFont, setCenterFont] = useState("")
+  const [char, setChar] = useState("A");
 
   const fetchData = async (mag, font) => {
     let queryURL = `http://appa.cs.williams.edu:18812/getfont?mag=${mag}`
@@ -197,7 +204,14 @@ const App = () => {
     fetchData(magnitude, centerFont)
   }
 
-  let letter = "A"
+  const handleInput = (e) => {
+    let text = e.target.innerText
+    if (text.length > 1) {
+      text = text.charAt(text.length - 1)
+    }
+    setChar(text)
+    e.target.innerText = text
+  }
   
   return (
     <div className="parent">
@@ -212,14 +226,14 @@ const App = () => {
 
           <div className="circle-container">
 
-            <CenterGlyph label={letter} font_name={centerFont} />
+            <CenterGlyph label={char} font_name={centerFont} onInput={handleInput}/>
 
             {fonts.map((font, index) => (
               <GlyphButton
                 key={index}
                 rotation={index * 60}
                 onClick={() => handleClick(index)}
-                label={letter}
+                label={char}
                 font_name={font}
               />
             ))}
