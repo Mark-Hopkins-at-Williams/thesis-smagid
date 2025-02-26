@@ -7,6 +7,7 @@ import faiss
 
 Z_SIZE = 6
 DATA_FILE = 'merged.csv'
+TSNE_FILE = '/mnt/storage/smagid/thesis-smagid/tsne/data/tnse.csv'
 
 app = Flask(__name__)
 CORS(app)
@@ -23,9 +24,9 @@ faissSearch = faiss.IndexFlatL2(Z_SIZE)
 faissSearch.add(vectors)
 
 @app.route('/getfont', methods=['GET'])
-def get_data():
-    centerFont = request.args.get('center')  # Retrieve 'param1' from the URL
-    magnitude = float(request.args.get('mag'))  # Retrieve 'param2' from the URL
+def get_font():
+    centerFont = request.args.get('center')
+    magnitude = float(request.args.get('mag'))
     if centerFont is not None:
         if centerFont in data['font'].values:
             datumRow = data[data['font'] == centerFont].iloc[:, 1:]
@@ -66,7 +67,11 @@ def get_data():
     response["selectedFonts"] = selectedFonts
     return jsonify(response)
 
-
+@app.route('/gettsne', methods=['GET'])
+def get_tsne():
+    df = pd.read_csv(TSNE_FILE)
+    data = df.to_dict(orient="records")
+    return jsonify(data)
 
 
 if __name__ == '__main__':
