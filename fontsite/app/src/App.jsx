@@ -6,6 +6,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
+import ScatterPlot from './Scatterplot'
 
 const iOSBoxShadow =
   '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
@@ -220,7 +221,23 @@ const App = () => {
 
       <div className="horizontal">
 
-        <div className="left-box"></div>
+        <div className="left-box">
+          <div className="scatterplotBox">
+            <ScatterPlot/>
+          </div>
+          <div className="sliderBox">
+            <IOSSlider 
+              className="slider"
+              aria-label="Slider"
+              value={magnitude}
+              onChange={handleSlider}
+              min={-8}
+              max={8}
+              step={0.1}
+              valueLabelDisplay="on"
+            />
+          </div>
+        </div>
 
         <div className="center-box">
 
@@ -250,16 +267,7 @@ const App = () => {
         </div>
 
         <div className="right-box">
-          <IOSSlider 
-            className="slider"
-            aria-label="Slider"
-            value={magnitude}
-            onChange={handleSlider}
-            min={-8}
-            max={8}
-            step={0.1}
-            valueLabelDisplay="on"
-          />
+
         </div>
 
       </div>

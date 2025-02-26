@@ -46,7 +46,10 @@ body {
 }
 
 .left-box {
-  width: 200px;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .center-box {
@@ -54,12 +57,24 @@ body {
 }
 
 .right-box {
-  width: 200px;
+  width: 0px;
 }
 
-.slider {
-  transform: translateY(-75px);
+.scatterplotBox {
+  width: 600px;
+  /* border: 2px solid black; */
 }
+
+.sliderBox {
+  margin-top: 15px;
+  width: 200px;
+  align-items: center;
+  /* border: 2px solid black; */
+}
+
+/* .slider {
+  transform: translateY(-75px);
+} */
 
 .center-glyph {
   display: flex;
