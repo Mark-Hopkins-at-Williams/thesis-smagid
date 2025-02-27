@@ -234,7 +234,7 @@ const App = () => {
               min={-8}
               max={8}
               step={0.1}
-              valueLabelDisplay="on"
+              valueLabelDisplay="off"
             />
           </div>
         </div>
