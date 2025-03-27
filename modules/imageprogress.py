@@ -10,7 +10,7 @@ def imageProgress(image_size, dev_set, model, step, out_dir, modeltype):
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
     # handles both style-transfer pairs and autoencoder models
-    if type == "pairs":
+    if modeltype == "pairs":
         (letter1_image, letter1_label, letter2_label), letter2_image = dev_set
         original = letter1_image.clone()[0].squeeze()
         letter1_image = letter1_image.to(GPU)
@@ -33,9 +33,10 @@ def imageProgress(image_size, dev_set, model, step, out_dir, modeltype):
         plt.imshow(letter2_image[0].squeeze().cpu().detach().numpy(), cmap='gray')
         plt.title(f"goal ({CHARACTERS[letter2_label[0].item()]})")
         plt.axis('off')
-    elif type == "auto": 
+    elif modeltype == "auto": 
         sample = 5
-        img = dev_set[0]
+        img = dev_set[:sample]
+        print(f'image shape: {img.shape}')
         img = img.reshape(-1, image_size*image_size)
         img = img.to(GPU)
         original = img.reshape(-1,image_size,image_size)[0]

@@ -23,9 +23,9 @@ class FontDataset(Dataset):
 
     def __getitem__(self, idx):
         item = self.data_frame.iloc[idx]
-        letter = chr(item['ASCII'])
+        letter = chr(item['ascii'])
         font = item['font']
-        img_name = os.path.join(self.data_dir, item['path'])
+        img_name = item['path']
         image = Image.open(img_name)
         
         if self.transform:

@@ -18,7 +18,7 @@ class FontAutoencoder(torch.nn.Module):
             torch.nn.ReLU(), 
             torch.nn.Linear(128, 64), 
             torch.nn.ReLU(), 
-            torch.nn.Linear(64, 32) 
+            torch.nn.Linear(64, 32),
         ) 
           
         self.decoder = torch.nn.Sequential( 
@@ -36,8 +36,7 @@ class FontAutoencoder(torch.nn.Module):
             torch.nn.ReLU(), 
             torch.nn.Linear(2048, 4096),
             torch.nn.Sigmoid() 
-        )
-        
+        ) 
   
     def forward(self, img): 
         encoded = self.encoder(img)        
