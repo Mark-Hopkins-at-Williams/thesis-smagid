@@ -4,10 +4,11 @@ import pandas as pd
 import numpy as np
 import torch
 import faiss
+from sklearn.manifold import TSNE
 
 Z_SIZE = 6
-DATA_FILE = 'merged.csv'
-TSNE_FILE = '/mnt/storage/smagid/thesis-smagid/tsne/data/tnse.csv'
+DATA_FILE = 'zhats.csv'
+TSNE_FILE = 'tsne.csv'
 
 app = Flask(__name__)
 CORS(app)
@@ -15,13 +16,21 @@ CORS(app)
 # set up faiss
 data = pd.read_csv(DATA_FILE)
 fontNames = data["font"].values
-# remove attribute data
-labels = ["font", "z0","z1","z2","z3","z4","z5"]
-data = data[labels]
 zLabels = ["z0","z1","z2","z3","z4","z5"]
 vectors = data[zLabels].values.astype("float32")
 faissSearch = faiss.IndexFlatL2(Z_SIZE)
 faissSearch.add(vectors)
+print('faiss initialized')
+
+# get t-sne reduction of data
+features = data.iloc[:, 1:].values
+labels = data.iloc[:, 0]
+tsne = TSNE(n_components=2, random_state=42)
+features_tsne = tsne.fit_transform(features)
+tsne_df = pd.DataFrame(data=features_tsne, columns=['x', 'y'])
+tsne_df['font'] = labels.values
+tsne_df.to_csv('tsne.csv', index=False)
+print('tsne file saved')
 
 @app.route('/getfont', methods=['GET'])
 def get_font():
@@ -47,8 +56,7 @@ def get_font():
         modTensor[0, i] = 1 * magnitude
         newTensor = datum + modTensor
         queryVector = newTensor.numpy().astype("float32")
-        print(queryVector)
-        _, indices = faissSearch.search(queryVector, 10)
+        _, indices = faissSearch.search(queryVector, 20)
         selectedFont = None
         i = 0
         # try to avoid duplicates and same fonts
@@ -59,11 +67,12 @@ def get_font():
             # print(font)
             if font != centerFont and font not in selectedFonts:
                 selectedFont = font
-            if i == 9 and selectedFont is None: # last resort just choose the first one
+            if i == 15 and selectedFont is None: # last resort just choose the first one
                 print('resorting :(')
                 selectedFont = fontNames[indices[0][0]]
             i += 1
         selectedFonts.append(selectedFont)
+        print(selectedFont)
     response["selectedFonts"] = selectedFonts
     return jsonify(response)
 
@@ -72,6 +81,11 @@ def get_tsne():
     df = pd.read_csv(TSNE_FILE)
     data = df.to_dict(orient="records")
     return jsonify(data)
+
+@app.route('/allfonts', methods=['GET'])
+def get_fonts():
+    unique_fonts = [{"font": font} for font in data['font'].unique()]
+    return jsonify(unique_fonts)
 
 
 if __name__ == '__main__':
