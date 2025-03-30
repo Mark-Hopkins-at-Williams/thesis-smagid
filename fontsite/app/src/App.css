@@ -31,7 +31,7 @@ body {
 
 .title {
   margin-bottom: 80px;
-  font-size: 50px;
+  font-size: 38px;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -128,6 +128,8 @@ body {
   justify-content: center;
   align-items: center;
   display: flex;
+  text-decoration: none;
+  color: black;
 }
 
 .utility-button-container {

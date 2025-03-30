@@ -64,7 +64,7 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
 }));
 
 
-const GlyphButton = ({ rotation, onClick, label, font_name }) => {
+const GlyphButton = ({ rotation, onClick, label, fontName }) => {
   let tooltipPlacement = 'left'
 
   if (rotation === 0 || rotation === 60 || rotation === 300) {
@@ -73,14 +73,14 @@ const GlyphButton = ({ rotation, onClick, label, font_name }) => {
 
   return (
     <>
-      <GoogleFontLoader fonts={[{font: font_name}]}/>
+      <GoogleFontLoader fonts={[{font: fontName}]}/>
           <Tooltip
-            title={<Typography sx={{ fontSize: '1rem' }}>{font_name}</Typography>}
+            title={<Typography sx={{ fontSize: '1rem' }}>{fontName}</Typography>}
             placement={tooltipPlacement}
           >
             <button
               className={`circle-button deg${rotation}`}
-              style={{ fontFamily: font_name }}
+              style={{ fontFamily: fontName }}
               onClick={onClick}
             >
               {label}
@@ -122,13 +122,13 @@ const ShuffleButton = ( {onClick} ) => {
   )
 }
 
-const CenterGlyph = ({ label, font_name, onInput }) => {
+const CenterGlyph = ({ label, fontName, onInput }) => {
   return (
     <>
-      <GoogleFontLoader fonts={[{font: font_name}]}/>
+      <GoogleFontLoader fonts={[{font: fontName}]}/>
       <p
         className="center-glyph"
-        style={{ fontFamily: font_name }}
+        style={{ fontFamily: fontName }}
         contentEditable
         suppressContentEditableWarning
         onInput={onInput}
@@ -136,6 +136,20 @@ const CenterGlyph = ({ label, font_name, onInput }) => {
         {label}
       </p>
     </>
+  )
+}
+
+const FontTitle = ({ fontName }) => {
+  const formatFontName = (name) => name.replace(/\s+/g, '+');
+  const fontUrl = `https://fonts.google.com/specimen/${formatFontName(fontName)}`;
+  return (
+    <a
+      className="fontName"
+      style={{ fontFamily: fontName }}
+      href={fontUrl}
+    >
+      {fontName}
+    </a>
   )
 }
 
@@ -150,17 +164,27 @@ const historyStack = []
 const App = () => {
   const [magnitude, setMagnitude] = useState(0)
   const [data, setData] = useState(null)
+  const [allFonts, setAllFonts] = useState([])
   const [fonts, setFonts] = useState(Array(6))
   const [centerFont, setCenterFont] = useState("")
-  const [char, setChar] = useState("A");
+  const [char, setChar] = useState("A")
+
+  useEffect(() => { // this runs only once
+    fetch("http://appa.cs.williams.edu:18812/allfonts")
+      .then((response) => response.json())
+      .then((jsonData) => {
+        setAllFonts(jsonData)
+      })
+    .catch((error) => {
+      console.error("Error fetching data:", error)
+    })
+  }, [])
 
   const fetchData = async (mag, font) => {
     let queryURL = `http://appa.cs.williams.edu:18812/getfont?mag=${mag}`
-    console.log(fonts)
     if (font !== "") {
       queryURL += `&center=${encodeURIComponent(font)}`
     }
-    console.log(queryURL)
     fetch(queryURL)
       .then((response) => response.json())
       .then((data) => {
@@ -200,6 +224,11 @@ const App = () => {
     fetchData(magnitude, newCenterFont)
   }
 
+  const handleScatterClick = (chosenFont) => {
+    historyStack.push([...fonts, centerFont, magnitude]) // save to history
+    fetchData(magnitude, chosenFont)
+  }
+
   const handleSlider = (event, newValue) => {
     setMagnitude(newValue)
     fetchData(magnitude, centerFont)
@@ -217,25 +246,35 @@ const App = () => {
   return (
     <div className="parent">
 
-      <h1 className = "title">Google Fontspace Selector</h1>
+      <GoogleFontLoader fonts={allFonts}/>
+
+      <h1 className = "title">Google Fonts TypefaceSpace Selector</h1>
 
       <div className="horizontal">
 
         <div className="left-box">
           <div className="scatterplotBox">
-            <ScatterPlot/>
+            <ScatterPlot
+              fonts={fonts}
+              centerFont={centerFont}
+              handleScatterClick={handleScatterClick}
+            />
           </div>
           <div className="sliderBox">
-            <IOSSlider 
-              className="slider"
-              aria-label="Slider"
-              value={magnitude}
-              onChange={handleSlider}
-              min={-8}
-              max={8}
-              step={0.1}
-              valueLabelDisplay="off"
-            />
+            <Tooltip
+              title={<Typography sx={{ fontSize: '1rem' }}>Magnitude</Typography>}
+            >
+              <IOSSlider 
+                className="slider"
+                aria-label="Slider"
+                value={magnitude}
+                onChange={handleSlider}
+                min={-8}
+                max={8}
+                step={0.1}
+                valueLabelDisplay="off"
+              />
+            </Tooltip>
           </div>
         </div>
 
@@ -243,7 +282,7 @@ const App = () => {
 
           <div className="circle-container">
 
-            <CenterGlyph label={char} font_name={centerFont} onInput={handleInput}/>
+            <CenterGlyph label={char} fontName={centerFont} onInput={handleInput}/>
 
             {fonts.map((font, index) => (
               <GlyphButton
@@ -251,13 +290,13 @@ const App = () => {
                 rotation={index * 60}
                 onClick={() => handleClick(index)}
                 label={char}
-                font_name={font}
+                fontName={font}
               />
             ))}
 
           </div>
 
-          <p className="fontName">{centerFont}</p>
+          <FontTitle fontName={centerFont}></FontTitle>
 
           <div className="utility-button-container">
             <BackButton onClick={back}></BackButton>
