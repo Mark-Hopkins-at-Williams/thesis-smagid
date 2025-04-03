@@ -304,7 +304,7 @@ const App = () => {
                 valueLabelDisplay="off"
               />
               <div className="sliderLabelBox">
-                <Tooltip title={<Typography sx={{ fontSize: '0.7rem' }}>Reset Magnitude</Typography>} placement='right'>
+                <Tooltip title={<Typography sx={{ fontSize: '0.8rem' }}>Reset Magnitude</Typography>} placement='bottom'>
                   <p onClick={resetSlider} style={{cursor: 'pointer'}}>{magnitude}</p>
                 </Tooltip>
               </div>
