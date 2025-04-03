@@ -16,7 +16,7 @@ const yellow = "rgb(237, 197, 64)"
 const lightred = "rgb(239, 143, 136)"
 const lightyellow = "rgb(240, 205, 134)"
 
-const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, hoverFont }) => {
+const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, hoverFont, magnitude }) => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true);
     const zoomBounds = useRef(null);
@@ -47,6 +47,13 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
                   font: item.font,
               })),
               pointRadius: () => {
+                if (chartRef.current) {
+                  const zoomScale = chartRef.current.getZoomLevel(chartRef)
+                  return 4 * Math.sqrt(zoomScale)
+                }
+                return 4
+              },
+              pointHoverRadius: () => {
                 if (chartRef.current) {
                   const zoomScale = chartRef.current.getZoomLevel(chartRef)
                   return 4 * Math.sqrt(zoomScale)
@@ -114,16 +121,17 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
           anchor: 'center',
           color: (context) => {
             var font = context.dataset.data[context.dataIndex].font;
-            if (font == centerFont) return red
             if (font === hoverFont) return lightblue
+            if (font == centerFont) return red
             if (fonts.includes(font)) return yellow
             else return "black"
           },
           font: function(context) {
             var family = context.dataset.data[context.dataIndex].font
             const zoomScale = chartRef.current.getZoomLevel(chartRef)
-            // var size = 12 * Math.sqrt(zoomScale) THIS MAKES THINGS SLOW
-            var size = 12
+            // THIS MAKES THINGS SLOW
+            var size = Math.round(12 * zoomScale ** .6)
+            // var size = 12
             return {
               family: family,
               size: size,
@@ -184,7 +192,7 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
           chartRef.current.zoomScale('y', zoomBounds.current.y)
         }
       }
-    }, [centerFont, chosenCharacter, displayChars, hoverFont]);
+    }, [centerFont, chosenCharacter, displayChars, hoverFont, magnitude, data, fonts]);
 
     const resetZoom = () => {
       if (chartRef.current) {

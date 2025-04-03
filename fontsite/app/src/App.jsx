@@ -288,6 +288,7 @@ const App = () => {
               handleScatterClick={handleScatterClick}
               chosenCharacter={char}
               hoverFont={hoverFont}
+              magnitude={magnitude}
             />
           </div>
 
@@ -306,7 +307,9 @@ const App = () => {
                 valueLabelDisplay="off"
               />
               <div className="sliderLabelBox">
-                <p onClick={resetSlider} style={{cursor: 'pointer'}}>{magnitude}</p>
+                <Tooltip title={<Typography sx={{ fontSize: '0.7rem' }}>Reset Magnitude</Typography>} placement='right'>
+                  <p onClick={resetSlider} style={{cursor: 'pointer'}}>{magnitude}</p>
+                </Tooltip>
               </div>
             </div>
           </div>
