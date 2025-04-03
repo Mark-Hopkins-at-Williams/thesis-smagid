@@ -225,7 +225,6 @@ const App = () => {
   const shuffle = () => {
     historyStack.push([...fonts, centerFont, magnitude]) // save to history
     setMagnitude(0)
-    // fetchData(magnitude, "")
   }
 
   const back = () => {
@@ -242,10 +241,9 @@ const App = () => {
     }
   }
 
-  const handleClick = (buttonIndex) => {
+  const handleGlyphButtonClick = (buttonIndex) => {
     historyStack.push([...fonts, centerFont, magnitude]) // save to history
-    const newCenterFont = fonts[buttonIndex]
-    // fetchData(magnitude, newCenterFont)
+    setCenterFont(fonts[buttonIndex])
   }
 
   const handleScatterClick = (chosenFont) => {
@@ -255,12 +253,10 @@ const App = () => {
 
   const handleSlider = (event, newValue) => {
     setMagnitude(newValue)
-    // fetchData(magnitude, centerFont)
   }
 
   const resetSlider = () => {
     setMagnitude(0)
-    // fetchData(magnitude, centerFont)
   }
 
   const handleInput = (e) => {
@@ -325,7 +321,7 @@ const App = () => {
                 <GlyphButton
                   key={index}
                   rotation={index * 60}
-                  onClick={() => handleClick(index)}
+                  onClick={() => handleGlyphButtonClick(index)}
                   label={char}
                   fontName={font}
                   setHoverFont={setHoverFont}
