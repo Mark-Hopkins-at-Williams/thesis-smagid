@@ -46,35 +46,58 @@ body {
 }
 
 .left-box {
-  width: 600px;
+  width: 800px;
+  margin-bottom: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+.scatterplotOptions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.scatterplotOptions p {
+  font-weight: bold;
+  font-size: 18px;
+  color: rgb(61, 61, 61);
+}
+
+.scatterplotButton {
+  margin-left: 20px;
+}
+
 .center-box {
-  width: 500px;
+  width: 50px;
 }
 
 .right-box {
-  width: 0px;
+  width: 500px;
+  margin-right: 150px;
 }
 
 .scatterplotBox {
-  width: 600px;
-  /* border: 2px solid black; */
-}
-
-.sliderBox {
-  margin-top: 15px;
-  width: 200px;
+  width: 800px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   /* border: 2px solid black; */
 }
 
-/* .slider {
-  transform: translateY(-75px);
-} */
+.sliderBox {
+  margin-bottom: 50px;
+  width: 15px;
+  align-items: center;
+  /* border: 2px solid black; */
+}
+
+.sliderLabelBox {
+  text-align: center;
+  align-items: center;
+}
 
 .center-glyph {
   display: flex;

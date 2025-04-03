@@ -5,16 +5,35 @@ import GoogleFontLoader from 'react-google-font'
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
+import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
 import ScatterPlot from './Scatterplot'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  typography: {
+    button: {
+      textTransform: 'none',
+      fontSize: 16
+    }
+  },
+  palette: {
+    grey: {
+      main: 'rgb(113, 113, 113)',
+      light: 'rgb(81, 81, 81)',
+      dark: 'rgb(81, 81, 81)',
+      contrastText: 'rgb(255, 255, 255)',
+    },
+  },
+});
 
 const iOSBoxShadow =
   '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
 
 const IOSSlider = styled(Slider)(({ theme }) => ({
   color: '#828282',
-  height: 5,
-  padding: '15px 0',
+  height: 250,
+  padding: '0 0',
   '& .MuiSlider-thumb': {
     height: 20,
     width: 20,
@@ -64,7 +83,7 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
 }));
 
 
-const GlyphButton = ({ rotation, onClick, label, fontName }) => {
+const GlyphButton = ({ rotation, onClick, label, fontName, setHoverFont }) => {
   let tooltipPlacement = 'left'
 
   if (rotation === 0 || rotation === 60 || rotation === 300) {
@@ -82,6 +101,8 @@ const GlyphButton = ({ rotation, onClick, label, fontName }) => {
               className={`circle-button deg${rotation}`}
               style={{ fontFamily: fontName }}
               onClick={onClick}
+              onMouseEnter={() => setHoverFont(fontName)}
+              onMouseLeave={() => setHoverFont("")}
             >
               {label}
             </button>
@@ -168,6 +189,7 @@ const App = () => {
   const [fonts, setFonts] = useState(Array(6))
   const [centerFont, setCenterFont] = useState("")
   const [char, setChar] = useState("A")
+  const [hoverFont, setHoverFont] = useState("")
 
   useEffect(() => { // this runs only once
     fetch("http://appa.cs.williams.edu:18812/allfonts")
@@ -234,6 +256,10 @@ const App = () => {
     fetchData(magnitude, centerFont)
   }
 
+  const resetSlider = () => {
+    setMagnitude(0)
+  }
+
   const handleInput = (e) => {
     let text = e.target.innerText
     if (text.length > 1) {
@@ -244,74 +270,77 @@ const App = () => {
   }
   
   return (
-    <div className="parent">
+    <ThemeProvider theme={theme}>
+      <div className="parent">
 
-      <GoogleFontLoader fonts={allFonts}/>
+        <GoogleFontLoader fonts={allFonts}/>
 
-      <h1 className = "title">Google Fonts TypefaceSpace Selector</h1>
+        <h1 className = "title">TypefaceSpace Selector (Google Fonts)</h1>
 
-      <div className="horizontal">
+        <div className="horizontal">
 
-        <div className="left-box">
-          <div className="scatterplotBox">
+          <div className="left-box">
             <ScatterPlot
               fonts={fonts}
               centerFont={centerFont}
               handleScatterClick={handleScatterClick}
+              chosenCharacter={char}
+              hoverFont={hoverFont}
             />
           </div>
-          <div className="sliderBox">
-            <Tooltip
-              title={<Typography sx={{ fontSize: '1rem' }}>Magnitude</Typography>}
-            >
+
+          <div className="center-box">
+            <div className="sliderBox">
               <IOSSlider 
                 className="slider"
                 aria-label="Slider"
                 value={magnitude}
+                track={false}
                 onChange={handleSlider}
+                orientation="vertical"
                 min={-8}
                 max={8}
                 step={0.1}
                 valueLabelDisplay="off"
               />
-            </Tooltip>
-          </div>
-        </div>
-
-        <div className="center-box">
-
-          <div className="circle-container">
-
-            <CenterGlyph label={char} fontName={centerFont} onInput={handleInput}/>
-
-            {fonts.map((font, index) => (
-              <GlyphButton
-                key={index}
-                rotation={index * 60}
-                onClick={() => handleClick(index)}
-                label={char}
-                fontName={font}
-              />
-            ))}
-
+              <div className="sliderLabelBox">
+                <p onClick={resetSlider} style={{cursor: 'pointer'}}>{magnitude}</p>
+              </div>
+            </div>
           </div>
 
-          <FontTitle fontName={centerFont}></FontTitle>
+          <div className="right-box">
 
-          <div className="utility-button-container">
-            <BackButton onClick={back}></BackButton>
-            <ShuffleButton onClick={shuffle}></ShuffleButton>
+            <div className="circle-container">
+
+              <CenterGlyph label={char} fontName={centerFont} onInput={handleInput}/>
+
+              {fonts.map((font, index) => (
+                <GlyphButton
+                  key={index}
+                  rotation={index * 60}
+                  onClick={() => handleClick(index)}
+                  label={char}
+                  fontName={font}
+                  setHoverFont={setHoverFont}
+                />
+              ))}
+
+            </div>
+
+            <FontTitle fontName={centerFont}></FontTitle>
+
+            <div className="utility-button-container">
+              <BackButton onClick={back}></BackButton>
+              <ShuffleButton onClick={shuffle}></ShuffleButton>
+            </div>
+
           </div>
-
-        </div>
-
-        <div className="right-box">
 
         </div>
 
       </div>
-
-    </div>
+    </ThemeProvider>
   )
 }
 
