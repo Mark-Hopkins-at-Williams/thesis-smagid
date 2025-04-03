@@ -143,7 +143,7 @@ const ShuffleButton = ( {onClick} ) => {
   )
 }
 
-const CenterGlyph = ({ label, fontName, onInput }) => {
+const CenterGlyph = ({ label, fontName, onInput, setHoverFont }) => {
   return (
     <>
       <GoogleFontLoader fonts={[{font: fontName}]}/>
@@ -153,6 +153,8 @@ const CenterGlyph = ({ label, fontName, onInput }) => {
         contentEditable
         suppressContentEditableWarning
         onInput={onInput}
+        onMouseEnter={() => setHoverFont(fontName)}
+        onMouseLeave={() => setHoverFont("")}
       >
         {label}
       </p>
@@ -313,7 +315,7 @@ const App = () => {
 
             <div className="circle-container">
 
-              <CenterGlyph label={char} fontName={centerFont} onInput={handleInput}/>
+              <CenterGlyph label={char} fontName={centerFont} onInput={handleInput} setHoverFont={setHoverFont}/>
 
               {fonts.map((font, index) => (
                 <GlyphButton

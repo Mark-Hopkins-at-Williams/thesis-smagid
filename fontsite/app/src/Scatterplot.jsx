@@ -10,6 +10,12 @@ import Button from '@mui/material/Button';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, Title, Tooltip, Legend, ChartDataLabels, zoomPlugin);
 
+const lightblue = "rgb(159, 221, 221)"
+const red = "rgb(235, 64, 52)"
+const yellow = "rgb(237, 197, 64)"
+const lightred = "rgb(239, 143, 136)"
+const lightyellow = "rgb(240, 205, 134)"
+
 const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, hoverFont }) => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true);
@@ -51,18 +57,18 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
               ? "rgba(0, 0, 0, 0)" 
               : (context) => {
                   const font = context.dataset.data[context.dataIndex].font;
-                  if (font === centerFont) return "rgb(235, 64, 52)";
-                  if (font === hoverFont) return "rgb(117, 214, 214)";
-                  if (fonts.includes(font)) return "rgb(237, 197, 64)";
+                  if (font === hoverFont) return lightblue;
+                  if (font === centerFont) return red;
+                  if (fonts.includes(font)) return yellow;
                   return "rgb(176, 176, 176, 0.3)";
                 },
               pointBorderColor: displayChars 
               ? "rgba(0, 0, 0, 0)" 
               : (context) => {
                   const font = context.dataset.data[context.dataIndex].font;
-                  if (font === centerFont) return "rgb(235, 64, 52)";
-                  if (font === hoverFont) return "rgb(117, 214, 214)";
-                  if (fonts.includes(font)) return "rgb(237, 197, 64)";
+                  if (font === hoverFont) return lightblue;
+                  if (font === centerFont) return red;
+                  if (fonts.includes(font)) return yellow;
                   return "rgb(120, 120, 120, 0)";
                 },
               datalabels: {
@@ -86,6 +92,9 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
           pan: {
               enabled: true,
               mode: 'xy',
+              onPan: (chart) => {
+                zoomBounds.current = chart.chart.getZoomedScaleBounds(chart)
+              }
           },
           zoom: {
               mode: 'xy',
@@ -105,9 +114,9 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
           anchor: 'center',
           color: (context) => {
             var font = context.dataset.data[context.dataIndex].font;
-            if (font == centerFont) return "rgb(235, 64, 52)"
-            if (font === hoverFont) return "rgb(117, 214, 214)"
-            if (fonts.includes(font)) return "rgb(237, 197, 64)"
+            if (font == centerFont) return red
+            if (font === hoverFont) return lightblue
+            if (fonts.includes(font)) return yellow
             else return "black"
           },
           font: function(context) {
@@ -132,8 +141,8 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
           borderWidth: 3,
           borderColor: function (tooltipItem) {
             var font = tooltipItem.tooltipItems[0].raw.font
-            if (font == centerFont) return "rgb(239, 143, 136)"
-            if (fonts.includes(font)) return "rgb(240, 205, 134)"
+            if (font == centerFont) return lightred
+            if (fonts.includes(font)) return lightyellow
             else return "rgb(247, 247, 247)"
           },
           bodyColor: '#000000',
@@ -204,7 +213,7 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
               color="black"
             />
             <div className="scatterplotButton">
-              <Button variant="contained" color="grey"   onClick={() => {resetZoom()}}>
+              <Button variant="contained" color="grey" onClick={() => {resetZoom()}}>
                 Reset Zoom
               </Button>
             </div>
