@@ -220,12 +220,12 @@ const App = () => {
 
   useEffect(() => {
     fetchData(magnitude, centerFont)
-  }, [historyStack])
+  }, [historyStack, magnitude, centerFont])
 
   const shuffle = () => {
     historyStack.push([...fonts, centerFont, magnitude]) // save to history
     setMagnitude(0)
-    fetchData(magnitude, "")
+    // fetchData(magnitude, "")
   }
 
   const back = () => {
@@ -245,21 +245,22 @@ const App = () => {
   const handleClick = (buttonIndex) => {
     historyStack.push([...fonts, centerFont, magnitude]) // save to history
     const newCenterFont = fonts[buttonIndex]
-    fetchData(magnitude, newCenterFont)
+    // fetchData(magnitude, newCenterFont)
   }
 
   const handleScatterClick = (chosenFont) => {
     historyStack.push([...fonts, centerFont, magnitude]) // save to history
-    fetchData(magnitude, chosenFont)
+    setCenterFont(chosenFont)
   }
 
   const handleSlider = (event, newValue) => {
     setMagnitude(newValue)
-    fetchData(magnitude, centerFont)
+    // fetchData(magnitude, centerFont)
   }
 
   const resetSlider = () => {
     setMagnitude(0)
+    // fetchData(magnitude, centerFont)
   }
 
   const handleInput = (e) => {
