@@ -20,7 +20,7 @@ For our first approach, we adapted the original autoencoder model proposed in \c
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{images/autoencoder-model.png}
-    \caption{A basic autoencoder model applied on MNIST data, as shown in \cite{bank2021autoencoders}.}
+    \caption{Basic autoencoder model applied on MNIST data}
     \label{fig:autoencoder-model}
 \end{figure}
 
@@ -30,7 +30,7 @@ We implemented an autoencoder model trained to reproduce the glyph images in our
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{images/autoencoder-example.png}
-    \caption{An example of our basic autoencoder model inputs/outputs mid-way through training.}
+    \caption{Our basic autoencoder model inputs/outputs mid-way through training}
     \label{fig:autoencoder-example}
 \end{figure}
 
@@ -48,7 +48,7 @@ Figure \ref{fig:styletransfer-example} shows our style transfer model part-way t
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{images/styletransfer-example.png}
-    \caption{An example instance in our style transfer model part-way through training.}
+    \caption{Example instance of our style transfer model part-way through training}
     \label{fig:styletransfer-example}
 \end{figure}
 
@@ -64,7 +64,7 @@ The Srivatsan model, similarly to our Style Transfer model detailed in \ref{styl
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{images/srivatsan-model.png}
-    \caption{A diagram of the Srivatsan et al. model architecture.}
+    \caption{Diagram of Srivatsan et al. model architecture}
     \label{fig:srivatsan-model}
 \end{figure}
  
@@ -74,7 +74,7 @@ Srivatsan et al. does an adequate job at glyph reconstruction–one of the focus
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{images/srivatsan-tsne.png}
-    \caption{A t-SNE plot of style encodings from Srivatsan et al. colored by weight (left) and Google Font style category (right).}
+    \caption{t-SNE plot of style encodings from Srivatsan et al. colored by weight (left) and Google Font style category (right)}
     \label{fig:srivatsan-tsne}
 \end{figure}
 
@@ -102,7 +102,7 @@ We experimented with several iterations of a tool which would allow users to int
 \begin{figure}[h]
     \centering
     \includegraphics[width=270pt]{images/scatterplot-tool.png}
-    \caption{A t-SNE scatterplot of our style encodings, allowing users to visually navigate a reduced-dimensionality version of our model style encodings.}
+    \caption{t-SNE scatterplot of our style encodings, allowing users to visually navigate a reduced-dimensionality version of our model style encodings}
     \label{fig:scatterplot-tool}
 \end{figure}
 
@@ -112,7 +112,7 @@ The current iteration of our typeface selector tool involves two connected user 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{images/selector-tool.png}
-    \caption{Our novel typeface selector tool, which allows users to navigate in all six dimensions of our model space.}
+    \caption{Our novel 6-dimensional typeface selector tool}
     \label{fig:selector-tool}
 \end{figure}
 
@@ -122,7 +122,7 @@ In order to provide another way for users to interact with this style space—on
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{images/both-selectors.png}
-    \caption{Our two typeface selector tools: an interactive t-SNE scatterplot and our six-point typeface selector. These two implementations are presented to users side-by-side, and users can use them in tandem to search for a single font.}
+    \caption{Both of our typeface selector tools side-by-side, allowing use of both tools in tandem}
     \label{fig:both-selectors}
 \end{figure}
 
