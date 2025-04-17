@@ -23,6 +23,13 @@ const font4color = "rgb(125, 212, 131)"
 const font5color = "rgb(145, 198, 255)"
 const font6color = "rgb(147, 135, 255)"
 
+const font1colorlight = "rgb(255, 222, 248)"
+const font2colorlight = "rgb(250, 215, 171)"
+const font3colorlight = "rgb(255, 230, 176)"
+const font4colorlight = "rgb(214, 237, 214)"
+const font5colorlight = "rgb(202, 227, 255)"
+const font6colorlight = "rgb(221, 218, 255)"
+
 const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, hoverFont, magnitude }) => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true);
@@ -165,7 +172,7 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
             // THIS MAKES THINGS SLOW
             var size = 12
             if (family === hoverFont) {
-              size = 24
+              size = size * 2
             }
             size = Math.round(size * zoomScale ** .6)
             // var size = 12
@@ -181,19 +188,29 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
           mode: 'nearest',
           intersect: true,
           displayColors: false,
-          backgroundColor: "rgb(247, 247, 247)",
-          padding: 10,
+          backgroundColor: function (tooltipItem) {
+            // var font = tooltipItem.tooltipItems[0].raw.font
+            // if (font === centerFont) return red
+            // if (font === fonts[0]) return font1colorlight
+            // if (font === fonts[1]) return font2colorlight
+            // if (font === fonts[2]) return font3colorlight
+            // if (font === fonts[3]) return font4colorlight
+            // if (font === fonts[4]) return font5colorlight
+            // if (font === fonts[5]) return font6colorlight
+            return "rgb(247, 247, 247)"
+          },
+          padding: 15,
           borderWidth: 3,
           borderColor: function (tooltipItem) {
             var font = tooltipItem.tooltipItems[0].raw.font
-            if (font === centerFont) return red;
-            if (font === fonts[0]) return font1color;
-            if (font === fonts[1]) return font2color;
-            if (font === fonts[2]) return font3color;
-            if (font === fonts[3]) return font4color;
-            if (font === fonts[4]) return font5color;
-            if (font === fonts[5]) return font6color;
-            else return "rgb(247, 247, 247)"
+            if (font === centerFont) return red
+            if (font === fonts[0]) return font1color
+            if (font === fonts[1]) return font2color
+            if (font === fonts[2]) return font3color
+            if (font === fonts[3]) return font4color
+            if (font === fonts[4]) return font5color
+            if (font === fonts[5]) return font6color
+            return "rgb(247, 247, 247)"
           },
           bodyColor: '#000000',
           bodyFont: {
@@ -201,7 +218,7 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
               const font = tooltipItems.tooltipItems[0]?.raw?.font || "Roboto";
               return font;
             },
-            size: 20,
+            size: 28,
           },
           callbacks: {
             label: function (tooltipItem) {
