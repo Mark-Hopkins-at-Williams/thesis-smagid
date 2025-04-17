@@ -199,7 +199,7 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
             // if (font === fonts[5]) return font6colorlight
             return "rgb(247, 247, 247)"
           },
-          padding: 15,
+          padding: 15, 
           borderWidth: 3,
           borderColor: function (tooltipItem) {
             var font = tooltipItem.tooltipItems[0].raw.font
