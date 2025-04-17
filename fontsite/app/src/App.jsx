@@ -10,6 +10,13 @@ import { styled } from '@mui/material/styles';
 import ScatterPlot from './Scatterplot'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+const font1color = "rgb(255, 222, 248)"
+const font2color = "rgb(250, 215, 171)"
+const font3color = "rgb(255, 230, 176)"
+const font4color = "rgb(214, 237, 214)"
+const font5color = "rgb(202, 227, 255)"
+const font6color = "rgb(221, 218, 255)"
+
 const theme = createTheme({
   typography: {
     button: {
@@ -83,12 +90,21 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
 }));
 
 
-const GlyphButton = ({ rotation, onClick, label, fontName, setHoverFont }) => {
+const GlyphButton = ({ rotation, onClick, label, fontName, setHoverFont, fonts }) => {
   let tooltipPlacement = 'left'
 
   if (rotation === 0 || rotation === 60 || rotation === 300) {
     tooltipPlacement = 'right'
   }
+
+  let color = "#e0e0e0"
+
+  if (fontName === fonts[0]) color = font1color;
+  if (fontName === fonts[1]) color = font2color;
+  if (fontName === fonts[2]) color = font3color;
+  if (fontName === fonts[3]) color = font4color;
+  if (fontName === fonts[4]) color = font5color;
+  if (fontName === fonts[5]) color = font6color;
 
   return (
     <>
@@ -99,7 +115,7 @@ const GlyphButton = ({ rotation, onClick, label, fontName, setHoverFont }) => {
           >
             <button
               className={`circle-button deg${rotation}`}
-              style={{ fontFamily: fontName }}
+              style={{ fontFamily: fontName, backgroundColor: color}}
               onClick={onClick}
               onMouseEnter={() => setHoverFont(fontName)}
               onMouseLeave={() => setHoverFont("")}
@@ -149,7 +165,7 @@ const CenterGlyph = ({ label, fontName, onInput, setHoverFont }) => {
       <GoogleFontLoader fonts={[{font: fontName}]}/>
       <p
         className="center-glyph"
-        style={{ fontFamily: fontName }}
+        style={{ fontFamily: fontName, backgroundColor: 'rgb(255, 171, 176)'}}
         contentEditable
         suppressContentEditableWarning
         onInput={onInput}
@@ -222,9 +238,14 @@ const App = () => {
     fetchData(magnitude, centerFont)
   }, [historyStack, magnitude, centerFont])
 
+  useEffect(() => {
+    setMagnitude(0)
+  }, [centerFont])
+
   const shuffle = () => {
     historyStack.push([...fonts, centerFont, magnitude]) // save to history
     setMagnitude(0)
+    fetchData(magnitude, "")
   }
 
   const back = () => {
@@ -274,7 +295,7 @@ const App = () => {
 
         <GoogleFontLoader fonts={allFonts}/>
 
-        <h1 className = "title">TypefaceSpace Selector (Google Fonts)</h1>
+        <h1 className = "title">Typeface Space Selector (Google Fonts)</h1>
 
         <div className="horizontal">
 
@@ -325,6 +346,7 @@ const App = () => {
                   label={char}
                   fontName={font}
                   setHoverFont={setHoverFont}
+                  fonts={fonts}
                 />
               ))}
 

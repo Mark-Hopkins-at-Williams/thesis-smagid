@@ -16,6 +16,13 @@ const yellow = "rgb(237, 197, 64)"
 const lightred = "rgb(239, 143, 136)"
 const lightyellow = "rgb(240, 205, 134)"
 
+const font1color = "rgb(255, 134, 229)"
+const font2color = "rgb(255, 160, 37)"
+const font3color = "rgb(255, 209, 69)"
+const font4color = "rgb(125, 212, 131)"
+const font5color = "rgb(145, 198, 255)"
+const font6color = "rgb(147, 135, 255)"
+
 const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, hoverFont, magnitude }) => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true);
@@ -46,36 +53,50 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
                   y: item.y,
                   font: item.font,
               })),
-              pointRadius: () => {
+              pointRadius: (context) => {
+                let size = 4
+                const font = context.dataset.data[context.dataIndex].font;
+                if (font === hoverFont) {
+                  size = 7
+                }
                 if (chartRef.current) {
                   const zoomScale = chartRef.current.getZoomLevel(chartRef)
-                  return 4 * Math.sqrt(zoomScale)
+                  size = size * Math.sqrt(zoomScale)
                 }
-                return 4
+                return size
               },
               pointHoverRadius: () => {
+                let size = 7
                 if (chartRef.current) {
                   const zoomScale = chartRef.current.getZoomLevel(chartRef)
-                  return 4 * Math.sqrt(zoomScale)
+                  return size * Math.sqrt(zoomScale)
                 }
-                return 4
+                return size
               },
               pointBackgroundColor: displayChars 
               ? "rgba(0, 0, 0, 0)" 
               : (context) => {
                   const font = context.dataset.data[context.dataIndex].font;
-                  if (font === hoverFont) return lightblue;
                   if (font === centerFont) return red;
-                  if (fonts.includes(font)) return yellow;
+                  if (font === fonts[0]) return font1color;
+                  if (font === fonts[1]) return font2color;
+                  if (font === fonts[2]) return font3color;
+                  if (font === fonts[3]) return font4color;
+                  if (font === fonts[4]) return font5color;
+                  if (font === fonts[5]) return font6color;
                   return "rgb(176, 176, 176, 0.3)";
                 },
               pointBorderColor: displayChars 
               ? "rgba(0, 0, 0, 0)" 
               : (context) => {
                   const font = context.dataset.data[context.dataIndex].font;
-                  if (font === hoverFont) return lightblue;
                   if (font === centerFont) return red;
-                  if (fonts.includes(font)) return yellow;
+                  if (font === fonts[0]) return font1color;
+                  if (font === fonts[1]) return font2color;
+                  if (font === fonts[2]) return font3color;
+                  if (font === fonts[3]) return font4color;
+                  if (font === fonts[4]) return font5color;
+                  if (font === fonts[5]) return font6color;
                   return "rgb(120, 120, 120, 0)";
                 },
               datalabels: {
@@ -88,6 +109,14 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
     const options = {
       animation: false,
       responsive: true,
+      layout: {
+        padding: {
+          top: 10,
+          bottom: 10,
+          left: 10,
+          right: 10,
+        },
+      },
       onClick: function(event, chartElements) {
         if (this.tooltip._active.length > 0) {
           var font = this.tooltip.body[0].lines[0]
@@ -121,16 +150,24 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
           anchor: 'center',
           color: (context) => {
             var font = context.dataset.data[context.dataIndex].font;
-            if (font === hoverFont) return lightblue
-            if (font == centerFont) return red
-            if (fonts.includes(font)) return yellow
+            if (font === centerFont) return red;
+            if (font === fonts[0]) return font1color;
+            if (font === fonts[1]) return font2color;
+            if (font === fonts[2]) return font3color;
+            if (font === fonts[3]) return font4color;
+            if (font === fonts[4]) return font5color;
+            if (font === fonts[5]) return font6color;
             else return "black"
           },
           font: function(context) {
             var family = context.dataset.data[context.dataIndex].font
             const zoomScale = chartRef.current.getZoomLevel(chartRef)
             // THIS MAKES THINGS SLOW
-            var size = Math.round(12 * zoomScale ** .6)
+            var size = 12
+            if (family === hoverFont) {
+              size = 24
+            }
+            size = Math.round(size * zoomScale ** .6)
             // var size = 12
             return {
               family: family,
@@ -149,8 +186,13 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
           borderWidth: 3,
           borderColor: function (tooltipItem) {
             var font = tooltipItem.tooltipItems[0].raw.font
-            if (font == centerFont) return lightred
-            if (fonts.includes(font)) return lightyellow
+            if (font === centerFont) return red;
+            if (font === fonts[0]) return font1color;
+            if (font === fonts[1]) return font2color;
+            if (font === fonts[2]) return font3color;
+            if (font === fonts[3]) return font4color;
+            if (font === fonts[4]) return font5color;
+            if (font === fonts[5]) return font6color;
             else return "rgb(247, 247, 247)"
           },
           bodyColor: '#000000',
@@ -188,6 +230,7 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
     useEffect(() => {
       if (chartRef && zoomBounds.current) {
         if (zoomBounds.current.x && zoomBounds.current.y) {
+          console.log('setting bounds')
           chartRef.current.zoomScale('x', zoomBounds.current.x)
           chartRef.current.zoomScale('y', zoomBounds.current.y)
         }
