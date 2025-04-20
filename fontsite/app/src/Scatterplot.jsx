@@ -189,6 +189,7 @@ const ScatterPlot = ({ fonts, centerFont, handleScatterClick, chosenCharacter, h
           intersect: true,
           displayColors: false,
           backgroundColor: function (tooltipItem) {
+            console.log(chartRef.current)
             // var font = tooltipItem.tooltipItems[0].raw.font
             // if (font === centerFont) return red
             // if (font === fonts[0]) return font1colorlight
