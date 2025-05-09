@@ -1,0 +1,290 @@
+\chapter*{Appendix}
+\setcounter{chapter}{1}
+\counterwithin{table}{chapter}
+\counterwithin{figure}{chapter}
+\markboth{APPENDIX}{APPENDIX}
+
+%%
+%% TABLE 1
+%%
+
+\begin{longtable}{|l|r|r|r|r|}
+\caption{Average pairwise Euclidean distance between style encodings grouped by Google Fonts categories, with distances normalized relative to the average pairwise distance between all fonts in model space. Distances less than one (categories whose average distance is less than the overall pairwise distance of the model) are in bold. The average of all category-wise distance scores, as well as how many beat the average, is shown at top.}
+\label{tab:category-distances} \\
+\hline
+\textbf{Category} & \textbf{Autoencoder} & \textbf{Style Transfer} & \textbf{Sriv. C64} & \textbf{Sriv. Full} \\
+\hhline{|=====|}
+average category distance & 1.318 & 1.337 & \textbf{0.952} & \textbf{0.769} \\
+\# beat average? & 23 & 21 & 39 & 65 \\
+\hhline{|=====|}
+\endfirsthead
+
+\multicolumn{5}{c}{{Table \thetable\ continued from previous page}} \\[0.5em]
+\hline
+\textbf{Category} & \textbf{Autoencoder} & \textbf{Style Transfer} & \textbf{Sriv. C64} & \textbf{Sriv. Full} \\
+\hline
+\endhead
+
+\hline \multicolumn{5}{r}{{Continued on next page}} \\
+\endfoot
+
+\hline
+\endlastfoot
+
+appearance-art-deco       & 1.728          & 1.337          & 1.184          & \textbf{0.780} \\
+appearance-art-nouveau    & \textbf{0.453} & \textbf{0.737} & \textbf{0.783} & \textbf{0.706} \\
+appearance-blackletter    & \textbf{0.698} & \textbf{0.956} & \textbf{0.956} & \textbf{0.921} \\
+appearance-blobby         & 1.198          & 1.276          & \textbf{0.880} & \textbf{0.657} \\
+appearance-distressed     & 1.489          & 1.278          & 1.057          & \textbf{0.698} \\
+appearance-inline         & 2.238          & 1.832          & 1.209          & \textbf{0.732} \\
+appearance-lunar-new-year & 1.390          & 1.541          & 1.093          & \textbf{0.841} \\
+appearance-marker         & 1.139          & 1.208          & \textbf{0.870} & \textbf{0.651} \\
+appearance-medieval       & \textbf{0.934} & 1.012          & \textbf{0.924} & \textbf{0.758} \\
+appearance-monospaced     & \textbf{0.475} & \textbf{0.616} & \textbf{0.717} & \textbf{0.746} \\
+appearance-not-text       & 6.477          & 11.048         & \textbf{0.863} & \textbf{0.754} \\
+appearance-pixel          & 1.424          & 1.310          & \textbf{0.917} & \textbf{0.436} \\
+appearance-shaded         & 2.713          & 1.802          & 1.057          & \textbf{0.649} \\
+appearance-stencil        & 1.227          & 1.213          & 1.117          & \textbf{0.842} \\
+appearance-techno         & 1.812          & 1.408          & 1.087          & \textbf{0.891} \\
+appearance-tuscan         & 2.130          & 1.238          & 1.046          & \textbf{0.633} \\
+appearance-valentines     & 1.861          & 1.671          & 1.072          & \textbf{0.729} \\
+appearance-wacky          & 1.674          & 1.244          & 1.086          & \textbf{0.722} \\
+appearance-wood-type      & 2.481          & 1.904          & 1.159          & \textbf{0.752} \\
+calligraphy-all           & 1.119          & 1.358          & \textbf{0.862} & \textbf{0.615} \\
+calligraphy-formal        & \textbf{0.967} & 1.237          & \textbf{0.622} & \textbf{0.406} \\
+calligraphy-handwritten   & 1.040          & 1.241          & \textbf{0.827} & \textbf{0.624} \\
+calligraphy-informal      & 1.155          & 1.376          & \textbf{0.856} & \textbf{0.582} \\
+feeling-active            & \textbf{0.963} & 1.075          & \textbf{0.882} & \textbf{0.621} \\
+feeling-artistic          & 1.222          & 1.434          & \textbf{0.896} & \textbf{0.646} \\
+feeling-awkward           & 1.238          & 1.185          & \textbf{0.992} & \textbf{0.694} \\
+feeling-business          & \textbf{0.646} & 0.575          & \textbf{0.907} & \textbf{0.996} \\
+feeling-calm              & \textbf{0.735} & 0.662          & \textbf{0.851} & \textbf{0.939} \\
+feeling-childlike         & \textbf{0.909} & 1.014          & \textbf{0.902} & \textbf{0.647} \\
+feeling-cute              & 1.038          & 1.130          & \textbf{0.962} & \textbf{0.736} \\
+feeling-excited           & 1.390          & 1.257          & 1.043          & \textbf{0.667} \\
+feeling-fancy             & 1.030          & 1.303          & \textbf{0.629} & \textbf{0.385} \\
+feeling-futuristic        & 1.405          & 1.124          & 1.069          & \textbf{0.983} \\
+feeling-happy             & 0.932          & \textbf{0.909} & \textbf{0.979} & \textbf{0.699} \\
+feeling-innovative        & 2.537          & 1.938          & 1.160          & \textbf{0.741} \\
+feeling-loud              & 1.665          & 1.481          & 1.100          & \textbf{0.805} \\
+feeling-playful           & 1.546          & 1.341          & 1.079          & \textbf{0.755} \\
+feeling-rugged            & 1.564          & 1.336          & 1.074          & \textbf{0.725} \\
+feeling-sophisticated     & 1.015          & 1.275          & \textbf{0.646} & \textbf{0.439} \\
+feeling-stiff             & 1.016          & \textbf{0.858} & 1.041          & \textbf{0.975} \\
+feeling-vintage           & 1.042          & 1.031          & 1.023          & \textbf{0.937} \\
+sans-serif-all            & 0.828          & \textbf{0.726} & \textbf{0.859} & \textbf{0.959} \\
+sans-serif-geometric      & 1.100          & \textbf{0.799} & \textbf{0.967} & \textbf{0.839} \\
+sans-serif-glyphic        & \textbf{0.743} & \textbf{0.671} & \textbf{0.812} & \textbf{0.823} \\
+sans-serif-grotesque      & \textbf{0.852} & \textbf{0.958} & \textbf{0.945} & \textbf{0.945} \\
+sans-serif-humanist       & \textbf{0.727} & \textbf{0.629} & \textbf{0.786} & \textbf{0.940} \\
+sans-serif-neo-grotesque  & \textbf{0.731} & \textbf{0.673} & \textbf{0.840} & \textbf{0.918} \\
+sans-serif-rounded        & \textbf{0.836} & \textbf{0.873} & \textbf{0.901} & \textbf{0.876} \\
+sans-serif-superellipse   & \textbf{0.810} & \textbf{0.945} & \textbf{0.955} & 1.014          \\
+seasonal-christmas        & 1.440          & 1.637          & 1.106          & \textbf{0.750} \\
+seasonal-diwali           & 1.173          & 1.223          & 1.011          & \textbf{0.823} \\
+seasonal-halloween        & 1.721          & 1.931          & 1.048          & \textbf{0.681} \\
+seasonal-hanukkah         & 1.274          & 1.107          & 1.069          & \textbf{0.892} \\
+seasonal-kwanzaa          & 1.498          & 1.318          & 1.084          & \textbf{0.866} \\
+seasonal-lunar-new-year   & 1.174          & 1.446          & 0.978          & \textbf{0.831} \\
+seasonal-valentines       & 1.861          & 1.671          & 1.072          & \textbf{0.729} \\
+serif-all                 & \textbf{0.840} & \textbf{0.794} & \textbf{0.889} & \textbf{0.927} \\
+serif-didone              & 1.238          & 1.363          & \textbf{0.846} & \textbf{0.688} \\
+serif-fatface             & 2.478          & 2.896          & 1.082          & \textbf{0.755} \\
+serif-humanist            & \textbf{0.628} & \textbf{0.545} & \textbf{0.873} & \textbf{0.841} \\
+serif-modern              & \textbf{0.794} & \textbf{0.596} & \textbf{0.847} & \textbf{0.889} \\
+serif-old-style           & \textbf{0.522} & \textbf{0.753} & \textbf{0.695} & \textbf{0.814} \\
+serif-scotch              & \textbf{0.562} & \textbf{0.576} & \textbf{0.879} & \textbf{0.891} \\
+serif-slab                & 1.582          & 1.347          & 1.117          & \textbf{0.845} \\
+serif-transitional        & \textbf{0.551} & \textbf{0.667} & \textbf{0.732} & \textbf{0.954}
+
+\end{longtable}
+
+%%
+%% TABLE 2
+%%
+
+\begin{longtable}{|l|r|r|}
+\caption{Average pairwise Euclidean and cosine distances between style encodings in the Autoencoder model space, across Google Fonts categories, with distances normalized relative to average pairwise distance across entire model space. Distance values smaller than the overall pairwise average (less than one for Euclidean, greater than one for cosine) are bolded. The average of all category-wise distance scores, as well as how many beat the average, is shown at top.}
+\label{tab:euclidean-vs-cosine-auto} \\
+\hline
+\textbf{Category} & \textbf{Autoencoder (Euclidean)} & \textbf{Autoencoder (Cosine)} \\
+\hhline{|===|}
+average category distance & 1.318 & \textbf{1.125} \\
+\# beat average? & 23 & 41 \\
+\hhline{|===|}
+\endfirsthead
+
+\multicolumn{3}{c}{{Table \thetable\ continued from previous page}} \\[0.5em]
+\hline
+\textbf{Category} & \textbf{Autoencoder (Euclidean)} & \textbf{Autoencoder (Cosine)} \\
+\hline
+\endhead
+
+\hline \multicolumn{3}{r}{{Continued on next page}} \\
+\endfoot
+
+\hline
+\endlastfoot
+
+appearance-art-deco       & 1.728                   & \textbf{1.282}      \\
+appearance-art-nouveau    & \textbf{0.453}          & 0.494               \\
+appearance-blackletter    & \textbf{0.698}          & \textbf{1.101}      \\
+appearance-blobby         & 1.198                   & 0.906               \\
+appearance-distressed     & 1.489                   & \textbf{1.434}      \\
+appearance-inline         & 2.238                   & \textbf{1.692}      \\
+appearance-lunar-new-year & 1.390                   & \textbf{1.742}      \\
+appearance-marker         & 1.139                   & \textbf{1.045}      \\
+appearance-medieval       & \textbf{0.934}          & 0.848               \\
+appearance-monospaced     & \textbf{0.475}          & 0.866               \\
+appearance-not-text       & 6.477                   & \textbf{2.699}      \\
+appearance-pixel          & 1.424                   & 0.8496               \\
+appearance-shaded         & 2.713                   & \textbf{2.086}      \\
+appearance-stencil        & 1.227                   & \textbf{1.412}      \\
+appearance-techno         & 1.812                   & \textbf{1.213}      \\
+appearance-tuscan         & 2.130                   & \textbf{1.324}      \\
+appearance-valentines     & 1.861                   & \textbf{1.466}      \\
+appearance-wacky          & 1.674                   & \textbf{1.311}      \\
+appearance-wood-type      & 2.481                   & \textbf{1.296}      \\
+calligraphy-all           & 1.119                   & \textbf{1.138}      \\
+calligraphy-formal        & \textbf{0.967}          & 0.540               \\
+calligraphy-handwritten   & 1.040                   & \textbf{1.178}      \\
+calligraphy-informal      & 1.155                   & \textbf{1.115}      \\
+feeling-active            & \textbf{0.963}          & 0.966               \\
+feeling-artistic          & 1.222                   & \textbf{1.198}      \\
+feeling-awkward           & 1.238                   & \textbf{1.270}      \\
+feeling-business          & \textbf{0.646}          & 0.719               \\
+feeling-calm              & \textbf{0.735}          & 0.886               \\
+feeling-childlike         & \textbf{0.909}          & \textbf{1.079}      \\
+feeling-cute              & 1.038                   & \textbf{1.156}      \\
+feeling-excited           & 1.390                   & \textbf{1.428}      \\
+feeling-fancy             & 1.030                   & 0.582               \\
+feeling-futuristic        & 1.405                   & \textbf{1.246}      \\
+feeling-happy             & \textbf{0.932}          & \textbf{1.088}      \\
+feeling-innovative        & 2.537                   & \textbf{1.611}      \\
+feeling-loud              & 1.665                   & \textbf{1.157}      \\
+feeling-playful           & 1.546                   & \textbf{1.288}      \\
+feeling-rugged            & 1.564                   & \textbf{1.489}      \\
+feeling-sophisticated     & 1.015                   & 0.658               \\
+feeling-stiff             & 1.016                   & 0.968               \\
+feeling-vintage           & 1.042                   & \textbf{1.042}      \\
+sans-serif-all            & \textbf{0.828}          & 0.885               \\
+sans-serif-geometric      & 1.100                   & \textbf{1.026}      \\
+sans-serif-glyphic        & \textbf{0.743}          & 0.890               \\
+sans-serif-grotesque      & \textbf{0.852}          & \textbf{1.181}      \\
+sans-serif-humanist       & \textbf{0.727}          & 0.758               \\
+sans-serif-neo-grotesque  & \textbf{0.731}          & 0.922               \\
+sans-serif-rounded        & \textbf{0.836}          & \textbf{1.082}      \\
+sans-serif-superellipse   & \textbf{0.810}          & \textbf{1.112}      \\
+seasonal-christmas        & 1.440                   & \textbf{1.476}      \\
+seasonal-diwali           & 1.173                   & \textbf{1.144}      \\
+seasonal-halloween        & 1.721                   & \textbf{1.500}      \\
+seasonal-hanukkah         & 1.274                   & \textbf{1.406}      \\
+seasonal-kwanzaa          & 1.498                   & \textbf{1.153}      \\
+seasonal-lunar-new-year   & 1.174                   & \textbf{1.740}      \\
+seasonal-valentines       & 1.861                   & \textbf{1.466}      \\
+serif-all                 & \textbf{0.840}          & 0.715               \\
+serif-didone              & 1.238                   & 0.853               \\
+serif-fatface             & 2.478                   & 0.666               \\
+serif-humanist            & \textbf{0.628}          & 0.535               \\
+serif-modern              & \textbf{0.794}          & 0.955               \\
+serif-old-style           & \textbf{0.522}          & 0.544               \\
+serif-scotch              & \textbf{0.562}          & 0.808               \\
+serif-slab                & 1.582                   & 0.920               \\
+serif-transitional        & 0.551                   & 0.529         \\           
+
+\end{longtable}
+
+%%
+%% TABLE 3
+%%
+
+\begin{longtable}{|l|r|r|}
+\caption{Average pairwise Euclidean and cosine distances between style encodings in the full Srivatsan model space, across Google Fonts categories, with distances normalized relative to average pairwise distance across entire model space. Distance values smaller than the overall pairwise average (less than one for Euclidean, greater than one for cosine) are bolded. The average of all category-wise distance scores, as well as how many beat the average, is shown at top.}
+\label{tab:euclidean-vs-cosine-sriv} \\
+\hline
+\textbf{Category} & \textbf{Srivatsan Full (Euclidean)} & \textbf{Srivatsan Full (Cosine)} \\
+\hhline{|===|}
+average category distance & \textbf{0.769} & 0.987 \\
+\# beat average? & 65 & 36 \\
+\hhline{|===|}
+\endfirsthead
+
+\multicolumn{3}{c}{{Table \thetable\ continued from previous page}} \\[0.5em]
+\hline
+\textbf{Category} & \textbf{Srivatsan Full (Euclidean)} & \textbf{Srivatsan Full (Cosine)} \\
+\hline
+\endhead
+
+\hline \multicolumn{3}{r}{{Continued on next page}} \\
+\endfoot
+
+\hline
+\endlastfoot
+
+appearance-art-deco       & \textbf{0.780}             & \textbf{1.266}          \\
+appearance-art-nouveau    & \textbf{0.706}             & 0.650                   \\
+appearance-blackletter    & \textbf{0.921}             & 0.881                   \\
+appearance-blobby         & \textbf{0.657}             & 0.955                   \\
+appearance-distressed     & \textbf{0.698}             & \textbf{1.303}          \\
+appearance-inline         & \textbf{0.732}             & \textbf{1.140}          \\
+appearance-lunar-new-year & \textbf{0.841}             & \textbf{1.264}          \\
+appearance-marker         & \textbf{0.651}             & \textbf{1.104}          \\
+appearance-medieval       & \textbf{0.758}             & 0.855                   \\
+appearance-monospaced     & \textbf{0.746}             & 0.909                   \\
+appearance-not-text       & \textbf{0.754}             & \textbf{1.707}          \\
+appearance-pixel          & \textbf{0.436}             & \textbf{1.300}          \\
+appearance-shaded         & \textbf{0.649}             & \textbf{1.362}          \\
+appearance-stencil        & \textbf{0.842}             & \textbf{1.214}          \\
+appearance-techno         & \textbf{0.891}             & \textbf{1.301}          \\
+appearance-tuscan         & \textbf{0.633}             & \textbf{1.054}          \\
+appearance-valentines     & \textbf{0.729}             & \textbf{1.018}          \\
+appearance-wacky          & \textbf{0.722}             & \textbf{1.223}          \\
+appearance-wood-type      & \textbf{0.752}             & \textbf{1.199}          \\
+calligraphy-all           & \textbf{0.615}             & 0.933                   \\
+calligraphy-formal        & \textbf{0.406}             & 0.393                   \\
+calligraphy-handwritten   & \textbf{0.624}             & 0.986                   \\
+calligraphy-informal      & \textbf{0.582}             & 0.933                   \\
+feeling-active            & \textbf{0.621}             & 0.924                   \\
+feeling-artistic          & \textbf{0.646}             & 0.873                   \\
+feeling-awkward           & \textbf{0.694}             & \textbf{1.215}          \\
+feeling-business          & \textbf{0.996}             & 0.756                   \\
+feeling-calm              & \textbf{0.939}             & 0.892                   \\
+feeling-childlike         & \textbf{0.647}             & \textbf{1.104}          \\
+feeling-cute              & \textbf{0.736}             & \textbf{1.124}          \\
+feeling-excited           & \textbf{0.667}             & \textbf{1.301}          \\
+feeling-fancy             & \textbf{0.385}             & 0.374                   \\
+feeling-futuristic        & \textbf{0.983}             & \textbf{1.189}          \\
+feeling-happy             & \textbf{0.699}             & \textbf{1.111}          \\
+feeling-innovative        & \textbf{0.741}             & \textbf{1.470}          \\
+feeling-loud              & \textbf{0.805}             & \textbf{1.086}          \\
+feeling-playful           & \textbf{0.755}             & \textbf{1.214}          \\
+feeling-rugged            & \textbf{0.725}             & \textbf{1.336}          \\
+feeling-sophisticated     & \textbf{0.439}             & 0.377                   \\
+feeling-stiff             & \textbf{0.975}             & \textbf{1.019}          \\
+feeling-vintage           & \textbf{0.937}             & 0.879                   \\
+sans-serif-all            & \textbf{0.959}             & 0.902                   \\
+sans-serif-geometric      & \textbf{0.839}             & \textbf{1.009}          \\
+sans-serif-glyphic        & \textbf{0.823}             & 0.906                   \\
+sans-serif-grotesque      & \textbf{0.945}             & \textbf{1.067}          \\
+sans-serif-humanist       & \textbf{0.940}             & 0.746                   \\
+sans-serif-neo-grotesque  & \textbf{0.918}             & 0.974                   \\
+sans-serif-rounded        & \textbf{0.876}             & \textbf{1.031}          \\
+sans-serif-superellipse   & 1.014                      & \textbf{1.053}          \\
+seasonal-christmas        & \textbf{0.750}             & \textbf{1.201}          \\
+seasonal-diwali           & \textbf{0.823}             & \textbf{1.036}          \\
+seasonal-halloween        & \textbf{0.681}             & \textbf{1.264}          \\
+seasonal-hanukkah         & \textbf{0.892}             & \textbf{1.242}          \\
+seasonal-kwanzaa          & \textbf{0.866}             & \textbf{1.222}          \\
+seasonal-lunar-new-year   & \textbf{0.831}             & \textbf{1.207}          \\
+seasonal-valentines       & \textbf{0.729}             & \textbf{1.018}          \\
+serif-all                 & \textbf{0.927}             & 0.577                   \\
+serif-didone              & \textbf{0.688}             & 0.399                   \\
+serif-fatface             & \textbf{0.755}             & 0.664                   \\
+serif-humanist            & \textbf{0.841}             & 0.525                   \\
+serif-modern              & \textbf{0.889}             & 0.597                   \\
+serif-old-style           & \textbf{0.814}             & 0.477                   \\
+serif-scotch              & \textbf{0.891}             & 0.502                   \\
+serif-slab                & \textbf{0.845}             & 0.849                   \\
+serif-transitional        & \textbf{0.954}             & 0.468                  
+
+\end{longtable}

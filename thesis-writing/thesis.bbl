@@ -1,0 +1,92 @@
+\begin{thebibliography}{10}
+
+\bibitem{ahmed1974}
+{\sc Ahmed, N., Natarajan, T., and Rao, K.~R.}
+\newblock Discrete cosine transform.
+\newblock {\em IEEE Transactions on Computers\/} (1974).
+
+\bibitem{azadi2017}
+{\sc Azadi, S., Fisher, M., Kim, V., Wang, Z., Shechtman, E., and Darrell, T.}
+\newblock {Multi-Content GAN for Few-Shot Font Style Transfer}, 2017.
+
+\bibitem{bank2021autoencoders}
+{\sc Bank, D., Koenigstein, N., and Giryes, R.}
+\newblock {Autoencoders}, 2021.
+
+\bibitem{carlier2020}
+{\sc Carlier, A., Danelljan, M., Alahi, A., and Timofte, R.}
+\newblock Deepsvg: A hierarchical generative network for vector graphics animation.
+\newblock In {\em Advances in Neural Information Processing Systems\/} (2020), vol.~33, pp.~2262--2273.
+
+\bibitem{cheng2006}
+{\sc Cheng, K.}
+\newblock {\em {Designing Type}}.
+\newblock Yale University Press, New Haven, CT, 2006.
+
+\bibitem{cho2022}
+{\sc Cho, J., Lee, K., and Choi, J.~Y.}
+\newblock {Font Representation Learning via Paired-glyph Matching}, 2022.
+
+\bibitem{freeman1997}
+{\sc Freeman, W.~T., and Tenenbaum, J.~B.}
+\newblock Learning bilinear models for two-factor problems in vision.
+\newblock In {\em Proceedings of IEEE Computer Society Conference on Computer Vision and Pattern Recognition\/} (1997), IEEE, pp.~554--560.
+
+\bibitem{kingma2013}
+{\sc Kingma, D.~P., and Welling, M.}
+\newblock {Auto-Encoding Variational Bayes}, 2013.
+
+\bibitem{kingma2019}
+{\sc Kingma, D.~P., and Welling, M.}
+\newblock {An Introduction to Variational Autoencoders}.
+\newblock {\em Foundations and Trends in Machine Learning 12}, 4 (2019), 307–392.
+
+\bibitem{lecun1998}
+{\sc LeCun, Y., Bottou, L., Bengio, Y., and Haffner, P.}
+\newblock Gradient-based learning applied to document recognition.
+\newblock {\em Proceedings of the IEEE 86}, 11 (1998), 2278--2324.
+
+\bibitem{michelucci2022}
+{\sc Michelucci, U.}
+\newblock An introduction to autoencoders, 2022.
+
+\bibitem{odonovan2014}
+{\sc O'Donovan, P., Lieberman, E., Zhao, K., Fry, E., Isenberg, P., and Hertzmann, A.}
+\newblock {Exploratory Font Selection Using Crowdsourced Attributes}.
+\newblock In {\em Proceedings of the 27th annual ACM symposium on User interface software and technology\/} (2014), ACM, pp.~369--378.
+
+\bibitem{rumelhart1986}
+{\sc Rumelhart, D.~E., Hinton, G.~E., and Williams, R.~J.}
+\newblock {\em {Learning Internal Representations by Error Propagation}}.
+\newblock MIT Press, Cambridge, MA, USA, 1986, p.~318–362.
+
+\bibitem{shaikh2006}
+{\sc Shaikh, A.~D., Chaparro, B.~S., and Fox, D.}
+\newblock Perception of fonts: Perceived personality traits and uses.
+\newblock {\em Usability News 8}, 1 (February 2006).
+
+\bibitem{srivatsan2020}
+{\sc Srivatsan, N., Barron, J.~T., Klein, D., and Berg-Kirkpatrick, T.}
+\newblock {A Deep Factorization of Style and Structure in Fonts}, 2020.
+
+\bibitem{tang2013}
+{\sc Tang, Y., Salakhutdinov, R., and Hinton, G.}
+\newblock Tensor analyzers.
+\newblock In {\em International Conference on Machine Learning\/} (2013), pp.~163--171.
+
+\bibitem{tenenbaum2000}
+{\sc Tenenbaum, J.~B., and Freeman, W.~T.}
+\newblock Separating style and content with bilinear models.
+\newblock {\em Neural Computation 12}, 6 (2000), 1247--1283.
+
+\bibitem{vandermaaten2008}
+{\sc van~der Maaten, L., and Hinton, G.}
+\newblock Visualizing data using t-sne.
+\newblock {\em Journal of Machine Learning Research 9\/} (2008), 2579--2605.
+
+\bibitem{vasilescu2002}
+{\sc Vasilescu, M. A.~O., and Terzopoulos, D.}
+\newblock Multilinear analysis of image ensembles: Tensorfaces.
+\newblock In {\em European Conference on Computer Vision\/} (2002), Springer, pp.~447--460.
+
+\end{thebibliography}

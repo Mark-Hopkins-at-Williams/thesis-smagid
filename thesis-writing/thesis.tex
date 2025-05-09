@@ -1,0 +1,131 @@
+\documentclass[twoside]{report}
+\usepackage[top=1in, bottom=1in, left=1.5in, right=1in, includehead]{geometry}
+\pagestyle{headings}
+\usepackage{setspace}
+\usepackage[utf8]{inputenc} % this is needed for umlauts
+\usepackage[T1]{fontenc}    % this is needed for correct output of umlauts in pdf
+
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{amsmath, amsthm, amstext, amssymb, amsfonts}
+\usepackage{rotating}
+\usepackage[hidelinks]{hyperref}
+\usepackage{color}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{wasysym}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[noend]{algpseudocode}
+\usepackage{empheq}
+\usepackage{multicol}
+\usepackage{xparse}
+\usepackage{url}
+\usepackage{pdfpages}
+\usepackage{subcaption}
+\makeatletter
+\setlength{\@fptop}{0pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{fontspec}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{hhline}
+\usepackage{todonotes}
+\usepackage{url}
+\urlstyle{same}
+\usepackage{algorithm}
+\let\svalgorithm\algorithm
+\catcode`'=\active
+\catcode`"=\active
+\def\quoteactive{\catcode`'=\active\def'{\makebox{\textquotesingle}}}
+\def\qquoteactive{\catcode`"=\active\def"{\makebox{\textquotedbl}}}
+\catcode`'=12
+\catcode`"=12
+\def\algorithm{\quoteactive\qquoteactive\svalgorithm}
+\makeatother
+
+\renewcommand{\arraystretch}{1.3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Thesis body           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Title page            %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{titlepage}
+$\;$
+\vskip1.5in
+\onehalfspacing
+
+\begin{center}
+{\LARGE
+Typeface Space: Using Neural Networks for Font Selection
+}
+\large
+\vskip.175in
+by\\
+Samuel Magid\\
+\vskip.125in
+Professor Jeannie Albrecht, Advisor\\
+Professor Mark Hopkins, Advisor\\
+\singlespacing
+\vskip.5in
+\small
+A thesis submitted in partial fulfillment\\
+of the requirements for the\\
+Degree of Bachelor of Arts with Honors\\
+in Computer Science\\
+\vskip.5in
+Williams College\\
+Williamstown, Massachusetts\\
+\vskip.5in
+\today
+%%\vskip.5in
+%%{\Huge \textbf{DRAFT}}
+\end{center}
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents
+\clearpage
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+\clearpage
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+\onehalfspacing
+
+%%%%%%%% Chapters %%%%%%%%%%%%
+\clearpage
+\addcontentsline{toc}{chapter}{Abstract}
+\include{chapters/abstract}
+\clearpage
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\include{chapters/acknowledgements}
+\include{chapters/1-introduction}
+\include{chapters/2-background}
+\include{chapters/3-methodology}
+\include{chapters/4-evaluation}
+\include{chapters/5-conclusion}
+%%%%%%%% End Chapters %%%%%%%%%
+
+
+
+%%%%%%%% References %%%%%%%%%%
+\bibliographystyle{acm}
+\bibliography{refs.bib}
+%%%%%%%% End References %%%%%%
+
+\clearpage
+\appendix
+\addcontentsline{toc}{chapter}{Appendix}
+\include{chapters/6-appendix}
+\end{document}
