@@ -2,6 +2,8 @@
 \chapter{Background}
 \label{chap:background}
 
+In this chapter, we provide necessary background to contextualize our research. Our Font Selection section explores the history of font selection tools, identifying a few recent areas of development which vary from the common list-based interface. In Autocoders, we introduce the autoencoder model and its variations, laying the fundamental structure for the neural network models we implement in this work. Finally, in Previous Work, we review related work on font selection and font inference, discussing important contributions which have informed our model design and system implementation.
+
 \section{Font Selection}
 
 This section explores some important background information about the history and current state of font selection tools. Comparing one of the earliest font selection interfaces---from the built-in word processor on the 1981 Xerox Star---to the typical font selection interfaces on Google Docs, Microsoft Word, and Apple Pages, it is evident that little progress has been made in the way we select fonts. Nevertheless, there has been some recent innovation in typeface selection interfaces, and we explore some of these new approaches---specifically the new language-based font selection models of the Google Fonts website and Canva, a popular online graphic design tool. We additionally discuss the difficulty of creating language-based font selection tools. Lastly, we provide an analogue between font selection interfaces and the much more diverse field of color selection, another common selection in graphic design, to envision alternative modeling schema for font selection.
@@ -52,7 +54,7 @@ The new font selection interface on the Google Fonts website\footnote{https://fo
 
 Google Font's categories break with the basic list-based interface; however, the tool has several drawbacks. For one, the user is forced to choose between discrete categories, rather than an open-ended text input, limiting their selection process to preconceived descriptors. Additionally, these categorizations are subjective; and while many of the groupings seem fairly accurate, some are questionable (such as the ``Christmas'' fonts in Figure \ref{fig:google-fonts-christmas}). Most importantly, Google has not incorporated this new font selection tool into their main Google Suite applications (Google Docs, Google Slides, and Google Sheets) where the majority of their users are choosing fonts. Most users are unfamiliar with the Google Fonts website, and therefore will not use the interface. This new font selector tool, available only from a separate website, is an interesting experiment in language-based font selection, but not yet more than that.
 
-Canva, a popular online graphic design tool, has also experimented with a language-based font selection tool: their main design interface allows users access to select fonts via a text input field. For example, a user could type ``Modern'' and they would be presented with a wide-variety of modern-style fonts. However, while the input prompt appears open-ended, the tool actually only works for a small set of keywords; for most text input, it will either yield no results or simply return fonts whose name contains that keyword (see Figure \ref{fig:canva-font-selector}). For many unseen inputs like ``Professional,'' ``Cheerful,'' ``Ancient,'' and ``Lightweight'' the tool returns no results at all.
+Canva, a popular online graphic design tool, has also experimented with a language-based font selection tool. Their main design interface allows users access to select fonts via a text input field. For example, a user could type ``Modern'' and they would be presented with a wide-variety of modern-style fonts. However, while the input prompt appears open-ended, the tool actually only works for a small set of keywords; for most text input, it will either yield no results or simply return fonts whose name contains that keyword (see Figure \ref{fig:canva-font-selector}). For many unseen inputs like ``Professional,'' ``Cheerful,'' ``Ancient,'' and ``Lightweight'' the tool returns no results at all.
 
 % own screenshots
 \begin{figure}
@@ -62,16 +64,12 @@ Canva, a popular online graphic design tool, has also experimented with a langua
     \label{fig:canva-font-selector}
 \end{figure}
 
-\subsection{Issues with Language-Based Models}
+\subsection{Issues with Language-Based Font Selection}
 
 Both of the above tools use keyword descriptors for font selection, one with predetermined style categories (Google Fonts) and the other with an open-ended search box which, in reality, allows only a limited set of keywords as input (Canva). The direction of this approach, however, is not a bad one. Language is one of the ways in which humans fundamentally conceive of the world, including with respect to visual style. Especially given the popularization of Large Language Models (LLMs) and chatbots, there is certainly an open space for innovation with language-based font selection. However, there are a couple key problems with creating these language-based font selection models. First of all, visual style is quite subjective: one user might find a certain font ``wacky'' while another might find that font ``sad'' or ``disgusting.'' A font which one user finds ``professional'' another might find ``playful.'' Building a language-based model for font selection should therefore account for user subjectivity in its recommendations. Secondly, there is a relative lack of datasets which connect typefaces to language-based style characteristics. Shaikh et al.\ \cite{shaikh2006} perform an online study with hundreds of participants to generate a dataset of only 20 fonts and 15 style adjectives. O'Donovan et al.\ \cite{odonovan2014} generate a larger dataset of 200 fonts and 31 style adjectives, but this is still relatively small when compared with the hundreds of thousands of available fonts and the many possible dimensions of style. For this project, we mostly avoid the issue of language-based font selection, and rather focus on the use of unsupervised neural models in building useful style-based font selection tools.
 
-\subsection{An Analogue: Color Selection}
-
-A useful analogue when considering the issue of typeface selection is another common problem in graphic design: color selection. The field of color selection has produced a much wider range of selection interfaces, which suggests a potential for a much more diverse set of font selection tools. Figure \ref{fig:basic-color-picker} shows a common, basic color selection tool containing several ways to interact with its many available colors: sliders, numeric input, and a 2-dimensional gradient. Color can be represented using a 4-dimensional basis called RGBA: red-value, green-value, blue-value, and transparency-value. The first three are based on a hexadecimal scale, allowing values between 0 and 255, while the transparency value is constrained between 0 and 1. By representing color using a multi-dimensional basis, users have an intuitive, finer-grained control over the color selection process. This is more useful than, say, selecting from an alphabetized list of colors (Apricot, Aquamarine, Baby Blue, Canary Yellow...), which---similar to an alphabetized list of fonts---does not provide users with a very meaningful way to navigate the dimensions of color. There are many other popular tools for color selection: Adobe Color, for example, utilizes a popular color-wheel tool, and additionally includes features to change color basis (CMYK and RGBA are the most common color bases, but other more obscure ones exist), pick a set of colors based on a particular harmony (Monochromatic, Triad, Complementary, e.g.), and save colors to a library for later access (see Figure \ref{fig:adobe-color}).
-
 % from rgbacolorpicker.com
-\begin{figure}[]
+\begin{figure}[p]
     \centering
     \includegraphics[width=0.8\textwidth]{images/basic-color-picker.png}
     \caption{A basic color selection interface with gradient, numeric, and slider controls}
@@ -79,12 +77,16 @@ A useful analogue when considering the issue of typeface selection is another co
 \end{figure}
 
 % from color.adobe.com
-\begin{figure}[]
+\begin{figure}[p]
     \centering
     \includegraphics[width=\textwidth]{images/adobe-color.png}
     \caption{Adobe Color selection interface, with a color wheel, multiple color bases, color harmony-based selection, and the ability to save colors}
     \label{fig:adobe-color}
 \end{figure}
+
+\subsection{An Analogue: Color Selection}
+
+A useful analogue when considering the issue of typeface selection is another common problem in graphic design: color selection. The field of color selection has produced a much wider range of selection interfaces, which suggests a potential for a much more diverse set of font selection tools. Figure \ref{fig:basic-color-picker} shows a common, basic color selection tool containing several ways to interact with its many available colors: sliders, numeric input, and a 2-dimensional gradient. Color can be represented using a 4-dimensional basis called RGBA: red-value, green-value, blue-value, and transparency-value. The first three are based on a hexadecimal scale, allowing values between 0 and 255, while the transparency value is constrained between 0 and 1. By representing color using a multi-dimensional basis, users have an intuitive, finer-grained control over the color selection process. This is more useful than, say, selecting from an alphabetized list of colors (Apricot, Aquamarine, Baby Blue, Canary Yellow...), which---similar to an alphabetized list of fonts---does not provide users with a very meaningful way to navigate the dimensions of color. There are many other popular tools for color selection: Adobe Color, for example, utilizes a popular color-wheel tool, and additionally includes features to change color basis (CMYK and RGBA are the most common color bases, but other more obscure ones exist), pick a set of colors based on a particular harmony (Monochromatic, Triad, Complementary, e.g.), and save colors to a library for later access (see Figure \ref{fig:adobe-color}).
 
 The wide range of diverse color selection interfaces and color bases suggests a potential for similarly-diverse, useful selection tools for typeface which provide control over the many dimensions of typeface style. While typefaces and their style cannot be decomposed as easily as color, their style \emph{can} be represented using a vector basis---as we will show in subsequent chapters---and building selection tools on a vector space of style dimensions could allow users greater control in typeface selection---similar to the level of control users have in color selection. Imagine, perhaps, a gradient of fonts, or sliders which control different aspects of font style. These ideas are not farfetched: as our research will show, neural networks---specifically autoencoder-like neural network models---can be used to distill quantitative style encodings from font image data, which provides a foundation upon which to build better style-based font selection tools.
 
@@ -104,7 +106,7 @@ The autoencoder \cite{rumelhart1986} is a specific type of neural network traine
     \label{fig:autoencoder-model}
 \end{figure}
 
-The autoencoder model may seem of little use---why would I want to reconstruct data which I already have? The main goal of an autoencoder, however, is not the final reconstructed output but rather the intermediate representation---which distills the essentials of the input. In order for the decoder to be able to accurately reconstruct input data which it has never seen, the encoder part of the model must encode an intermediate encoding that captures enough salient aspects of the input for the reconstruction stage. Thus, the autoencoder's intermediate representation tends to be a rich and concise summary of the input. In our research, we leverage these encodings as a proxy for typeface style. Bank et al. \cite{bank2021autoencoders} write:
+The autoencoder model may seem of little use---why would we want to reconstruct data which we already have? The main goal of an autoencoder, however, is not the final reconstructed output but rather the intermediate representation---which distills the essentials of the input. In order for the decoder to be able to accurately reconstruct input data which it has never seen, the encoder part of the model must encode an intermediate encoding that captures enough salient aspects of the input for the reconstruction stage. Thus, the autoencoder's intermediate representation tends to be a rich and concise summary of the input. In our research, we leverage these encodings as a proxy for typeface style. Bank et al.\ \cite{bank2021autoencoders} write:
 
 \begin{quote}
     ...the goal of autoencoders is to get a compressed and meaningful
@@ -115,17 +117,17 @@ In order to create meaningful representations, however, some steps must be taken
 
 \subsection{Variations on the Autoencoder}
 
-There have been many variations on this basic autoencoder model \cite{michelucci2022}. While the basic autoencoder is unsupervised, it is possible to feed additional data into the autoencoder, such as data labels, in order to coerce the model to ignore these aspects of the input data in the construction of an intermediate representation. (In our research, we employ this method to disentangle \textit{content}---i.e. the character being represented---from \textit{style.}) Another alteration of the original autoencoder is the variational autoencoder (VAE) model \cite{kingma2013}, which uses probabilistic distributions to improve autoencoder performance, especially with respect to generative tasks. Rather than encoding an explicit intermediate encoding, VAEs encode the parameters of a multi-dimensional Gaussian distribution which represents the probabilistic space of the intermediate encoding. The decoder then samples randomly from the distribution and proceeds with the decoding task. This probabilistic model is especially useful in generative tasks, when the goal is to generate new content (e.g. to generate a new character in a font), but the continuous latent space encoded by VAEs can also be directly used, as in our case, as a compact representation of salient input properties like visual style.
+There have been many variations on this basic autoencoder model \cite{michelucci2022}. While the basic autoencoder is unsupervised, it is possible to feed additional data into the autoencoder, such as data labels, in order to coerce the model to ignore these aspects of the input data in the construction of an intermediate representation. (In our research, we employ this method to disentangle \textit{content}---i.e. the character being represented---from \textit{style.}) Another alteration of the original autoencoder is the variational autoencoder (VAE) model \cite{kingma2013}, which uses probabilistic distributions to improve autoencoder performance, especially with respect to generative tasks. Rather than encoding an explicit intermediate encoding, VAEs encode the parameters of a multi-dimensional Gaussian distribution which represents the probabilistic space of the intermediate encoding. The decoder then samples randomly from the distribution and proceeds with the decoding task. This probabilistic model is especially useful in generative tasks, when the goal is to generate new content (e.g. to generate a new character in a font); but the continuous latent space encoded by VAEs can also be directly used, as in our case, as a compact representation of salient input properties like visual style.
 
 \section{Previous Work}
 
-There has been previous scholarly on improving font selection interfaces, especially based around font inference models. This section explores some of these models, one based on crowdsourced data, and the others on neural inference models. Both of these approaches have informed our research, but the neural inference models have particularly influenced the models we have built. Particularly, we adapt the Srivatsan et al. model \cite{srivatsan2020} in our work and use the style encodings trained by the model to build our typeface selector tool.
+There has been previous scholarly work on improving font selection interfaces, especially based around font inference models. This section explores some of these models, one based on crowdsourced data, and the others on neural inference models. Both of these approaches have informed our research, but the neural inference models have particularly influenced the models we implemented. Particularly, we adapt the Srivatsan et al.\ model \cite{srivatsan2020} in our work and use the style encodings trained by the model to build our typeface selector tool.
 
 % own screenshots
 \begin{figure}
     \centering
     \includegraphics[width=1\textwidth]{images/odonovan-interfaces.png}
-    \caption{Group Interface, Attribute Interface, and Search-By-Similarity selection tools from O'Donovan et al. \cite{odonovan2014}}
+    \caption{Group Interface, Attribute Interface, and Search-By-Similarity selection tools from O'Donovan et al.\ \cite{odonovan2014}}
     \label{fig:odonovan-interfaces}
 \end{figure}
 
@@ -144,34 +146,34 @@ There has also been some effort to build inference models around font character 
 \begin{figure}
     \centering
     \includegraphics[width=1\textwidth]{images/cho-paired-glyph.png}
-    \caption{Paired-glyph matching in Cho et al. \cite{cho2022}}
+    \caption{Paired-glyph matching in Cho et al.\ \cite{cho2022}}
     \label{fig:cho-paired-glyph}
 \end{figure}
 
-Their paired-glyph matching, shown in Figure \ref{fig:cho-paired-glyph}, involves selecting random pairs of glyphs and training the model to prefer a low cosine similarity (more similar) between the representations if the glyphs are characters in the same font, and a high cosine similarity (less similar) if the glyphs come from different fonts. While Cho et al.\ succeeds in their goal of clustering the latent space representations of glyphs by typeface, it is unclear how well these encodings will represent the stylistic aspects of typeface. Notably, the training technique focuses on decreasing the cosine similarity of encodings for characters of different typefaces, but it does not seem to have a mechanism to actually consider the style of a character or typeface. Rather, the training data for their model is essentially the \emph{name} of a font. As Figure \ref{fig:cho-latent-space} shows, their model performs well at discriminating character style encodings based on font---their model effectively clusters characters according to their typeface, denoted by point color---but the model space may not represent meaningful dimensions of typeface style (weight, size, serif) beyond simply separating fonts which are not identical.
+Their paired-glyph matching, shown in Figure \ref{fig:cho-paired-glyph}, involves selecting random pairs of glyphs and training the model to prefer a low cosine similarity (more similar) between the representations if the glyphs are characters in the same font, and a high cosine similarity (less similar) if the glyphs come from different fonts. While Cho et al.\ succeeds in their goal of clustering the latent space representations of glyphs by typeface, it is unclear how well these encodings represent the stylistic aspects of typeface. Notably, the training technique focuses on decreasing the cosine similarity of encodings for characters of different typefaces, but it does not seem to have a mechanism to actually consider the style of a character or typeface. Rather, the training data for their model is essentially the \emph{name} of a font. As Figure \ref{fig:cho-latent-space} shows, their model performs well at discriminating character style encodings based on font---their model effectively clusters characters according to their typeface, denoted by point color---but the model space may not represent meaningful dimensions of typeface style (weight, size, serif) beyond simply separating fonts which are not identical.
 
 \begin{figure}[]
     \centering
     \includegraphics[width=1\textwidth]{images/cho-latent-space.png}
-    \caption{Latent space of style embeddings across model techniques in Cho et al. \cite{cho2022}, with color representing the typeface of a given character style encoding}
+    \caption{Latent space of style embeddings across model techniques in Cho et al.\ \cite{cho2022}, with color representing the typeface of a given character style encoding}
     \label{fig:cho-latent-space}
 \end{figure}
 
 Relevant to our work is their evaluation of different model architectures for generating style encodings. As shown in the latent space maps in Figure \ref{fig:cho-latent-space}, they employ three different model architectures in addition to their paired-glyph matching: the basic autoencoder model, style transfer (generating another character in the same font given an input character), and classification (predicting which font is represented in a glyph). There is an overlap in some of their model choices and ours (namely, autoencoder and style transfer), and the figure they provide is useful in visualizing the typeface-clustering effectiveness of these various models.
 
-\begin{figure}[h]
+\begin{figure}[]
     \centering
     \includegraphics[width=1\textwidth]{images/srivatsan-model.png}
-    \caption{Generative process of model Srivatsan et al.}
+    \caption{Generative process of model from Srivatsan et al.\ \cite{srivatsan2020}}
     \label{fig:srivatsan-model}
 \end{figure}
 
-Srivatsan et al.\ \cite{srivatsan2020} introduce a training method based on latent probability space and a tensor factorization approach well-founded in past literature \cite{freeman1997,tenenbaum2000,vasilescu2002,tang2013}. Their model explicitly seeks to disentangle style and content—to encode the typeface style of a glyph as separate from the actual character it represents. The model architecture, shown in Figure \ref{fig:srivatsan-model}, convolutionally encodes a probabilistic encoding of a font given its complete character glyph set (with a chosen number missing) and corresponding character embeddings, and uses that latent probability vector along with a given character embedding to reconstruct the missing glyphs. Their model is particularly effective at reconstructing glyphs, when compared to peer models, and it also succeeds against a state-of-the-art peer model \cite{azadi2017} when evaluated by humans on Amazon Mechanical Turk. The model additionally yields high quality style encodings, with similar fonts having similar encodings in the model space. Figure \ref{fig:srivatsan-latent} shows a t-SNE projection of their model latent space with ``A'' glyphs displayed at each centroid given k-means clustering ($k=10$). These centroids are representative of the typeface styles existing at the given area of the t-SNE plot. Lastly, Srivatsan et al. find that, qualitatively, their model seems to effectively recreate many important aspects of character style including shape, shadow, and texture.
+Srivatsan et al.\ \cite{srivatsan2020} introduce a training method based on latent probability space and a tensor factorization approach well-founded in past literature \cite{freeman1997,tenenbaum2000,vasilescu2002,tang2013}. Their model explicitly seeks to disentangle style and content—to encode the typeface style of a glyph as separate from the actual character it represents. The model architecture, shown in Figure \ref{fig:srivatsan-model}, convolutionally encodes a probabilistic encoding of a font given its complete character glyph set (with a chosen number missing) and corresponding character embeddings, and uses that latent probability vector along with a given character embedding to reconstruct the missing glyphs. Their model is particularly effective at reconstructing glyphs, when compared to peer models, and it also succeeds against a state-of-the-art peer model \cite{azadi2017} when evaluated by humans on Amazon Mechanical Turk. The model additionally yields high quality style encodings, with similar fonts having similar encodings in the model space. Figure \ref{fig:srivatsan-latent} shows a t-SNE projection \cite{vandermaaten2008} of their model latent space with ``A'' glyphs displayed at each centroid given k-means clustering ($k=10$). These centroids are representative of the typeface styles existing at the given area of the t-SNE plot. Lastly, Srivatsan et al.\ find that, qualitatively, their model seems to effectively recreate many important aspects of character style including shape, shadow, and texture.
 
 \begin{figure}[]
     \centering
     \includegraphics[width=.7\textwidth]{images/srivatsan-latent.png}
-    \caption{t-SNE projection of latent font variables in Srivatsan et al.\ with centroids}
+    \caption{t-SNE projection of latent font variables in Srivatsan et al.\ \cite{srivatsan2020} with centroids}
     \label{fig:srivatsan-latent}
 \end{figure}
 

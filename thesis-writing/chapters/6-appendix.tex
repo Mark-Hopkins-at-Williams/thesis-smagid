@@ -1,4 +1,5 @@
 \chapter*{Appendix}
+\addcontentsline{toc}{chapter}{Appendix}
 \setcounter{chapter}{1}
 \counterwithin{table}{chapter}
 \counterwithin{figure}{chapter}
@@ -15,7 +16,7 @@
 \textbf{Category} & \textbf{Autoencoder} & \textbf{Style Transfer} & \textbf{Sriv. C64} & \textbf{Sriv. Full} \\
 \hhline{|=====|}
 average category distance & 1.318 & 1.337 & \textbf{0.952} & \textbf{0.769} \\
-\# beat average? & 23 & 21 & 39 & 65 \\
+\% categories beat average & 34.8\% & 31.8\% & 59.1\% & 98.5\% \\
 \hhline{|=====|}
 \endfirsthead
 
@@ -85,7 +86,7 @@ seasonal-diwali           & 1.173          & 1.223          & 1.011          & \
 seasonal-halloween        & 1.721          & 1.931          & 1.048          & \textbf{0.681} \\
 seasonal-hanukkah         & 1.274          & 1.107          & 1.069          & \textbf{0.892} \\
 seasonal-kwanzaa          & 1.498          & 1.318          & 1.084          & \textbf{0.866} \\
-seasonal-lunar-new-year   & 1.174          & 1.446          & 0.978          & \textbf{0.831} \\
+seasonal-lunar-new-year   & 1.174          & 1.446          & \textbf{0.978} & \textbf{0.831} \\
 seasonal-valentines       & 1.861          & 1.671          & 1.072          & \textbf{0.729} \\
 serif-all                 & \textbf{0.840} & \textbf{0.794} & \textbf{0.889} & \textbf{0.927} \\
 serif-didone              & 1.238          & 1.363          & \textbf{0.846} & \textbf{0.688} \\
@@ -104,13 +105,13 @@ serif-transitional        & \textbf{0.551} & \textbf{0.667} & \textbf{0.732} & \
 %%
 
 \begin{longtable}{|l|r|r|}
-\caption{Average pairwise Euclidean and cosine distances between style encodings in the Autoencoder model space, across Google Fonts categories, with distances normalized relative to average pairwise distance across entire model space. Distance values smaller than the overall pairwise average (less than one for Euclidean, greater than one for cosine) are bolded. The average of all category-wise distance scores, as well as how many beat the average, is shown at top.}
+\caption{Average pairwise Euclidean and cosine distances between style encodings in the Autoencoder model space, across Google Fonts categories, with distances normalized relative to average pairwise distance across entire model space. Distance values closer than the overall pairwise average (less than one for Euclidean, greater than one for cosine) are bolded. The average of all category-wise distance scores, as well as how many beat the average, is shown at top.}
 \label{tab:euclidean-vs-cosine-auto} \\
 \hline
 \textbf{Category} & \textbf{Autoencoder (Euclidean)} & \textbf{Autoencoder (Cosine)} \\
 \hhline{|===|}
 average category distance & 1.318 & \textbf{1.125} \\
-\# beat average? & 23 & 41 \\
+\% categories beat average & 34.8\% & 62.1\% \\
 \hhline{|===|}
 \endfirsthead
 
@@ -199,13 +200,13 @@ serif-transitional        & 0.551                   & 0.529         \\
 %%
 
 \begin{longtable}{|l|r|r|}
-\caption{Average pairwise Euclidean and cosine distances between style encodings in the full Srivatsan model space, across Google Fonts categories, with distances normalized relative to average pairwise distance across entire model space. Distance values smaller than the overall pairwise average (less than one for Euclidean, greater than one for cosine) are bolded. The average of all category-wise distance scores, as well as how many beat the average, is shown at top.}
+\caption{Average pairwise Euclidean and cosine distances between style encodings in the full Srivatsan model space, across Google Fonts categories, with distances normalized relative to average pairwise distance across entire model space. Distance values closer than the overall pairwise average (less than one for Euclidean, greater than one for cosine) are bolded. The average of all category-wise distance scores, as well as how many beat the average, is shown at top.}
 \label{tab:euclidean-vs-cosine-sriv} \\
 \hline
 \textbf{Category} & \textbf{Srivatsan Full (Euclidean)} & \textbf{Srivatsan Full (Cosine)} \\
 \hhline{|===|}
 average category distance & \textbf{0.769} & 0.987 \\
-\# beat average? & 65 & 36 \\
+\% categories beat average & 98.5\% & 54.5\% \\
 \hhline{|===|}
 \endfirsthead
 

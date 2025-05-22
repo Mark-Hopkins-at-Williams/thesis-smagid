@@ -1,4 +1,4 @@
-\documentclass[twoside]{report}
+\documentclass[]{report}
 \usepackage[top=1in, bottom=1in, left=1.5in, right=1in, includehead]{geometry}
 \pagestyle{headings}
 \usepackage{setspace}
@@ -66,7 +66,7 @@ $\;$
 
 \begin{center}
 {\LARGE
-Typeface Space: Using Neural Networks for Font Selection
+Typeface Space: Neural Networks for Font Selection
 }
 \large
 \vskip.175in
@@ -96,19 +96,17 @@ Williamstown, Massachusetts\\
 
 \tableofcontents
 \clearpage
-\addcontentsline{toc}{chapter}{List of Figures}
 \listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
 \clearpage
-\addcontentsline{toc}{chapter}{List of Tables}
 \listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
 \onehalfspacing
 
 %%%%%%%% Chapters %%%%%%%%%%%%
 \clearpage
-\addcontentsline{toc}{chapter}{Abstract}
 \include{chapters/abstract}
 \clearpage
-\addcontentsline{toc}{chapter}{Acknowledgements}
 \include{chapters/acknowledgements}
 \include{chapters/1-introduction}
 \include{chapters/2-background}
@@ -120,12 +118,14 @@ Williamstown, Massachusetts\\
 
 
 %%%%%%%% References %%%%%%%%%%
+\clearpage
 \bibliographystyle{acm}
 \bibliography{refs.bib}
+\addcontentsline{toc}{chapter}{Bibliography}
+
 %%%%%%%% End References %%%%%%
 
 \clearpage
 \appendix
-\addcontentsline{toc}{chapter}{Appendix}
 \include{chapters/6-appendix}
 \end{document}
