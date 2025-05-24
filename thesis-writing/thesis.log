@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.10.2)  22 MAY 2025 16:07
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.10.2)  23 MAY 2025 12:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -956,13 +956,13 @@ LaTeX Font Info:    Trying to load font information for U+wasy on input line 63.
 File: uwasy.fd 2020/01/19 v2.4 Wasy-2 symbol font definitions
 ) [1
 
-] (./thesis.toc [1
+] (./thesis.toc [2
 
 ])
 \tf@toc=\write5
 \openout5 = `thesis.toc'.
 
- [2] (./thesis.lof
+ [3] (./thesis.lof
 Overfull \hbox (4.75606pt too wide) in paragraph at lines 9--9
  [][] [][]\TU/lmr/m/n/10 Adobe Color selection interface, with a color wheel, multiple color bases, color harmony- 
  []
@@ -995,31 +995,31 @@ Package fontspec Info: Font family 'comicsans.ttf(0)' created for font
 (fontspec)             <->"[comicsans.ttf]/OT:language=dflt;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 
-[3
+[4
 
 
 ])
 \tf@lof=\write6
 \openout6 = `thesis.lof'.
 
- [4] (./thesis.lot)
+ [5] (./thesis.lot)
 \tf@lot=\write7
 \openout7 = `thesis.lot'.
 
- [5
+ [6
 
 
 ]
 \openout2 = `chapters/abstract.aux'.
 
- (./chapters/abstract.tex) [6
+ (./chapters/abstract.tex) [7
 
 
 
 ]
 \openout2 = `chapters/acknowledgements.aux'.
 
- (./chapters/acknowledgements.tex) [7
+ (./chapters/acknowledgements.tex) [8
 
 
 
@@ -1030,17 +1030,17 @@ Package fontspec Info: Font family 'comicsans.ttf(0)' created for font
 
  (./chapters/1-introduction.tex
 Chapter 1.
-[8
+[9
 
 
 
 
-]) [9]
+]) [10]
 \openout2 = `chapters/2-background.aux'.
 
  (./chapters/2-background.tex
 Chapter 2.
-[10
+[11
 
 
 
@@ -1048,36 +1048,36 @@ Chapter 2.
 ]
 File: images/xerox-star.png Graphic file (type bmp)
 <images/xerox-star.png>
- [11]
+ [12]
 File: images/font-selectors.png Graphic file (type bmp)
 <images/font-selectors.png>
- [12]
+ [13]
 File: images/google-font-categories.png Graphic file (type bmp)
 <images/google-font-categories.png>
 File: images/google-fonts-christmas.png Graphic file (type bmp)
 <images/google-fonts-christmas.png>
- [13]
+ [14]
 File: images/canva-font-selector.png Graphic file (type bmp)
 <images/canva-font-selector.png>
- [14]
+ [15]
 File: images/basic-color-picker.png Graphic file (type bmp)
 <images/basic-color-picker.png>
 File: images/adobe-color.png Graphic file (type bmp)
 <images/adobe-color.png>
- [15] [16]
+ [16] [17]
 File: images/autoencoder-model.png Graphic file (type bmp)
 <images/autoencoder-model.png>
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[17] [18]
+[18] [19]
 File: images/odonovan-interfaces.png Graphic file (type bmp)
 <images/odonovan-interfaces.png>
- [19]
+ [20]
 File: images/cho-paired-glyph.png Graphic file (type bmp)
 <images/cho-paired-glyph.png>
- [20]
+ [21]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 155.
@@ -1090,19 +1090,19 @@ LaTeX Warning: No positions in optional float specifier.
 
 File: images/srivatsan-model.png Graphic file (type bmp)
 <images/srivatsan-model.png>
-[21]
+[22]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 173.
 
 File: images/srivatsan-latent.png Graphic file (type bmp)
 <images/srivatsan-latent.png>
-) [22]
+) [23]
 \openout2 = `chapters/3-methodology.aux'.
 
  (./chapters/3-methodology.tex
 Chapter 3.
-[23
+[24
 
 
 
@@ -1120,7 +1120,11 @@ LaTeX Warning: No positions in optional float specifier.
 
 File: images/ab-cs-helvetica.png Graphic file (type bmp)
 <images/ab-cs-helvetica.png>
-[24] [25]
+[25] [26]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 45.
+
 File: images/style-transfer-model.pdf Graphic file (type pdf)
 <use images/style-transfer-model.pdf>
 
@@ -1143,7 +1147,7 @@ Package fontspec Info: Font family 'Arial(0)' created for font 'Arial' with
 (fontspec)             <->"Arial/BI/OT:script=latn;language=dflt;"
 (fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
 
- [26]
+[27]
 
 Package fontspec Info: Font family 'kumar-one.ttf(0)' created for font
 (fontspec)             'kumar-one.ttf' with options [].
@@ -1162,36 +1166,40 @@ LaTeX Warning: No positions in optional float specifier.
 
 File: images/styletransfer-example.png Graphic file (type bmp)
 <images/styletransfer-example.png>
-[27]
+[28]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 75.
 
 File: images/srivatsan-model.png Graphic file (type bmp)
 <images/srivatsan-model.png>
-[28]
+[29]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 87.
 
 File: images/srivatsan-tsne.png Graphic file (type bmp)
 <images/srivatsan-tsne.png>
-[29]
+[30]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 99.
 
 File: images/srivatsan-reconstructions.png Graphic file (type bmp)
 <images/srivatsan-reconstructions.png>
-[30] [31]
+[31] [32]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 129.
+
 File: images/selector-tool.png Graphic file (type bmp)
 <images/selector-tool.png>
- [32]
+[33]
 File: images/both-selectors.png Graphic file (type bmp)
 <images/both-selectors.png>
 File: images/tool-with-chars.png Graphic file (type bmp)
 <images/tool-with-chars.png>
- [33] [34]
+ [34] [35]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 167.
@@ -1204,12 +1212,12 @@ LaTeX Warning: No positions in optional float specifier.
 
 File: images/system-diagram.png Graphic file (type bmp)
 <images/system-diagram.png>
-[35] [36]) [37]
+) [36] [37] [38]
 \openout2 = `chapters/4-evaluation.aux'.
 
  (./chapters/4-evaluation.tex
 Chapter 4.
-[38
+[39
 
 
 
@@ -1223,67 +1231,63 @@ File: images/feeling-artistic.png Graphic file (type bmp)
 <images/feeling-artistic.png>
 File: images/seasonal-kwanzaa.png Graphic file (type bmp)
 <images/seasonal-kwanzaa.png>
- [39] [40] [41] [42] [43]
+ [40] [41] [42] [43] [44]
 File: images/user-fonts.pdf Graphic file (type pdf)
 <use images/user-fonts.pdf>
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[44] [45]
-Overfull \hbox (1.23999pt too wide) in alignment at lines 232--238
- [] [] [] 
- []
-
-
+ [45] [46]
 Overfull \hbox (1.23999pt too wide) in alignment at lines 238--244
  [] [] [] 
  []
 
 
-Overfull \hbox (1.23999pt too wide) in alignment at lines 244--247
+Overfull \hbox (1.23999pt too wide) in alignment at lines 244--250
  [] [] [] 
  []
 
 
-Overfull \hbox (1.23999pt too wide) in alignment at lines 247--250
+Overfull \hbox (1.23999pt too wide) in alignment at lines 250--253
  [] [] [] 
  []
 
 
-Overfull \hbox (1.23999pt too wide) in alignment at lines 250--307
+Overfull \hbox (1.23999pt too wide) in alignment at lines 253--256
  [] [] [] 
  []
 
-[46]) [47]
+
+Overfull \hbox (1.23999pt too wide) in alignment at lines 256--315
+ [] [] [] 
+ []
+
+[47]) [48]
 \openout2 = `chapters/5-conclusion.aux'.
 
  (./chapters/5-conclusion.tex
 Chapter 5.
-[48
+[49
 
 
 
 
-] [49]) [50] (./thesis.bbl [51
+] [50]) [51] (./thesis.bbl [52
 
 
 
 
-]) [52]
+]) [53]
 \openout2 = `chapters/6-appendix.aux'.
 
- (./chapters/6-appendix.tex [53
+ (./chapters/6-appendix.tex [54
 
 
 
-] [54] [55] [56] [57] [58] [59] [60]) [61] (./thesis.aux (./chapters/abstract.aux) (./chapters/acknowledgements.aux) (./chapters/1-introduction.aux) (./chapters/2-background.aux) (./chapters/3-methodology.aux) (./chapters/4-evaluation.aux) (./chapters/5-conclusion.aux) (./chapters/6-appendix.aux))
+] [55] [56] [57] [58] [59] [60] [61]) [62] (./thesis.aux (./chapters/abstract.aux) (./chapters/acknowledgements.aux) (./chapters/1-introduction.aux) (./chapters/2-background.aux) (./chapters/3-methodology.aux) (./chapters/4-evaluation.aux) (./chapters/5-conclusion.aux) (./chapters/6-appendix.aux))
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: DBDB38023CC7E35F561B73A338776BB1;7057.
+(rerunfilecheck)             Checksum: 8F273A1D4B328A8287454BA2D4893D75;7057.
  ) 
 Here is how much of TeX's memory you used:
  30024 strings out of 474773
@@ -1294,4 +1298,4 @@ Here is how much of TeX's memory you used:
  1348 hyphenation exceptions out of 8191
  99i,11n,101p,2721b,535s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on thesis.xdv (62 pages, 1306728 bytes).
+Output written on thesis.xdv (62 pages, 1310404 bytes).

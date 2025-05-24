@@ -1,35 +1,35 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Font selection interface in Xerox Star (1981)}}{11}{figure.caption.6}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Current font selection interfaces in Microsoft Word, Google Docs, and Apple Pages}}{12}{figure.caption.7}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Some typeface categorizations in the new Google Fonts interface}}{13}{figure.caption.8}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Some of the ``Christmas'' fonts in Google Fonts do not seem very Christmassy}}{14}{figure.caption.9}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Example usages of the Canva text-based font selector tool}}{15}{figure.caption.10}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces A basic color selection interface with gradient, numeric, and slider controls}}{16}{figure.caption.11}%
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Adobe Color selection interface, with a color wheel, multiple color bases, color harmony-based selection, and the ability to save colors}}{16}{figure.caption.12}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Basic autoencoder model applied on an image from MNIST, a dataset of handwritten images widely-used for image classification tasks \cite {lecun1998}}}{18}{figure.caption.13}%
-\contentsline {figure}{\numberline {2.9}{\ignorespaces Group Interface, Attribute Interface, and Search-By-Similarity selection tools from O'Donovan et al.\ \cite {odonovan2014}}}{19}{figure.caption.14}%
-\contentsline {figure}{\numberline {2.10}{\ignorespaces Paired-glyph matching in Cho et al.\ \cite {cho2022}}}{20}{figure.caption.15}%
-\contentsline {figure}{\numberline {2.11}{\ignorespaces Latent space of style embeddings across model techniques in Cho et al.\ \cite {cho2022}, with color representing the typeface of a given character style encoding}}{21}{figure.caption.16}%
-\contentsline {figure}{\numberline {2.12}{\ignorespaces Generative process of model from Srivatsan et al.\ \cite {srivatsan2020}}}{21}{figure.caption.17}%
-\contentsline {figure}{\numberline {2.13}{\ignorespaces t-SNE projection of latent font variables in Srivatsan et al.\ \cite {srivatsan2020} with centroids}}{22}{figure.caption.18}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Font selection interface in Xerox Star (1981)}}{12}{figure.caption.8}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Current font selection interfaces in Microsoft Word, Google Docs, and Apple Pages}}{13}{figure.caption.9}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Some typeface categorizations in the new Google Fonts interface}}{14}{figure.caption.10}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Some of the ``Christmas'' fonts in Google Fonts do not seem very Christmassy}}{15}{figure.caption.11}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Example usages of the Canva text-based font selector tool}}{16}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces A basic color selection interface with gradient, numeric, and slider controls}}{17}{figure.caption.13}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Adobe Color selection interface, with a color wheel, multiple color bases, color harmony-based selection, and the ability to save colors}}{17}{figure.caption.14}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Basic autoencoder model applied on an image from MNIST, a dataset of handwritten images widely-used for image classification tasks \cite {lecun1998}}}{19}{figure.caption.15}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Group Interface, Attribute Interface, and Search-By-Similarity selection tools from O'Donovan et al.\ \cite {odonovan2014}}}{20}{figure.caption.16}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Paired-glyph matching in Cho et al.\ \cite {cho2022}}}{21}{figure.caption.17}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Latent space of style embeddings across model techniques in Cho et al.\ \cite {cho2022}, with color representing the typeface of a given character style encoding}}{22}{figure.caption.18}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Generative process of model from Srivatsan et al.\ \cite {srivatsan2020}}}{22}{figure.caption.19}%
+\contentsline {figure}{\numberline {2.13}{\ignorespaces t-SNE projection of latent font variables in Srivatsan et al.\ \cite {srivatsan2020} with centroids}}{23}{figure.caption.20}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Our basic autoencoder model inputs/outputs mid-way through training}}{25}{figure.caption.19}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces An {\fontspec {Helvetica} A} in Helvetica is structurally more similar to an {\fontspec {comicsans.ttf} A} in Comic Sans than to a {\fontspec {Helvetica} B} in Helvetica}}{25}{figure.caption.20}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Our Style Transfer Autoencoder model, which attempts to recreate a different character in the typeface of an input character image}}{26}{figure.caption.21}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Example instance of our style transfer model part-way through training}}{27}{figure.caption.22}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Diagram of Srivatsan et al.\ model architecture \cite {srivatsan2020}}}{28}{figure.caption.23}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces t-SNE plot of style encodings from Srivatsan et al.\ \cite {srivatsan2020} colored by weight (left) and Google Fonts style category (right)}}{29}{figure.caption.24}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Reconstructed character sets from the adapted Srivatsan model}}{30}{figure.caption.25}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Our novel 6-dimensional typeface selector tool, displaying several similar calligraphic fonts nearby the Princess Sofia typeface}}{33}{figure.caption.26}%
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Both of our typeface selector tools side-by-side, with additional features to ease use of both tools in tandem}}{34}{figure.caption.27}%
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Our typeface selector tool with characters displayed on scatterplot, showing many nearby calligraphic fonts}}{34}{figure.caption.28}%
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Search algorithm in our model space:\ extend search in each dimension according to magnitude and find nearest neighbor}}{36}{figure.caption.29}%
-\contentsline {figure}{\numberline {3.12}{\ignorespaces A network diagram of our font selector webapp system}}{36}{figure.caption.30}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Our basic autoencoder model inputs/outputs mid-way through training}}{26}{figure.caption.21}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces An {\fontspec {Helvetica} A} in Helvetica is structurally more similar to an {\fontspec {comicsans.ttf} A} in Comic Sans than to a {\fontspec {Helvetica} B} in Helvetica}}{26}{figure.caption.22}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Our Style Transfer Autoencoder model, which attempts to recreate a different character in the typeface of an input character image}}{27}{figure.caption.23}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Example instance of our style transfer model part-way through training}}{28}{figure.caption.24}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Diagram of Srivatsan et al.\ model architecture \cite {srivatsan2020}}}{29}{figure.caption.25}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces t-SNE plot of style encodings from Srivatsan et al.\ \cite {srivatsan2020} colored by weight (left) and Google Fonts style category (right)}}{30}{figure.caption.26}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Reconstructed character sets from the adapted Srivatsan model}}{31}{figure.caption.27}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Our novel 6-dimensional typeface selector tool, displaying several similar calligraphic fonts nearby the Princess Sofia typeface}}{34}{figure.caption.28}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Both of our typeface selector tools side-by-side, with additional features to ease use of both tools in tandem}}{35}{figure.caption.29}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Our typeface selector tool with characters displayed on scatterplot, showing many nearby calligraphic fonts}}{35}{figure.caption.30}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Search algorithm in our model space:\ extend search in each dimension according to magnitude and find nearest neighbor}}{37}{figure.caption.31}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces A network diagram of our font selector webapp system}}{37}{figure.caption.32}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Selection of fonts in the Google Fonts serif-fatface category}}{40}{figure.caption.31}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Selection of fonts in the Google Fonts serif-slab category}}{40}{figure.caption.32}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Selection of fonts in the Google Fonts feeling-artistic category}}{41}{figure.caption.33}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Selection of fonts in the Google Fonts seasonal-kwanzaa category}}{41}{figure.caption.34}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Fonts chosen for our user study (Faster One, Londrina Shadow, and Josefin Slab, from top to bottom) with sample text ``The quick brown fox jumped over the lazy dog''}}{45}{figure.caption.35}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Selection of fonts in the Google Fonts serif-fatface category}}{41}{figure.caption.33}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Selection of fonts in the Google Fonts serif-slab category}}{41}{figure.caption.34}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Selection of fonts in the Google Fonts feeling-artistic category}}{42}{figure.caption.35}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Selection of fonts in the Google Fonts seasonal-kwanzaa category}}{42}{figure.caption.36}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Fonts chosen for our user study (Faster One, Londrina Shadow, and Josefin Slab, from top to bottom) with sample text ``The quick brown fox jumped over the lazy dog''}}{46}{figure.caption.37}%
 \addvspace {10\p@ }

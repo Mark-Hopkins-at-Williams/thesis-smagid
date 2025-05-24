@@ -5,7 +5,7 @@ In this chapter we evaluate the performance of our model and novel font selectio
 
 \section{Model Evaluation} \label{model-eval}
 
-We evaluate our models by measuring the average pairwise distances between fonts within each of the typeface style categories recently introduced by Google Fonts (see Section \ref{font-selection-innovation}), normalized against the overall average pairwise distance in the model space. While these categories are inherently subjective and have some inaccuracies (as previously discussed) they provide a useful grouping which is auxiliary to our model training and therefore can be used to evaluate our model encodings.
+We evaluate our models by measuring the average pairwise distances between fonts within each of the 64 typeface style categories recently introduced by Google Fonts, normalized against the overall average pairwise distance in the model space. While these categories are inherently subjective and have some inaccuracies (see Section \ref{font-selection-innovation}), they provide a useful grouping which is auxiliary to our model training and therefore can be used to evaluate our model encodings.
 
 \begin{longtable}{|l|r|r|r|r|}
 \caption{Average pairwise Euclidean distance between style encodings grouped by Google Fonts categories, normalized relative to the average pairwise distance between all fonts in model space. Distances less than one (closer than average) are bolded. Abbreviated from Table \ref{tab:category-distances} (Appendix).}
@@ -14,7 +14,7 @@ We evaluate our models by measuring the average pairwise distances between fonts
 \textbf{Category} & \textbf{Autoencoder} & \textbf{Style Transfer} & \textbf{Sriv. C64} & \textbf{Sriv. Full} \\
 \hhline{|=====|}
 average category distance & 1.318 & 1.337 & \textbf{0.952} & \textbf{0.769} \\
-\% categories beat average & 34.8\% & 31.8\% & 59.1\% & 98.5\% \\
+\% categories beat average & 35.9\% & 32.8\% & 59.4\% & 98.4\% \\
 \hhline{|=====|}
 \endfirsthead
 
@@ -35,9 +35,15 @@ appearance-art-nouveau    & \textbf{0.453} & \textbf{0.737} & \textbf{0.783} & \
 appearance-blackletter    & \textbf{0.698} & \textbf{0.956} & \textbf{0.956} & \textbf{0.921} \\
 appearance-blobby         & 1.198          & 1.276          & \textbf{0.880} & \textbf{0.657} \\
 appearance-distressed     & 1.489          & 1.278          & 1.057          & \textbf{0.698} \\
+appearance-inline     & 2.238          & 1.832          & 1.209          & \textbf{0.732} \\
+appearance-marker     & 1.139          & 1.208          & \textbf{0.870}      & \textbf{0.651} \\
+appearance-medieval     & \textbf{0.934}    & 1.012   & \textbf{0.924}          & \textbf{0.758} \\
+appearance-monospaced     & \textbf{0.475}  & \textbf{0.616}  & \textbf{0.717}  & \textbf{0.746} \\
+appearance-not-text     & 6.477          & 11.048       &  \textbf{0.863}   & \textbf{0.754} \\
 \hline
 \multicolumn{5}{|c|}{$\cdots$} \\
 \hline
+serif-didone             & 1.238          & 1.363          & \textbf{0.846}          & \textbf{0.688} \\
 serif-fatface             & 2.478          & 2.896          & 1.082          & \textbf{0.755} \\
 serif-humanist            & \textbf{0.628} & \textbf{0.545} & \textbf{0.873} & \textbf{0.841} \\
 serif-modern              & \textbf{0.794} & \textbf{0.596} & \textbf{0.847} & \textbf{0.889} \\
@@ -49,7 +55,7 @@ serif-transitional        & \textbf{0.551} & \textbf{0.667} & \textbf{0.732} & \
 
 Table \ref{tab:category-distances-short} displays representative results from this evaluation. Each row contains data for a different Google Fonts category, and the four columns represent our four models. (\textbf{Sriv.\ C64} is the Srivatsan model trained only on the Capitals64 dataset, while \textbf{Sriv.\ Full} is the Srivatsan model trained on our full dataset.) Since our distance scores are normalized, values less than one (shown in bold) represent categories whose typeface encodings are closer than the model average, suggesting that salient aspects of the category's style are captured in the model encodings.
 
-We find that the Srivatsan model, trained on the smaller Capitals64 dataset, outperforms both the Autoencoder and Style Transfer models, with a greater number of Google Fonts categories having a lower average distance between fonts than the overall pairwise average ($n=39$), and the average distance score across all the categories slightly lower than the overall average (0.952). However, when trained on our full dataset---including Capitals64, Google Fonts, and the preinstalled fonts from macOS---the Srivatsan model performs even better, with 65 of the Google Font categories having a closer-than-average distance score---all but one---and an average distance score across all the categories of 0.769, much lower than the average pairwise encoding distance.
+We find that the Srivatsan model, trained on the smaller Capitals64 dataset, outperforms both the Autoencoder and Style Transfer models, with a greater percentage of Google Fonts categories having a lower average distance between fonts than the overall pairwise average (59.4\%), and the average distance score across all the categories slightly lower than the overall average (0.952). However, when trained on our full dataset---including Capitals64, Google Fonts, and the preinstalled fonts from macOS---the Srivatsan model performs even better, with 63 out of the 64 Google Font categories (98.4\%) having a closer-than-average distance score, and an average distance score across all the categories significantly lower than the overall average pairwise encoding distance (0.769).
 
 % my own figure
 \begin{figure}[p]
@@ -91,7 +97,7 @@ We additionally find that some of the more ambiguous font style categories are n
 
 \subsection{Euclidean Distance vs Cosine Similarity}
 
-We find an interesting result when comparing the cosine and Euclidean distances in our model evaluation. In general, we find that the models which perform strongly for Euclidean distance do not perform as well when considering cosine similarity; and conversely, the models which perform less well in terms of Euclidean closeness perform better with cosine similarity. For example, when comparing the normalized category-wise Euclidean distances and cosine similarities of the Autoencoder model (see Table \ref{tab:euclidean-vs-cosine-auto-short}), we find that a greater number of categories have a better-than-average similarity when considering cosine similarity ($n=41$) rather than Euclidean distance ($n=23$); and the average similarity score across all category groups is closer than average (1.125) as measured by cosine similarity but further than average (1.318) when using Euclidean distance. On the other hand, our full Srivatsan model performs very well on Euclidean distance scores but not as well when using cosine similarity (see Table \ref{tab:euclidean-vs-cosine-sriv-short}), with far fewer scores beating the average under the cosine similarity metric ($n=36$) and the average category-wise cosine similarity score (0.987) slightly worse than the overall pairwise average for the full model space. It is unclear exactly why there is a discrepancy with cosine and Euclidean similarity evaluation in our model space. It is certainly the case that Euclidean and cosine similarity metrics are measuring different types of vector similarity, which might be representing different aspects of the model encodings. However, for the purposes of our selection tool this should not matter. Since our user tool is built around Euclidean distance measurements, it is mainly important that our full Srivatsan model performs well under Euclidean distance metrics---that similar font styles should be closer to each other in Euclidean space---which it does. Cosine similarity metrics tell an interesting story about our model space, but ultimately the metric of most importance for our purposes is Euclidean distance.
+We find an interesting result when comparing the cosine and Euclidean distances in our model evaluation. In general, we find that the models which perform strongly for Euclidean distance do not perform as well when considering cosine similarity; and conversely, the models which perform less well in terms of Euclidean closeness perform better with cosine similarity. For example, when comparing the normalized category-wise Euclidean distances and cosine similarities of the Autoencoder model (see Table \ref{tab:euclidean-vs-cosine-auto-short}), we find that a greater percentage of categories have a better-than-average similarity when considering cosine similarity (60.9\%) rather than Euclidean distance (35.9\%); and the average similarity score across all category groups is closer than average (1.125) as measured by cosine similarity but further than average (1.318) when using Euclidean distance. On the other hand, our full Srivatsan model performs very well on Euclidean distance scores but not as well when using cosine similarity (see Table \ref{tab:euclidean-vs-cosine-sriv-short}), with far fewer scores beating the average under the cosine similarity metric (54.7\%) and the average category-wise cosine similarity score (0.987) slightly worse than the overall pairwise average for the full model space. It is unclear exactly why there is a discrepancy with cosine and Euclidean similarity evaluation in our model space. It is certainly the case that Euclidean and cosine similarity metrics are measuring different types of vector similarity, which might be representing different aspects of the model encodings. However, for the purposes of our selection tool this should not matter. Since our user tool is built around Euclidean distance measurements, it is mainly important that our full Srivatsan model performs well under Euclidean distance metrics---that similar font styles should be closer to each other in Euclidean space---which it does. Cosine similarity metrics tell an interesting story about our model space, but ultimately the metric of most importance for our purposes is Euclidean distance.
 
 \begin{longtable}{|l|r|r|}
 \caption{Normalized average pairwise Euclidean and cosine distances across Google Fonts category groups in our Autoencoder model space. Distances closer than the overall pairwise average (less than one for Euclidean, greater than one for cosine) are bolded. Abbreviated from Table \ref{tab:euclidean-vs-cosine-auto} (Appendix).}
@@ -100,7 +106,7 @@ We find an interesting result when comparing the cosine and Euclidean distances 
 \textbf{Category} & \textbf{Autoencoder (Euclidean)} & \textbf{Autoencoder (Cosine)} \\
 \hhline{|===|}
 average category distance & 1.318 & \textbf{1.125} \\
-\% categories beat average & 34.8\% & 62.1\% \\
+\% categories beat average & 35.9\% & 60.9\% \\
 \hhline{|===|}
 \endfirsthead
 
@@ -122,7 +128,6 @@ appearance-blackletter    & \textbf{0.698}          & \textbf{1.101}      \\
 appearance-blobby         & 1.198                   & 0.906               \\
 appearance-distressed     & 1.489                   & \textbf{1.434}      \\
 appearance-inline         & 2.238                   & \textbf{1.692}      \\
-appearance-lunar-new-year & 1.390                   & \textbf{1.742}      \\
 appearance-marker         & 1.139                   & \textbf{1.045}      \\
 appearance-medieval       & \textbf{0.934}          & 0.848               \\
 appearance-monospaced     & \textbf{0.475}          & 0.866               \\
@@ -148,7 +153,7 @@ serif-transitional        & 0.551                   & 0.529         \\
 \textbf{Category} & \textbf{Srivatsan Full (Euclidean)} & \textbf{Srivatsan Full (Cosine)} \\
 \hhline{|===|}
 average category distance & \textbf{0.769} & 0.987 \\
-\% categories beat average & 98.5\% & 54.5\% \\
+\% categories beat average & 98.4\% & 54.7\% \\
 \hhline{|===|}
 \endfirsthead
 
@@ -170,7 +175,6 @@ appearance-blackletter    & \textbf{0.921}             & 0.881                  
 appearance-blobby         & \textbf{0.657}             & 0.955                   \\
 appearance-distressed     & \textbf{0.698}             & \textbf{1.303}          \\
 appearance-inline         & \textbf{0.732}             & \textbf{1.140}          \\
-appearance-lunar-new-year & \textbf{0.841}             & \textbf{1.264}          \\
 appearance-marker         & \textbf{0.651}             & \textbf{1.104}          \\
 appearance-medieval       & \textbf{0.758}             & 0.855                   \\
 appearance-monospaced     & \textbf{0.746}             & 0.909                   \\
@@ -178,6 +182,8 @@ appearance-not-text       & \textbf{0.754}             & \textbf{1.707}         
 \hline
 \multicolumn{3}{|c|}{$\cdots$} \\
 \hline
+serif-didone            & \textbf{0.688}             & 0.399                   \\
+serif-fatface              & \textbf{0.755}             & 0.664                   \\
 serif-humanist            & \textbf{0.841}             & 0.525                   \\
 serif-modern              & \textbf{0.889}             & 0.597                   \\
 serif-old-style           & \textbf{0.814}             & 0.477                   \\
@@ -197,7 +203,7 @@ serif-transitional        & \textbf{0.954}             & 0.468
     \label{fig:user-fonts}
 \end{figure}
 
-We additionally conducted a small user study to qualify the effectiveness of our font selection interface. Our participants were 12 college students. Each of the 12 participants were given three fonts (on a printed piece of paper) and three corresponding font identification tasks using each of three interfaces: the basic list-based font selector in Google Docs, the category-based search from Google Fonts, and our typeface-space selector. We chose three fonts which represent a variety of search difficulties: one which was very distinct and would not be confused with another typeface in our set (Faster One), another which was somewhat distinct but has some lookalike fonts in the set (Londrina Shadow), and a third which was more generic and likely harder to find among similar fonts (Josefin Slab). For each user, we presented one of the three fonts showing a default display text (see Figure \ref{fig:user-fonts}) and introduced one of the tools. We then gave the participant two minutes to try and identify the font using the given tool. We repeated the task two additional times, randomizing the order of tools between participants, so that each user tried all three tools and attempted to identify each font. By randomizing tool order but keeping font order the same, we ensured that our performance data was not affected by the choice of font. We kept track of several metrics: remaining time (if the user selected a font in less than two minutes); \# of clicks, mouse movements, and scrolls; and also the selected font, which we used to calculate the normalized Euclidean distance from the correct font in our model space (i.e. how close the user got, zero if correct) as well as percent accuracy.
+We additionally conducted a small user study to qualify the effectiveness of our font selection interface. Our test subjects were 12 college students. Each participant was given three fonts (on a printed piece of paper) and three corresponding font identification tasks using each of three interfaces: the basic list-based font selector in Google Docs, the category-based search from Google Fonts, and our typeface-space selector. We chose three fonts which represent a variety of search difficulties: one which was very distinct and would not be confused with another typeface in our set (Faster One), another which was somewhat distinct but has some lookalike fonts in the set (Londrina Shadow), and a third which was more generic and likely harder to find among similar fonts (Josefin Slab). For each user, we presented one of the three fonts showing a default display text (see Figure \ref{fig:user-fonts}) and introduced one of the tools. We then gave the participant two minutes to try and identify the font using the given tool. We repeated the task two additional times, randomizing the order of tools between participants, so that each user tried all three tools and attempted to identify each font. By randomizing tool order but keeping font order the same, we ensured that our performance data was not affected by the choice of font. We kept track of several metrics: remaining time (if the user selected a font in less than two minutes); \# of clicks, mouse movements, and scrolls; and also the selected font, which we used to calculate the normalized Euclidean distance from the correct font in our model space (i.e. how close the user got, zero if correct) as well as percent accuracy.
 
 \begin{longtable}{|l|r|r|r|r|r|r|}
 \caption{Quantitative results from font matching user study, averaged across trials, with distance from correct normalized to average pairwise distance in encoding space.}
@@ -230,7 +236,7 @@ Table \ref{tab:user-study-quant} shows the quantitative results from our user st
 At the end of each trial, we also asked users to qualitatively evaluate each of the tools. For each selector, we simply asked the user to list positive and negative aspects of each tool---what they liked, didn't like, found helpful, or not. These results are helpful in both evaluating our own tool and better understanding user needs in font selection tasks. Table \ref{tab:user-study-qual} shows a summary of user responses, organized by ``advantages'' and ``disadvantages'' of each tool. For the basic list interface, we received the same piece of feedback from most users: that alphabetical order is not useful when selecting fonts based on style, and the lack of categories led to a long, mundane search experience. Additionally, users reported finding the small text size difficult and found it frustrating that the tool did not save their place in the long list when they clicked away from it. However, users did find the simplicity of the interface useful, as well as the fact that it displays many characters at once in the font name. For the Google Fonts category-search interface, users liked the ability to search by attribute, but they found that the categories were often too vague or subjective; additionally, sometimes a category they envisioned and hoped to use (e.g. ``Block Letters'') was not an available option. For our style-based tool, users liked that the interface tended to cluster fonts by similarity, allowing them to narrow down their search and eliminate parts of the map from consideration, and generally found the interface to be fun and explorative; however, many found the tool somewhat unintuitive and difficult to use at first, wished they could preview more letters at once, and were frustrated by the lag which occurs due to character re-rendering when zooming in the map tool.
 
 \begin{longtable}{|l|l|l|}
-\caption{Summary of qualitative results from user study, separated into ``advantages'' and ``disadvantages'' of each tool.}
+\caption{Summary of qualitative results from our user study, separated into ``advantages'' and ``disadvantages'' of each tool.}
 \label{tab:user-study-qual} \\
 \hline
 & \textbf{advantages} & \textbf{disadvantages} \\
@@ -266,6 +272,8 @@ doesn't save your place\\
 small text\\
 boring
 \end{tabular} \\
+
+\hline
 
 google fonts &
 
