@@ -344,13 +344,6 @@ OUTPUT thesis.aux
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/ts1cmr.fd
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/ts1cmr.fd
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/ts1cmr.fd
-INPUT ./thesis.out
-INPUT ./thesis.out
-INPUT thesis.out
-INPUT thesis.out
-INPUT ./thesis.out
-INPUT ./thesis.out
-OUTPUT thesis.out
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/pdflscape/pdflscape-nometadata.sty
@@ -570,5 +563,3 @@ INPUT chapters/5-conclusion.aux
 INPUT ./chapters/6-appendix.aux
 INPUT ./chapters/6-appendix.aux
 INPUT chapters/6-appendix.aux
-INPUT ./thesis.out
-INPUT ./thesis.out

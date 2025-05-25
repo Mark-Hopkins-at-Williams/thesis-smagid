@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.10.2)  23 MAY 2025 12:53
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.10.2)  25 MAY 2025 13:11
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -245,6 +245,7 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
  (/usr/local/texlive/2024/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2024-01-20 v7.01h Hyperref: PDF Unicode definition (HO)
 )
+Package hyperref Info: Option `draft' set `true' on input line 4062.
 Package hyperref Info: Hyper figures OFF on input line 4179.
 Package hyperref Info: Link nesting OFF on input line 4184.
 Package hyperref Info: Hyper index ON on input line 4187.
@@ -870,13 +871,12 @@ LaTeX Font Info:    ... okay on input line 57.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 57.
-(./thesis.out) (./thesis.out)
-\@outlinefile=\write4
-\openout4 = `thesis.out'.
 
+Package hyperref Warning: Draft mode on.
+
+Package hyperref Info: Link coloring OFF on input line 57.
 \c@lstlisting=\count378
- (/usr/local/texlive/2024/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+(/usr/local/texlive/2024/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
  (/usr/local/texlive/2024/texmf-dist/tex/latex/pdflscape/pdflscape-nometadata.sty
 Package: pdflscape-nometadata 2022-10-28 v0.13 Display of landscape pages in PDF (HO)
@@ -959,12 +959,12 @@ File: uwasy.fd 2020/01/19 v2.4 Wasy-2 symbol font definitions
 ] (./thesis.toc [2
 
 ])
-\tf@toc=\write5
-\openout5 = `thesis.toc'.
+\tf@toc=\write4
+\openout4 = `thesis.toc'.
 
  [3] (./thesis.lof
 Overfull \hbox (4.75606pt too wide) in paragraph at lines 9--9
- [][] [][]\TU/lmr/m/n/10 Adobe Color selection interface, with a color wheel, multiple color bases, color harmony- 
+ [][] []\TU/lmr/m/n/10 Adobe Color selection interface, with a color wheel, multiple color bases, color harmony- |
  []
 
 
@@ -999,12 +999,12 @@ Package fontspec Info: Font family 'comicsans.ttf(0)' created for font
 
 
 ])
-\tf@lof=\write6
-\openout6 = `thesis.lof'.
+\tf@lof=\write5
+\openout5 = `thesis.lof'.
 
  [5] (./thesis.lot)
-\tf@lot=\write7
-\openout7 = `thesis.lot'.
+\tf@lot=\write6
+\openout6 = `thesis.lot'.
 
  [6
 
@@ -1045,58 +1045,24 @@ Chapter 2.
 
 
 
-]
-File: images/xerox-star.png Graphic file (type bmp)
-<images/xerox-star.png>
- [12]
-File: images/font-selectors.png Graphic file (type bmp)
-<images/font-selectors.png>
- [13]
-File: images/google-font-categories.png Graphic file (type bmp)
-<images/google-font-categories.png>
-File: images/google-fonts-christmas.png Graphic file (type bmp)
-<images/google-fonts-christmas.png>
- [14]
-File: images/canva-font-selector.png Graphic file (type bmp)
-<images/canva-font-selector.png>
- [15]
-File: images/basic-color-picker.png Graphic file (type bmp)
-<images/basic-color-picker.png>
-File: images/adobe-color.png Graphic file (type bmp)
-<images/adobe-color.png>
- [16] [17]
-File: images/autoencoder-model.png Graphic file (type bmp)
-<images/autoencoder-model.png>
-
+] [12] [13] [14] [15] [16] [17]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[18] [19]
-File: images/odonovan-interfaces.png Graphic file (type bmp)
-<images/odonovan-interfaces.png>
- [20]
-File: images/cho-paired-glyph.png Graphic file (type bmp)
-<images/cho-paired-glyph.png>
- [21]
+[18] [19] [20] [21]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 155.
 
-File: images/cho-latent-space.png Graphic file (type bmp)
-<images/cho-latent-space.png>
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 164.
 
-File: images/srivatsan-model.png Graphic file (type bmp)
-<images/srivatsan-model.png>
 [22]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 173.
 
-File: images/srivatsan-latent.png Graphic file (type bmp)
-<images/srivatsan-latent.png>
 ) [23]
 \openout2 = `chapters/3-methodology.aux'.
 
@@ -1112,21 +1078,15 @@ Chapter 3.
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 19.
 
-File: images/autoencoder-example.png Graphic file (type bmp)
-<images/autoencoder-example.png>
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 31.
 
-File: images/ab-cs-helvetica.png Graphic file (type bmp)
-<images/ab-cs-helvetica.png>
 [25] [26]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 45.
 
-File: images/style-transfer-model.pdf Graphic file (type pdf)
-<use images/style-transfer-model.pdf>
 
 Package fontspec Info: Font family 'Arial(0)' created for font 'Arial' with
 (fontspec)             options [].
@@ -1164,54 +1124,35 @@ Package fontspec Info: Font family 'kumar-one.ttf(0)' created for font
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 63.
 
-File: images/styletransfer-example.png Graphic file (type bmp)
-<images/styletransfer-example.png>
 [28]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 75.
 
-File: images/srivatsan-model.png Graphic file (type bmp)
-<images/srivatsan-model.png>
 [29]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 87.
 
-File: images/srivatsan-tsne.png Graphic file (type bmp)
-<images/srivatsan-tsne.png>
 [30]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 99.
 
-File: images/srivatsan-reconstructions.png Graphic file (type bmp)
-<images/srivatsan-reconstructions.png>
 [31] [32]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 129.
 
-File: images/selector-tool.png Graphic file (type bmp)
-<images/selector-tool.png>
-[33]
-File: images/both-selectors.png Graphic file (type bmp)
-<images/both-selectors.png>
-File: images/tool-with-chars.png Graphic file (type bmp)
-<images/tool-with-chars.png>
- [34] [35]
+[33] [34] [35]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 167.
 
-File: images/model-search.png Graphic file (type bmp)
-<images/model-search.png>
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 175.
 
-File: images/system-diagram.png Graphic file (type bmp)
-<images/system-diagram.png>
 ) [36] [37] [38]
 \openout2 = `chapters/4-evaluation.aux'.
 
@@ -1222,19 +1163,7 @@ Chapter 4.
 
 
 
-]
-File: images/serif-fatface.png Graphic file (type bmp)
-<images/serif-fatface.png>
-File: images/serif-slab.png Graphic file (type bmp)
-<images/serif-slab.png>
-File: images/feeling-artistic.png Graphic file (type bmp)
-<images/feeling-artistic.png>
-File: images/seasonal-kwanzaa.png Graphic file (type bmp)
-<images/seasonal-kwanzaa.png>
- [40] [41] [42] [43] [44]
-File: images/user-fonts.pdf Graphic file (type pdf)
-<use images/user-fonts.pdf>
- [45] [46]
+] [40] [41] [42] [43] [44] [45] [46]
 Overfull \hbox (1.23999pt too wide) in alignment at lines 238--244
  [] [] [] 
  []
@@ -1286,16 +1215,14 @@ Chapter 5.
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
-Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 8F273A1D4B328A8287454BA2D4893D75;7057.
  ) 
 Here is how much of TeX's memory you used:
- 30024 strings out of 474773
- 601148 string characters out of 5757724
+ 29974 strings out of 474773
+ 600028 string characters out of 5757724
  1957839 words of memory out of 5000000
- 51507 multiletter control sequences out of 15000+600000
- 567804 words of font info for 112 fonts, out of 8000000 for 9000
+ 51460 multiletter control sequences out of 15000+600000
+ 567812 words of font info for 113 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,11n,101p,2721b,535s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on thesis.xdv (62 pages, 1310404 bytes).
+Output written on thesis.xdv (62 pages, 1281524 bytes).
