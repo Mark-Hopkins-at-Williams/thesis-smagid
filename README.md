@@ -1,3 +1,3 @@
-hello and welcome to my thesis!
+# Typeface Space (Honors Thesis)
 
-advised by Jeannie Albrecht and Mark Hopkins
+Welcome to the repository for Typeface Space, the honors thesis work of Sam Magid, advised by Professors Jeannie Albrecht and Mark Hopkins at Williams College.
